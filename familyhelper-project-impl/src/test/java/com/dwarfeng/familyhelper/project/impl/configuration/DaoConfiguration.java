@@ -1,15 +1,19 @@
 package com.dwarfeng.familyhelper.project.impl.configuration;
 
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateProject;
+import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateUser;
 import com.dwarfeng.familyhelper.project.impl.dao.preset.ProjectPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -65,6 +69,18 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(Project.class, HibernateProject.class, mapper),
                 HibernateProject.class,
                 projectPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, User, HibernateUser> userHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(User.class, HibernateUser.class, mapper),
+                HibernateUser.class,
+                new DefaultDeletionMod<>(),
+                batchSize
         );
     }
 }
