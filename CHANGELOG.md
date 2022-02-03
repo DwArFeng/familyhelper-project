@@ -6,6 +6,9 @@
 
 - 项目结构建立，程序清理测试通过。
 
+- 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.Project。
+
 #### Bug修复
 
 - (无)
