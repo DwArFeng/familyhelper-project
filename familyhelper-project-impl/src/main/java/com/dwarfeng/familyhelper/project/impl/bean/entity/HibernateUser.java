@@ -5,7 +5,9 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateStringIdKey.class)
@@ -22,6 +24,10 @@ public class HibernateUser implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePop.class, mappedBy = "user")
+    private Set<HibernatePop> pops = new HashSet<>();
 
     public HibernateUser() {
     }
@@ -50,6 +56,14 @@ public class HibernateUser implements Bean {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Set<HibernatePop> getPops() {
+        return pops;
+    }
+
+    public void setPops(Set<HibernatePop> pops) {
+        this.pops = pops;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.dwarfeng.familyhelper.project.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.familyhelper.project.sdk.util.Constraints;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import java.util.Objects;
@@ -34,6 +36,7 @@ public class WebInputUser implements Bean {
     private WebInputStringIdKey key;
 
     @JSONField(name = "remark")
+    @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
 
     public WebInputUser() {

@@ -6,7 +6,9 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateLongIdKey.class)
@@ -15,8 +17,7 @@ import java.util.Optional;
 })
 public class HibernateProject implements Bean {
 
-    private static final long serialVersionUID = 815950763875337977L;
-
+    private static final long serialVersionUID = 6245956605653715498L;
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -43,6 +44,10 @@ public class HibernateProject implements Bean {
     @Column(name = "finished_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishedDate;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePop.class, mappedBy = "project")
+    private Set<HibernatePop> pops = new HashSet<>();
 
     public HibernateProject() {
     }
@@ -112,6 +117,14 @@ public class HibernateProject implements Bean {
 
     public void setFinishedDate(Date finishedDate) {
         this.finishedDate = finishedDate;
+    }
+
+    public Set<HibernatePop> getPops() {
+        return pops;
+    }
+
+    public void setPops(Set<HibernatePop> pops) {
+        this.pops = pops;
     }
 
     @Override

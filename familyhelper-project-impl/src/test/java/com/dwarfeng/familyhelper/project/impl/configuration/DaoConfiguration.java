@@ -1,10 +1,15 @@
 package com.dwarfeng.familyhelper.project.impl.configuration;
 
+import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernatePop;
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateProject;
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateUser;
+import com.dwarfeng.familyhelper.project.impl.bean.key.HibernatePopKey;
+import com.dwarfeng.familyhelper.project.impl.dao.preset.PopPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.project.impl.dao.preset.ProjectPresetCriteriaMaker;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -27,17 +32,20 @@ public class DaoConfiguration {
     private final Mapper mapper;
 
     private final ProjectPresetCriteriaMaker projectPresetCriteriaMaker;
+    private final PopPresetCriteriaMaker popPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
 
     public DaoConfiguration(
             HibernateTemplate template, Mapper mapper,
-            ProjectPresetCriteriaMaker projectPresetCriteriaMaker
+            ProjectPresetCriteriaMaker projectPresetCriteriaMaker,
+            PopPresetCriteriaMaker popPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
         this.projectPresetCriteriaMaker = projectPresetCriteriaMaker;
+        this.popPresetCriteriaMaker = popPresetCriteriaMaker;
     }
 
     @Bean
@@ -81,6 +89,37 @@ public class DaoConfiguration {
                 HibernateUser.class,
                 new DefaultDeletionMod<>(),
                 batchSize
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<PopKey, HibernatePopKey, Pop, HibernatePop> popHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(PopKey.class, HibernatePopKey.class, mapper),
+                new DozerBeanTransformer<>(Pop.class, HibernatePop.class, mapper),
+                HibernatePop.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Pop, HibernatePop> popHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Pop.class, HibernatePop.class, mapper),
+                HibernatePop.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Pop, HibernatePop> popHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Pop.class, HibernatePop.class, mapper),
+                HibernatePop.class,
+                popPresetCriteriaMaker
         );
     }
 }
