@@ -11,6 +11,8 @@
   - com.dwarfeng.familyhelper.project.stack.bean.entity.User。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Pop。
 
+- 完成 node 模块，打包测试及启动测试通过。
+
 #### Bug修复
 
 - (无)
