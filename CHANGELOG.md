@@ -14,6 +14,9 @@
 
 - 完成 node 模块，打包测试及启动测试通过。
 
+- 完成实体的操作服务。
+  - com.dwarfeng.familyhelper.project.stack.service.ProjectOperateService。
+
 #### Bug修复
 
 - (无)

@@ -8,6 +8,9 @@ package com.dwarfeng.familyhelper.project.sdk.util;
  */
 public final class Constants {
 
+    public static final int PROJECT_STATUS_IN_PROGRESS = 0;
+    public static final int PROJECT_STATUS_FINISHED = 1;
+
     public static final int PERMISSION_LEVEL_OWNER = 0;
     public static final int PERMISSION_LEVEL_GUEST = 1;
     public static final int PERMISSION_LEVEL_MODIFIER = 2;
