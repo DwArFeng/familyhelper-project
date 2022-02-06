@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Hibernate 工程摘要主键。
+ * Hibernate 工程权限主键。
  *
  * @author DwArFeng
  * @since 1.0.0

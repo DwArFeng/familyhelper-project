@@ -27,9 +27,6 @@ public class HibernatePop implements Bean {
     @Column(name = "permission_level")
     private int permissionLevel;
 
-    @Column(name = "star")
-    private boolean star;
-
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
@@ -90,14 +87,6 @@ public class HibernatePop implements Bean {
         this.permissionLevel = permissionLevel;
     }
 
-    public boolean isStar() {
-        return star;
-    }
-
-    public void setStar(boolean star) {
-        this.star = star;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -124,13 +113,13 @@ public class HibernatePop implements Bean {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "longId = " + longId + ", " +
-                "stringId = " + stringId + ", " +
-                "permissionLevel = " + permissionLevel + ", " +
-                "star = " + star + ", " +
-                "remark = " + remark + ", " +
-                "project = " + project + ", " +
-                "user = " + user + ")";
+        return "HibernatePop{" +
+                "longId=" + longId +
+                ", stringId='" + stringId + '\'' +
+                ", permissionLevel=" + permissionLevel +
+                ", remark='" + remark + '\'' +
+                ", project=" + project +
+                ", user=" + user +
+                '}';
     }
 }

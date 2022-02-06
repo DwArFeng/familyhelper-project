@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- * WebInput 工程摘要主键。
+ * WebInput 工程权限主键。
  *
  * @author DwArFeng
  * @since 1.0.0

@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 
 /**
- * 工程摘要数据访问层。
+ * 工程权限数据访问层。
  *
  * @author DwArFeng
  * @since 1.0.0

@@ -5,7 +5,7 @@ import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 
 /**
- * 工程摘要缓存。
+ * 工程权限缓存。
  *
  * @author DwArFeng
  * @since 1.0.0

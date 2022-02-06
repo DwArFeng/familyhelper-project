@@ -4,27 +4,25 @@ import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 
 /**
- * 工程摘要。
+ * 工程权限。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
 public class Pop implements Entity<PopKey> {
 
-    private static final long serialVersionUID = -4249189103880968218L;
+    private static final long serialVersionUID = -4141849733744820109L;
 
     private PopKey key;
     private int permissionLevel;
-    private boolean star;
     private String remark;
 
     public Pop() {
     }
 
-    public Pop(PopKey key, int permissionLevel, boolean star, String remark) {
+    public Pop(PopKey key, int permissionLevel, String remark) {
         this.key = key;
         this.permissionLevel = permissionLevel;
-        this.star = star;
         this.remark = remark;
     }
 
@@ -46,14 +44,6 @@ public class Pop implements Entity<PopKey> {
         this.permissionLevel = permissionLevel;
     }
 
-    public boolean isStar() {
-        return star;
-    }
-
-    public void setStar(boolean star) {
-        this.star = star;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -67,7 +57,6 @@ public class Pop implements Entity<PopKey> {
         return "Pop{" +
                 "key=" + key +
                 ", permissionLevel=" + permissionLevel +
-                ", star=" + star +
                 ", remark='" + remark + '\'' +
                 '}';
     }

@@ -8,14 +8,14 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import java.util.Objects;
 
 /**
- * JSFixed FastJson 工程摘要。
+ * JSFixed FastJson 工程权限。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
 public class JSFixedFastJsonPop implements Bean {
 
-    private static final long serialVersionUID = 6838024032384817203L;
+    private static final long serialVersionUID = 2488413790306158951L;
 
     public static JSFixedFastJsonPop of(Pop pop) {
         if (Objects.isNull(pop)) {
@@ -23,7 +23,7 @@ public class JSFixedFastJsonPop implements Bean {
         } else {
             return new JSFixedFastJsonPop(
                     JSFixedFastJsonPopKey.of(pop.getKey()),
-                    pop.getPermissionLevel(), pop.isStar(), pop.getRemark()
+                    pop.getPermissionLevel(), pop.getRemark()
             );
         }
     }
@@ -34,19 +34,15 @@ public class JSFixedFastJsonPop implements Bean {
     @JSONField(name = "permission_level", ordinal = 2)
     private int permissionLevel;
 
-    @JSONField(name = "star", ordinal = 3)
-    private boolean star;
-
-    @JSONField(name = "remark", ordinal = 4)
+    @JSONField(name = "remark", ordinal = 3)
     private String remark;
 
     public JSFixedFastJsonPop() {
     }
 
-    public JSFixedFastJsonPop(JSFixedFastJsonPopKey key, int permissionLevel, boolean star, String remark) {
+    public JSFixedFastJsonPop(JSFixedFastJsonPopKey key, int permissionLevel, String remark) {
         this.key = key;
         this.permissionLevel = permissionLevel;
-        this.star = star;
         this.remark = remark;
     }
 
@@ -66,14 +62,6 @@ public class JSFixedFastJsonPop implements Bean {
         this.permissionLevel = permissionLevel;
     }
 
-    public boolean isStar() {
-        return star;
-    }
-
-    public void setStar(boolean star) {
-        this.star = star;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -87,7 +75,6 @@ public class JSFixedFastJsonPop implements Bean {
         return "JSFixedFastJsonPop{" +
                 "key=" + key +
                 ", permissionLevel=" + permissionLevel +
-                ", star=" + star +
                 ", remark='" + remark + '\'' +
                 '}';
     }

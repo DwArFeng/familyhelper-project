@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import java.util.Objects;
 
 /**
- * JSFixed FastJson 工程摘要主键。
+ * JSFixed FastJson 工程权限主键。
  *
  * @author DwArFeng
  * @since 1.0.0

@@ -5,7 +5,7 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import java.util.Objects;
 
 /**
- * 工程摘要主键。
+ * 工程权限主键。
  *
  * @author DwArFeng
  * @since 1.0.0

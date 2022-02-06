@@ -45,7 +45,7 @@ public class PopMaintainServiceImplTest {
     public void setUp() {
         project = new Project(new LongIdKey(PROJECT_ID), "name", "remark", 12450, new Date(), new Date(), new Date());
         user = new User(new StringIdKey(USER_ID), "remark");
-        pop = new Pop(new PopKey(PROJECT_ID, USER_ID), 233, true, "remark");
+        pop = new Pop(new PopKey(PROJECT_ID, USER_ID), 233, "remark");
     }
 
     @After

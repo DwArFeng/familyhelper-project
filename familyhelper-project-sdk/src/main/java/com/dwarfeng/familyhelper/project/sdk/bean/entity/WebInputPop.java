@@ -11,14 +11,14 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 /**
- * WebInput 工程摘要。
+ * WebInput 工程权限。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
 public class WebInputPop implements Bean {
 
-    private static final long serialVersionUID = 3506363410896643083L;
+    private static final long serialVersionUID = -515025354719410401L;
 
     public static Pop toStackBean(WebInputPop webInputPop) {
         if (Objects.isNull(webInputPop)) {
@@ -26,9 +26,7 @@ public class WebInputPop implements Bean {
         } else {
             return new Pop(
                     WebInputPopKey.toStackBean(webInputPop.getKey()),
-                    webInputPop.getPermissionLevel(),
-                    webInputPop.isStar(),
-                    webInputPop.getRemark()
+                    webInputPop.getPermissionLevel(), webInputPop.getRemark()
             );
         }
     }
@@ -39,9 +37,6 @@ public class WebInputPop implements Bean {
 
     @JSONField(name = "permission_level")
     private int permissionLevel;
-
-    @JSONField(name = "star")
-    private boolean star;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -66,14 +61,6 @@ public class WebInputPop implements Bean {
         this.permissionLevel = permissionLevel;
     }
 
-    public boolean isStar() {
-        return star;
-    }
-
-    public void setStar(boolean star) {
-        this.star = star;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -87,7 +74,6 @@ public class WebInputPop implements Bean {
         return "WebInputPop{" +
                 "key=" + key +
                 ", permissionLevel=" + permissionLevel +
-                ", star=" + star +
                 ", remark='" + remark + '\'' +
                 '}';
     }

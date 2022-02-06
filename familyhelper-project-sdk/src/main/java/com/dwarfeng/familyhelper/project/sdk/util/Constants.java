@@ -8,7 +8,6 @@ package com.dwarfeng.familyhelper.project.sdk.util;
  */
 public final class Constants {
 
-    public static final int PERMISSION_LEVEL_NONE = -1;
     public static final int PERMISSION_LEVEL_OWNER = 0;
     public static final int PERMISSION_LEVEL_GUEST = 1;
     public static final int PERMISSION_LEVEL_MODIFIER = 2;
