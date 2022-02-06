@@ -2,12 +2,14 @@ package com.dwarfeng.familyhelper.project.node.configuration;
 
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernatePop;
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateProject;
+import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateTaskTypeIndicator;
 import com.dwarfeng.familyhelper.project.impl.bean.entity.HibernateUser;
 import com.dwarfeng.familyhelper.project.impl.bean.key.HibernatePopKey;
 import com.dwarfeng.familyhelper.project.impl.dao.preset.PopPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.project.impl.dao.preset.ProjectPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -120,6 +122,29 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(Pop.class, HibernatePop.class, mapper),
                 HibernatePop.class,
                 popPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, TaskTypeIndicator,
+            HibernateTaskTypeIndicator> taskTypeIndicatorHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(TaskTypeIndicator.class, HibernateTaskTypeIndicator.class, mapper),
+                HibernateTaskTypeIndicator.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<TaskTypeIndicator, HibernateTaskTypeIndicator>
+    taskTypeIndicatorHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(TaskTypeIndicator.class, HibernateTaskTypeIndicator.class, mapper),
+                HibernateTaskTypeIndicator.class
         );
     }
 }

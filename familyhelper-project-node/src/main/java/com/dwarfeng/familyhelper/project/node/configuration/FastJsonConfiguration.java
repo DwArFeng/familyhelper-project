@@ -3,6 +3,7 @@ package com.dwarfeng.familyhelper.project.node.configuration;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonPop;
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonProject;
+import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonTaskTypeIndicator;
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonProject.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonUser.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonPop.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonTaskTypeIndicator.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

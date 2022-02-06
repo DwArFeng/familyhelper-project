@@ -2,10 +2,12 @@ package com.dwarfeng.familyhelper.project.impl.configuration;
 
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonPop;
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonProject;
+import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonTaskTypeIndicator;
 import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonUser;
 import com.dwarfeng.familyhelper.project.sdk.bean.key.formatter.PopStringKeyFormatter;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -32,6 +34,8 @@ public class CacheConfiguration {
     private String userPrefix;
     @Value("${cache.prefix.entity.pop}")
     private String popPrefix;
+    @Value("${cache.prefix.entity.task_type_indicator}")
+    private String taskTypeIndicatorPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -65,6 +69,17 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonPop>) template,
                 new PopStringKeyFormatter(popPrefix),
                 new DozerBeanTransformer<>(Pop.class, FastJsonPop.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, TaskTypeIndicator, FastJsonTaskTypeIndicator>
+    taskTypeIndicatorRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonTaskTypeIndicator>) template,
+                new StringIdStringKeyFormatter(taskTypeIndicatorPrefix),
+                new DozerBeanTransformer<>(TaskTypeIndicator.class, FastJsonTaskTypeIndicator.class, mapper)
         );
     }
 }

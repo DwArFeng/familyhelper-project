@@ -10,6 +10,7 @@
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Project。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.User。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Pop。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator。
 
 - 完成 node 模块，打包测试及启动测试通过。
 
