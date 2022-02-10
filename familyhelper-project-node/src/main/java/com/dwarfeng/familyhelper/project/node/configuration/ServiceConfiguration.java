@@ -1,17 +1,15 @@
 package com.dwarfeng.familyhelper.project.node.configuration;
 
 import com.dwarfeng.familyhelper.project.impl.service.operation.ProjectCrudOperation;
+import com.dwarfeng.familyhelper.project.impl.service.operation.TaskCrudOperation;
 import com.dwarfeng.familyhelper.project.impl.service.operation.UserCrudOperation;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
+import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
 import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
+import com.dwarfeng.familyhelper.project.stack.cache.PreTaskCache;
 import com.dwarfeng.familyhelper.project.stack.cache.TaskTypeIndicatorCache;
-import com.dwarfeng.familyhelper.project.stack.dao.PopDao;
-import com.dwarfeng.familyhelper.project.stack.dao.ProjectDao;
-import com.dwarfeng.familyhelper.project.stack.dao.TaskTypeIndicatorDao;
+import com.dwarfeng.familyhelper.project.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
@@ -38,18 +36,26 @@ public class ServiceConfiguration {
     private final PopCache popCache;
     private final TaskTypeIndicatorDao taskTypeIndicatorDao;
     private final TaskTypeIndicatorCache taskTypeIndicatorCache;
+    private final TaskCrudOperation taskCrudOperation;
+    private final TaskDao taskDao;
+    private final PreTaskDao preTaskDao;
+    private final PreTaskCache preTaskCache;
 
     @Value("${cache.timeout.entity.pop}")
     private long popTimeout;
     @Value("${cache.timeout.entity.task_type_indicator}")
     private long taskTypeIndicatorTimeout;
+    @Value("${cache.timeout.entity.pre_task}")
+    private long preTaskTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
             ProjectCrudOperation projectCrudOperation, ProjectDao projectDao,
             UserCrudOperation userCrudOperation,
             PopDao popDao, PopCache popCache,
-            TaskTypeIndicatorDao taskTypeIndicatorDao, TaskTypeIndicatorCache taskTypeIndicatorCache
+            TaskTypeIndicatorDao taskTypeIndicatorDao, TaskTypeIndicatorCache taskTypeIndicatorCache,
+            TaskCrudOperation taskCrudOperation, TaskDao taskDao,
+            PreTaskDao preTaskDao, PreTaskCache preTaskCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.projectCrudOperation = projectCrudOperation;
@@ -59,6 +65,10 @@ public class ServiceConfiguration {
         this.popCache = popCache;
         this.taskTypeIndicatorDao = taskTypeIndicatorDao;
         this.taskTypeIndicatorCache = taskTypeIndicatorCache;
+        this.taskCrudOperation = taskCrudOperation;
+        this.taskDao = taskDao;
+        this.preTaskDao = preTaskDao;
+        this.preTaskCache = preTaskCache;
     }
 
     @Bean
@@ -151,6 +161,64 @@ public class ServiceConfiguration {
     public DaoOnlyEntireLookupService<TaskTypeIndicator> taskTypeIndicatorDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 taskTypeIndicatorDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Task> taskBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                taskCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Task> taskDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                taskDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Task> taskDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                taskDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<TpKey, PreTask> preTaskGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                preTaskDao,
+                preTaskCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                preTaskTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<PreTask> preTaskDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                preTaskDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<PreTask> preTaskDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                preTaskDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

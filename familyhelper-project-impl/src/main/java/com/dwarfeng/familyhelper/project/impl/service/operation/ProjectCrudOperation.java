@@ -2,12 +2,15 @@ package com.dwarfeng.familyhelper.project.impl.service.operation;
 
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Task;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
 import com.dwarfeng.familyhelper.project.stack.cache.ProjectCache;
 import com.dwarfeng.familyhelper.project.stack.dao.PopDao;
 import com.dwarfeng.familyhelper.project.stack.dao.ProjectDao;
+import com.dwarfeng.familyhelper.project.stack.dao.TaskDao;
 import com.dwarfeng.familyhelper.project.stack.service.PopMaintainService;
+import com.dwarfeng.familyhelper.project.stack.service.TaskMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -27,14 +30,23 @@ public class ProjectCrudOperation implements BatchCrudOperation<LongIdKey, Proje
     private final ProjectCache projectCache;
     private final PopCache popCache;
 
+    private final TaskDao taskDao;
+    private final TaskCrudOperation taskCrudOperation;
+
     @Value("${cache.timeout.entity.project}")
     private long projectTimeout;
 
-    public ProjectCrudOperation(ProjectDao projectDao, PopDao popDao, ProjectCache projectCache, PopCache popCache) {
+    public ProjectCrudOperation(
+            ProjectDao projectDao, PopDao popDao,
+            ProjectCache projectCache, PopCache popCache,
+            TaskDao taskDao, TaskCrudOperation taskCrudOperation
+    ) {
         this.projectDao = projectDao;
         this.popDao = popDao;
         this.projectCache = projectCache;
         this.popCache = popCache;
+        this.taskDao = taskDao;
+        this.taskCrudOperation = taskCrudOperation;
     }
 
     @Override
@@ -70,11 +82,16 @@ public class ProjectCrudOperation implements BatchCrudOperation<LongIdKey, Proje
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        // 删除与账本相关的账本权限。
+        // 删除与工程相关的工程权限。
         List<PopKey> popKeys = popDao.lookup(PopMaintainService.CHILD_FOR_PROJECT, new Object[]{key})
                 .stream().map(Pop::getKey).collect(Collectors.toList());
         popCache.batchDelete(popKeys);
         popDao.batchDelete(popKeys);
+
+        // 删除与工程相关的任务。
+        List<LongIdKey> taskKeys = taskDao.lookup(TaskMaintainService.CHILD_FOR_PROJECT, new Object[]{key})
+                .stream().map(Task::getKey).collect(Collectors.toList());
+        taskCrudOperation.batchDelete(taskKeys);
 
         // 删除账本实体自身。
         projectCache.delete(key);

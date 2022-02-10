@@ -43,12 +43,14 @@ public class HibernatePop implements Bean {
     })
     private HibernateUser user;
 
-
     public HibernatePop() {
     }
 
     // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernatePopKey getKey() {
+        if (Objects.isNull(longId) && Objects.isNull(stringId)) {
+            return null;
+        }
         return new HibernatePopKey(longId, stringId);
     }
 

@@ -1,10 +1,7 @@
 package com.dwarfeng.familyhelper.project.node.configuration;
 
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonPop;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonProject;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonTaskTypeIndicator;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonUser;
+import com.dwarfeng.familyhelper.project.sdk.bean.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +18,8 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonUser.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonPop.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonTaskTypeIndicator.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonTask.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonPreTask.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

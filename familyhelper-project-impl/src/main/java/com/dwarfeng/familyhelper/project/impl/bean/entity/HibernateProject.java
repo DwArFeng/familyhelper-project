@@ -17,7 +17,8 @@ import java.util.Set;
 })
 public class HibernateProject implements Bean {
 
-    private static final long serialVersionUID = 6245956605653715498L;
+    private static final long serialVersionUID = 8360160176815728720L;
+
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -49,6 +50,9 @@ public class HibernateProject implements Bean {
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePop.class, mappedBy = "project")
     private Set<HibernatePop> pops = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTask.class, mappedBy = "project")
+    private Set<HibernateTask> tasks = new HashSet<>();
+
     public HibernateProject() {
     }
 
@@ -62,7 +66,6 @@ public class HibernateProject implements Bean {
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
-
     public Long getLongId() {
         return longId;
     }
@@ -125,6 +128,14 @@ public class HibernateProject implements Bean {
 
     public void setPops(Set<HibernatePop> pops) {
         this.pops = pops;
+    }
+
+    public Set<HibernateTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<HibernateTask> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
