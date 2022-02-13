@@ -22,6 +22,7 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(UserNotPermittedException.class, ServiceExceptionCodes.USER_NOT_PERMITTED);
         destination.put(InvalidPermissionLevelException.class, ServiceExceptionCodes.INVALID_PERMISSION_LEVEL);
         destination.put(InvalidProjectStatusException.class, ServiceExceptionCodes.INVALID_PROJECT_STATUS);
+        destination.put(PostTaskExistsException.class, ServiceExceptionCodes.POST_TASK_EXISTS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }

@@ -22,6 +22,8 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(30), "invalid permission level");
     public static final ServiceException.Code INVALID_PROJECT_STATUS =
             new ServiceException.Code(offset(40), "invalid project status");
+    public static final ServiceException.Code POST_TASK_EXISTS =
+            new ServiceException.Code(offset(50), "post task exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -51,6 +53,7 @@ public final class ServiceExceptionCodes {
         USER_NOT_PERMITTED.setCode(offset(20));
         INVALID_PERMISSION_LEVEL.setCode(offset(30));
         INVALID_PROJECT_STATUS.setCode(offset(40));
+        POST_TASK_EXISTS.setCode(offset(50));
     }
 
     private ServiceExceptionCodes() {

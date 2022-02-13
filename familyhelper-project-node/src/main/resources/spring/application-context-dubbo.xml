@@ -36,6 +36,8 @@
                    ref="popMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TaskMaintainService"
                    ref="taskMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TaskOperateService"
+                   ref="taskOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.PreTaskMaintainService"
                    ref="preTaskMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TaskTypeIndicatorMaintainService"

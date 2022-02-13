@@ -24,16 +24,6 @@ public final class Constraints {
     public static final int LENGTH_REMARK = 100;
 
     /**
-     * 消息的长度约束。
-     */
-    public static final int LENGTH_MESSAGE = 100;
-
-    /**
-     * 过滤器、触发器类型的长度约束。
-     */
-    public static final int LENGTH_TYPE = 50;
-
-    /**
      * 用户主键的长度约束。
      */
     public static final int LENGTH_USER = 50;

@@ -90,7 +90,7 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             // 2. 确认用户存在。
             makeSureUserExists(userKey);
 
-            // 3. 确认资产目录存在。
+            // 3. 确认工程存在。
             makeSureProjectExists(projectKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
@@ -216,7 +216,7 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
 
     private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
         try {
-            if (!userMaintainService.exists(userKey)) {
+            if (Objects.isNull(userKey) || !userMaintainService.exists(userKey)) {
                 throw new UserNotExistsException(userKey);
             }
         } catch (ServiceException e) {
@@ -234,6 +234,7 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void makeSureUserPermittedForProject(StringIdKey userKey, LongIdKey projectKey)
             throws HandlerException {
         try {
