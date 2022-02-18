@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "tbl_task")
 public class HibernateTask implements Bean {
 
-    private static final long serialVersionUID = -8876721183282796210L;
+    private static final long serialVersionUID = -903785545165264901L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -32,9 +32,6 @@ public class HibernateTask implements Bean {
 
     @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
     private String name;
-
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -127,14 +124,6 @@ public class HibernateTask implements Bean {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -222,7 +211,6 @@ public class HibernateTask implements Bean {
                 "projectLongId = " + projectLongId + ", " +
                 "type = " + type + ", " +
                 "name = " + name + ", " +
-                "description = " + description + ", " +
                 "remark = " + remark + ", " +
                 "status = " + status + ", " +
                 "createdDate = " + createdDate + ", " +

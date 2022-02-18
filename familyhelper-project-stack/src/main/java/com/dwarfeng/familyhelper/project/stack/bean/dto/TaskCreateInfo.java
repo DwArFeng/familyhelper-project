@@ -11,12 +11,11 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class TaskCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 7348262690320843431L;
+    private static final long serialVersionUID = 7360406093563589882L;
 
     private LongIdKey projectKey;
     private String type;
     private String name;
-    private String description;
     private String remark;
     private int totalMissionCount;
 
@@ -24,12 +23,11 @@ public class TaskCreateInfo implements Dto {
     }
 
     public TaskCreateInfo(
-            LongIdKey projectKey, String type, String name, String description, String remark, int totalMissionCount
+            LongIdKey projectKey, String type, String name, String remark, int totalMissionCount
     ) {
         this.projectKey = projectKey;
         this.type = type;
         this.name = name;
-        this.description = description;
         this.remark = remark;
         this.totalMissionCount = totalMissionCount;
     }
@@ -58,14 +56,6 @@ public class TaskCreateInfo implements Dto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -88,7 +78,6 @@ public class TaskCreateInfo implements Dto {
                 "projectKey=" + projectKey +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", remark='" + remark + '\'' +
                 ", totalMissionCount=" + totalMissionCount +
                 '}';

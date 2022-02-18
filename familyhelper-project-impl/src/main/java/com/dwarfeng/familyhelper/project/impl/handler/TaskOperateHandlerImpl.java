@@ -60,7 +60,7 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
             new Date();
             Task task = new Task(
                     null, projectKey, taskCreateInfo.getType(), taskCreateInfo.getName(),
-                    taskCreateInfo.getDescription(), taskCreateInfo.getRemark(), Constants.TASK_STATUS_IN_PROGRESS,
+                    taskCreateInfo.getRemark(), Constants.TASK_STATUS_IN_PROGRESS,
                     new Date(), new Date(), null, taskCreateInfo.getTotalMissionCount(), 0
             );
 
@@ -91,7 +91,6 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
             Task task = taskMaintainService.get(taskKey);
             task.setType(taskUpdateInfo.getType());
             task.setName(taskUpdateInfo.getName());
-            task.setDescription(taskUpdateInfo.getDescription());
             task.setRemark(taskUpdateInfo.getRemark());
             task.setTotalMissionCount(taskUpdateInfo.getTotalMissionCount());
             task.setFinishedMissionCount(taskUpdateInfo.getFinishedMissionCount());

@@ -34,10 +34,10 @@ public class PreTaskMaintainServiceImplTest {
     @Before
     public void setUp() {
         taskA = new Task(
-                null, null, "type", "name.a", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.a", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         taskB = new Task(
-                null, null, "type", "name.b", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.b", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         preTask = new PreTask(null, "remark");
     }

@@ -31,8 +31,8 @@ public class WebInputTask implements Bean {
             return new Task(
                     WebInputLongIdKey.toStackBean(webInputTask.getKey()),
                     WebInputLongIdKey.toStackBean(webInputTask.getProjectKey()),
-                    webInputTask.getType(), webInputTask.getName(), webInputTask.getDescription(),
-                    webInputTask.getRemark(), webInputTask.getStatus(), webInputTask.getCreatedDate(),
+                    webInputTask.getType(), webInputTask.getName(), webInputTask.getRemark(),
+                    webInputTask.getStatus(), webInputTask.getCreatedDate(),
                     webInputTask.getModifiedDate(), webInputTask.getFinishedDate(),
                     webInputTask.getTotalMissionCount(), webInputTask.getFinishedMissionCount()
             );

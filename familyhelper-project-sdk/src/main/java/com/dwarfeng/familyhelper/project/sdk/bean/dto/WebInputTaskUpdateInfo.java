@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputTaskUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 1519171566025879200L;
+    private static final long serialVersionUID = -8719923706441253773L;
 
     public static TaskUpdateInfo toStackBean(WebInputTaskUpdateInfo webInputTaskUpdateInfo) {
         if (Objects.isNull(webInputTaskUpdateInfo)) {
@@ -30,7 +30,6 @@ public class WebInputTaskUpdateInfo implements Dto {
                     WebInputLongIdKey.toStackBean(webInputTaskUpdateInfo.getTaskKey()),
                     webInputTaskUpdateInfo.getType(),
                     webInputTaskUpdateInfo.getName(),
-                    webInputTaskUpdateInfo.getDescription(),
                     webInputTaskUpdateInfo.getRemark(),
                     webInputTaskUpdateInfo.getTotalMissionCount(),
                     webInputTaskUpdateInfo.getFinishedMissionCount()
@@ -48,9 +47,6 @@ public class WebInputTaskUpdateInfo implements Dto {
     @JSONField(name = "name")
     @Length(max = Constraints.LENGTH_NAME)
     private String name;
-
-    @JSONField(name = "description")
-    private String description;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -91,14 +87,6 @@ public class WebInputTaskUpdateInfo implements Dto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -129,7 +117,6 @@ public class WebInputTaskUpdateInfo implements Dto {
                 "taskKey=" + taskKey +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", remark='" + remark + '\'' +
                 ", totalMissionCount=" + totalMissionCount +
                 ", finishedMissionCount=" + finishedMissionCount +

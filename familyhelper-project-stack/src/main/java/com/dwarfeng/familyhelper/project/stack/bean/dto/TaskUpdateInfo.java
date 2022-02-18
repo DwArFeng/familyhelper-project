@@ -11,12 +11,11 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class TaskUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 2836247040933734330L;
+    private static final long serialVersionUID = -9195233624030100036L;
 
     private LongIdKey taskKey;
     private String type;
     private String name;
-    private String description;
     private String remark;
     private int totalMissionCount;
     private int finishedMissionCount;
@@ -25,13 +24,12 @@ public class TaskUpdateInfo implements Dto {
     }
 
     public TaskUpdateInfo(
-            LongIdKey taskKey, String type, String name, String description, String remark, int totalMissionCount,
+            LongIdKey taskKey, String type, String name, String remark, int totalMissionCount,
             int finishedMissionCount
     ) {
         this.taskKey = taskKey;
         this.type = type;
         this.name = name;
-        this.description = description;
         this.remark = remark;
         this.totalMissionCount = totalMissionCount;
         this.finishedMissionCount = finishedMissionCount;
@@ -59,14 +57,6 @@ public class TaskUpdateInfo implements Dto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRemark() {
@@ -99,7 +89,6 @@ public class TaskUpdateInfo implements Dto {
                 "taskKey=" + taskKey +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", remark='" + remark + '\'' +
                 ", totalMissionCount=" + totalMissionCount +
                 ", finishedMissionCount=" + finishedMissionCount +

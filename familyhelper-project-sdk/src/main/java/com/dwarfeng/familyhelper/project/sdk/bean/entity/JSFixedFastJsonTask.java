@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonTask implements Bean {
 
-    private static final long serialVersionUID = -5566002766405027006L;
+    private static final long serialVersionUID = 6625032520962892640L;
 
     public static JSFixedFastJsonTask of(Task task) {
         if (Objects.isNull(task)) {
@@ -25,8 +25,8 @@ public class JSFixedFastJsonTask implements Bean {
             return new JSFixedFastJsonTask(
                     JSFixedFastJsonLongIdKey.of(task.getKey()),
                     JSFixedFastJsonLongIdKey.of(task.getProjectKey()),
-                    task.getType(), task.getName(), task.getDescription(), task.getRemark(), task.getStatus(),
-                    task.getCreatedDate(), task.getModifiedDate(), task.getFinishedDate(), task.getTotalMissionCount(),
+                    task.getType(), task.getName(), task.getRemark(), task.getStatus(), task.getCreatedDate(),
+                    task.getModifiedDate(), task.getFinishedDate(), task.getTotalMissionCount(),
                     task.getFinishedMissionCount()
             );
         }
@@ -44,28 +44,25 @@ public class JSFixedFastJsonTask implements Bean {
     @JSONField(name = "name", ordinal = 4)
     private String name;
 
-    @JSONField(name = "description", ordinal = 5)
-    private String description;
-
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark", ordinal = 5)
     private String remark;
 
-    @JSONField(name = "status", ordinal = 7)
+    @JSONField(name = "status", ordinal = 6)
     private int status;
 
-    @JSONField(name = "created_date", ordinal = 8)
+    @JSONField(name = "created_date", ordinal = 7)
     private Date createdDate;
 
-    @JSONField(name = "modified_date", ordinal = 9)
+    @JSONField(name = "modified_date", ordinal = 8)
     private Date modifiedDate;
 
-    @JSONField(name = "finished_date", ordinal = 10)
+    @JSONField(name = "finished_date", ordinal = 9)
     private Date finishedDate;
 
-    @JSONField(name = "total_mission_count", ordinal = 11)
+    @JSONField(name = "total_mission_count", ordinal = 10)
     private int totalMissionCount;
 
-    @JSONField(name = "finished_mission_count", ordinal = 12)
+    @JSONField(name = "finished_mission_count", ordinal = 11)
     private int finishedMissionCount;
 
     public JSFixedFastJsonTask() {
@@ -73,14 +70,13 @@ public class JSFixedFastJsonTask implements Bean {
 
     public JSFixedFastJsonTask(
             JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey projectKey, String type, String name,
-            String description, String remark, int status, Date createdDate, Date modifiedDate, Date finishedDate,
+            String remark, int status, Date createdDate, Date modifiedDate, Date finishedDate,
             int totalMissionCount, int finishedMissionCount
     ) {
         this.key = key;
         this.projectKey = projectKey;
         this.type = type;
         this.name = name;
-        this.description = description;
         this.remark = remark;
         this.status = status;
         this.createdDate = createdDate;
@@ -120,14 +116,6 @@ public class JSFixedFastJsonTask implements Bean {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRemark() {
@@ -193,7 +181,6 @@ public class JSFixedFastJsonTask implements Bean {
                 ", projectKey=" + projectKey +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status=" + status +
                 ", createdDate=" + createdDate +

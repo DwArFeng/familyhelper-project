@@ -13,13 +13,12 @@ import java.util.Date;
  */
 public class Task implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -4055411123748816467L;
-
+    private static final long serialVersionUID = -785360998290077983L;
+    
     private LongIdKey key;
     private LongIdKey projectKey;
     private String type;
     private String name;
-    private String description;
     private String remark;
     private int status;
     private Date createdDate;
@@ -32,7 +31,7 @@ public class Task implements Entity<LongIdKey> {
     }
 
     public Task(
-            LongIdKey key, LongIdKey projectKey, String type, String name, String description, String remark,
+            LongIdKey key, LongIdKey projectKey, String type, String name, String remark,
             int status, Date createdDate, Date modifiedDate, Date finishedDate, int totalMissionCount,
             int finishedMissionCount
     ) {
@@ -40,7 +39,6 @@ public class Task implements Entity<LongIdKey> {
         this.projectKey = projectKey;
         this.type = type;
         this.name = name;
-        this.description = description;
         this.remark = remark;
         this.status = status;
         this.createdDate = createdDate;
@@ -82,14 +80,6 @@ public class Task implements Entity<LongIdKey> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRemark() {
@@ -155,7 +145,6 @@ public class Task implements Entity<LongIdKey> {
                 ", projectKey=" + projectKey +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status=" + status +
                 ", createdDate=" + createdDate +

@@ -49,16 +49,16 @@ public class TaskMaintainServiceImplTest {
     public void setUp() {
         project = new Project(null, "name", "remark", 12450, new Date(), new Date(), new Date());
         taskA = new Task(
-                null, null, "type", "name.a", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.a", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         taskB = new Task(
-                null, null, "type", "name.b", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.b", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         taskC = new Task(
-                null, null, "type", "name.c", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.c", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         taskD = new Task(
-                null, null, "type", "name.d", "description", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
+                null, null, "type", "name.d", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
         );
         preTaskBA = new PreTask(null, "remark");
         preTaskCA = new PreTask(null, "remark");
