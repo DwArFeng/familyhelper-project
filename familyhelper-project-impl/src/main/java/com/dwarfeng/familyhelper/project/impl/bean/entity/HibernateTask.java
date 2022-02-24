@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "tbl_task")
 public class HibernateTask implements Bean {
 
-    private static final long serialVersionUID = -903785545165264901L;
+    private static final long serialVersionUID = 4407104144216995151L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -70,6 +70,9 @@ public class HibernateTask implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePreTask.class, mappedBy = "objectTask")
     private Set<HibernatePreTask> objectPreTasks = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTimePoint.class, mappedBy = "task")
+    private Set<HibernateTimePoint> timePoints = new HashSet<>();
 
     public HibernateTask() {
     }

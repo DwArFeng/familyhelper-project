@@ -2,12 +2,16 @@ package com.dwarfeng.familyhelper.project.impl.service.operation;
 
 import com.dwarfeng.familyhelper.project.stack.bean.entity.PreTask;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Task;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.TimePoint;
 import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
 import com.dwarfeng.familyhelper.project.stack.cache.PreTaskCache;
 import com.dwarfeng.familyhelper.project.stack.cache.TaskCache;
+import com.dwarfeng.familyhelper.project.stack.cache.TimePointCache;
 import com.dwarfeng.familyhelper.project.stack.dao.PreTaskDao;
 import com.dwarfeng.familyhelper.project.stack.dao.TaskDao;
+import com.dwarfeng.familyhelper.project.stack.dao.TimePointDao;
 import com.dwarfeng.familyhelper.project.stack.service.PreTaskMaintainService;
+import com.dwarfeng.familyhelper.project.stack.service.TimePointMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -27,17 +31,23 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
     private final PreTaskDao preTaskDao;
     private final PreTaskCache preTaskCache;
 
+    private final TimePointDao timePointDao;
+    private final TimePointCache timePointCache;
+
     @Value("${cache.timeout.entity.task}")
     private long taskTimeout;
 
     public TaskCrudOperation(
             TaskDao taskDao, TaskCache taskCache,
-            PreTaskDao preTaskDao, PreTaskCache preTaskCache
+            PreTaskDao preTaskDao, PreTaskCache preTaskCache,
+            TimePointDao timePointDao, TimePointCache timePointCache
     ) {
         this.taskDao = taskDao;
         this.taskCache = taskCache;
         this.preTaskDao = preTaskDao;
         this.preTaskCache = preTaskCache;
+        this.timePointDao = timePointDao;
+        this.timePointCache = timePointCache;
     }
 
     @Override
@@ -83,6 +93,12 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
                 .stream().map(PreTask::getKey).collect(Collectors.toList());
         preTaskCache.batchDelete(presetTaskKeys);
         preTaskDao.batchDelete(presetTaskKeys);
+
+        // 删除与任务相关的时间点。
+        List<LongIdKey> timePointKeys = timePointDao.lookup(TimePointMaintainService.CHILD_FOR_TASK, new Object[]{key})
+                .stream().map(TimePoint::getKey).collect(Collectors.toList());
+        timePointCache.batchDelete(timePointKeys);
+        timePointDao.batchDelete(timePointKeys);
 
         // 删除账本实体自身。
         taskCache.delete(key);

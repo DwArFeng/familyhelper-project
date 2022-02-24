@@ -48,18 +48,10 @@ public class TaskMaintainServiceImplTest {
     @Before
     public void setUp() {
         project = new Project(null, "name", "remark", 12450, new Date(), new Date(), new Date());
-        taskA = new Task(
-                null, null, "type", "name.a", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
-        );
-        taskB = new Task(
-                null, null, "type", "name.b", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
-        );
-        taskC = new Task(
-                null, null, "type", "name.c", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
-        );
-        taskD = new Task(
-                null, null, "type", "name.d", "remark", 12450, new Date(), new Date(), new Date(), 0, 0
-        );
+        taskA = new Task(null, null, "type", "name.a", "remark", 12450, new Date(), new Date(), new Date(), 0, 0);
+        taskB = new Task(null, null, "type", "name.b", "remark", 12450, new Date(), new Date(), new Date(), 0, 0);
+        taskC = new Task(null, null, "type", "name.c", "remark", 12450, new Date(), new Date(), new Date(), 0, 0);
+        taskD = new Task(null, null, "type", "name.d", "remark", 12450, new Date(), new Date(), new Date(), 0, 0);
         preTaskBA = new PreTask(null, "remark");
         preTaskCA = new PreTask(null, "remark");
         preTaskDB = new PreTask(null, "remark");

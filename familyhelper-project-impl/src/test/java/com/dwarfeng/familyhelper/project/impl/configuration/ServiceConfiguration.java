@@ -9,6 +9,7 @@ import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
 import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
 import com.dwarfeng.familyhelper.project.stack.cache.PreTaskCache;
 import com.dwarfeng.familyhelper.project.stack.cache.TaskTypeIndicatorCache;
+import com.dwarfeng.familyhelper.project.stack.cache.TimePointCache;
 import com.dwarfeng.familyhelper.project.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
@@ -40,6 +41,8 @@ public class ServiceConfiguration {
     private final TaskDao taskDao;
     private final PreTaskDao preTaskDao;
     private final PreTaskCache preTaskCache;
+    private final TimePointDao timePointDao;
+    private final TimePointCache timePointCache;
 
     @Value("${cache.timeout.entity.pop}")
     private long popTimeout;
@@ -47,6 +50,8 @@ public class ServiceConfiguration {
     private long taskTypeIndicatorTimeout;
     @Value("${cache.timeout.entity.pre_task}")
     private long preTaskTimeout;
+    @Value("${cache.timeout.entity.time_point}")
+    private long timePointTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -55,7 +60,8 @@ public class ServiceConfiguration {
             PopDao popDao, PopCache popCache,
             TaskTypeIndicatorDao taskTypeIndicatorDao, TaskTypeIndicatorCache taskTypeIndicatorCache,
             TaskCrudOperation taskCrudOperation, TaskDao taskDao,
-            PreTaskDao preTaskDao, PreTaskCache preTaskCache
+            PreTaskDao preTaskDao, PreTaskCache preTaskCache,
+            TimePointDao timePointDao, TimePointCache timePointCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.projectCrudOperation = projectCrudOperation;
@@ -69,6 +75,8 @@ public class ServiceConfiguration {
         this.taskDao = taskDao;
         this.preTaskDao = preTaskDao;
         this.preTaskCache = preTaskCache;
+        this.timePointDao = timePointDao;
+        this.timePointCache = timePointCache;
     }
 
     @Bean
@@ -219,6 +227,36 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<PreTask> preTaskDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 preTaskDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, TimePoint> timePointGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                timePointDao,
+                timePointCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                timePointTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<TimePoint> timePointDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                timePointDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<TimePoint> timePointDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                timePointDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

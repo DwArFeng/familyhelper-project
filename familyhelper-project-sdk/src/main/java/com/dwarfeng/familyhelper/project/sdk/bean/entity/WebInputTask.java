@@ -9,6 +9,8 @@ import org.checkerframework.checker.index.qual.Positive;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
@@ -51,6 +53,8 @@ public class WebInputTask implements Bean {
     private String type;
 
     @JSONField(name = "name")
+    @NotNull
+    @NotEmpty
     @Length(max = Constraints.LENGTH_NAME)
     private String name;
 

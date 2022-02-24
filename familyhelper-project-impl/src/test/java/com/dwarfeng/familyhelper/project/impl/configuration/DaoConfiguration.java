@@ -3,10 +3,7 @@ package com.dwarfeng.familyhelper.project.impl.configuration;
 import com.dwarfeng.familyhelper.project.impl.bean.entity.*;
 import com.dwarfeng.familyhelper.project.impl.bean.key.HibernatePopKey;
 import com.dwarfeng.familyhelper.project.impl.bean.key.HibernateTpKey;
-import com.dwarfeng.familyhelper.project.impl.dao.preset.PopPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.project.impl.dao.preset.PreTaskPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.project.impl.dao.preset.ProjectPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.project.impl.dao.preset.TaskPresetCriteriaMaker;
+import com.dwarfeng.familyhelper.project.impl.dao.preset.*;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
@@ -35,6 +32,7 @@ public class DaoConfiguration {
     private final PopPresetCriteriaMaker popPresetCriteriaMaker;
     private final TaskPresetCriteriaMaker taskPresetCriteriaMaker;
     private final PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker;
+    private final TimePointPresetCriteriaMaker timePointPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -44,7 +42,8 @@ public class DaoConfiguration {
             ProjectPresetCriteriaMaker projectPresetCriteriaMaker,
             PopPresetCriteriaMaker popPresetCriteriaMaker,
             TaskPresetCriteriaMaker taskPresetCriteriaMaker,
-            PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker
+            PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker,
+            TimePointPresetCriteriaMaker timePointPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -52,6 +51,7 @@ public class DaoConfiguration {
         this.popPresetCriteriaMaker = popPresetCriteriaMaker;
         this.taskPresetCriteriaMaker = taskPresetCriteriaMaker;
         this.preTaskPresetCriteriaMaker = preTaskPresetCriteriaMaker;
+        this.timePointPresetCriteriaMaker = timePointPresetCriteriaMaker;
     }
 
     @Bean
@@ -213,6 +213,38 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(PreTask.class, HibernatePreTask.class, mapper),
                 HibernatePreTask.class,
                 preTaskPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, TimePoint, HibernateTimePoint>
+    timePointHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
+                HibernateTimePoint.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<TimePoint, HibernateTimePoint> timePointHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
+                HibernateTimePoint.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<TimePoint, HibernateTimePoint> timePointHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
+                HibernateTimePoint.class,
+                timePointPresetCriteriaMaker
         );
     }
 }

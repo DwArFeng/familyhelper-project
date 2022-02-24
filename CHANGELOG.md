@@ -13,6 +13,7 @@
   - com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.PreTask。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Task。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.TimePoint。
 
 - 完成 node 模块，打包测试及启动测试通过。
 
