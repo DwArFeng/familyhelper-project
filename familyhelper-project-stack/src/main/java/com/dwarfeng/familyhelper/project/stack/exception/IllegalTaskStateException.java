@@ -28,5 +28,4 @@ public class IllegalTaskStateException extends HandlerException {
     public String getMessage() {
         return "任务 " + taskKey + " 状态异常: 它是否没绑定工程?";
     }
-
 }

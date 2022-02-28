@@ -6,15 +6,15 @@ import com.dwarfeng.familyhelper.project.stack.bean.dto.TaskUpdateInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.service.Service;
+import com.dwarfeng.subgrade.stack.handler.Handler;
 
 /**
- * 任务操作服务。
+ * 任务操作处理器。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
-public interface TaskOperateHandler extends Service {
+public interface TaskOperateHandler extends Handler {
 
     /**
      * 创建任务。

@@ -20,6 +20,7 @@
 - 完成实体的操作服务。
   - com.dwarfeng.familyhelper.project.stack.service.ProjectOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.TaskOperateService。
+  - com.dwarfeng.familyhelper.project.stack.service.TimePointOperateService。
 
 #### Bug修复
 

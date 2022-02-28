@@ -57,11 +57,11 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
             makeSureUserPermittedForProject(userKey, projectKey);
 
             // 4. 根据 taskCreateInfo 以及创建的规则组合任务实体。
-            new Date();
+            Date currentDate = new Date();
             Task task = new Task(
                     null, projectKey, taskCreateInfo.getType(), taskCreateInfo.getName(),
                     taskCreateInfo.getRemark(), Constants.TASK_STATUS_IN_PROGRESS,
-                    new Date(), new Date(), null, taskCreateInfo.getTotalMissionCount(), 0
+                    currentDate, currentDate, null, taskCreateInfo.getTotalMissionCount(), 0
             );
 
             // 5. 插入任务实体，并返回生成的主键。
