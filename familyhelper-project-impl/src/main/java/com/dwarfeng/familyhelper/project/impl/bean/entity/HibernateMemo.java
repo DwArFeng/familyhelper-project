@@ -7,14 +7,16 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_memo")
 public class HibernateMemo implements Bean {
 
-    private static final long serialVersionUID = -8236547070260104438L;
+    private static final long serialVersionUID = 8097845626470348046L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -53,6 +55,10 @@ public class HibernateMemo implements Bean {
             @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateUser user;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMemoFileInfo.class, mappedBy = "memo")
+    private Set<HibernateMemoFileInfo> memoFileInfos = new HashSet<>();
 
     public HibernateMemo() {
     }
@@ -145,6 +151,14 @@ public class HibernateMemo implements Bean {
 
     public void setUser(HibernateUser user) {
         this.user = user;
+    }
+
+    public Set<HibernateMemoFileInfo> getMemoFileInfos() {
+        return memoFileInfos;
+    }
+
+    public void setMemoFileInfos(Set<HibernateMemoFileInfo> memoFileInfos) {
+        this.memoFileInfos = memoFileInfos;
     }
 
     @Override

@@ -34,6 +34,7 @@ public class DaoConfiguration {
     private final PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker;
     private final TimePointPresetCriteriaMaker timePointPresetCriteriaMaker;
     private final MemoPresetCriteriaMaker memoPresetCriteriaMaker;
+    private final MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -45,7 +46,8 @@ public class DaoConfiguration {
             TaskPresetCriteriaMaker taskPresetCriteriaMaker,
             PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker,
             TimePointPresetCriteriaMaker timePointPresetCriteriaMaker,
-            MemoPresetCriteriaMaker memoPresetCriteriaMaker
+            MemoPresetCriteriaMaker memoPresetCriteriaMaker,
+            MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -55,6 +57,7 @@ public class DaoConfiguration {
         this.preTaskPresetCriteriaMaker = preTaskPresetCriteriaMaker;
         this.timePointPresetCriteriaMaker = timePointPresetCriteriaMaker;
         this.memoPresetCriteriaMaker = memoPresetCriteriaMaker;
+        this.memoFileInfoPresetCriteriaMaker = memoFileInfoPresetCriteriaMaker;
     }
 
     @Bean
@@ -280,6 +283,38 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(Memo.class, HibernateMemo.class, mapper),
                 HibernateMemo.class,
                 memoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, MemoFileInfo, HibernateMemoFileInfo>
+    memoFileInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(MemoFileInfo.class, HibernateMemoFileInfo.class, mapper),
+                HibernateMemoFileInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MemoFileInfo, HibernateMemoFileInfo> memoFileInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(MemoFileInfo.class, HibernateMemoFileInfo.class, mapper),
+                HibernateMemoFileInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MemoFileInfo, HibernateMemoFileInfo> memoFileInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(MemoFileInfo.class, HibernateMemoFileInfo.class, mapper),
+                HibernateMemoFileInfo.class,
+                memoFileInfoPresetCriteriaMaker
         );
     }
 }

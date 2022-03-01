@@ -40,6 +40,8 @@ public class CacheConfiguration {
     private String timePointPrefix;
     @Value("${cache.prefix.entity.memo}")
     private String memoPrefix;
+    @Value("${cache.prefix.entity.memo_file_info}")
+    private String memoFileInfoPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -124,6 +126,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonMemo>) template,
                 new LongIdStringKeyFormatter(memoPrefix),
                 new DozerBeanTransformer<>(Memo.class, FastJsonMemo.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, MemoFileInfo, FastJsonMemoFileInfo> memoFileInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMemoFileInfo>) template,
+                new LongIdStringKeyFormatter(memoFileInfoPrefix),
+                new DozerBeanTransformer<>(MemoFileInfo.class, FastJsonMemoFileInfo.class, mapper)
         );
     }
 }

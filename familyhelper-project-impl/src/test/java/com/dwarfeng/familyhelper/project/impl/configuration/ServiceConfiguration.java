@@ -7,10 +7,7 @@ import com.dwarfeng.familyhelper.project.impl.service.operation.UserCrudOperatio
 import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
-import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
-import com.dwarfeng.familyhelper.project.stack.cache.PreTaskCache;
-import com.dwarfeng.familyhelper.project.stack.cache.TaskTypeIndicatorCache;
-import com.dwarfeng.familyhelper.project.stack.cache.TimePointCache;
+import com.dwarfeng.familyhelper.project.stack.cache.*;
 import com.dwarfeng.familyhelper.project.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
@@ -46,6 +43,8 @@ public class ServiceConfiguration {
     private final TimePointCache timePointCache;
     private final MemoCrudOperation memoCrudOperation;
     private final MemoDao memoDao;
+    private final MemoFileInfoDao memoFileInfoDao;
+    private final MemoFileInfoCache memoFileInfoCache;
 
     @Value("${cache.timeout.entity.pop}")
     private long popTimeout;
@@ -55,6 +54,8 @@ public class ServiceConfiguration {
     private long preTaskTimeout;
     @Value("${cache.timeout.entity.time_point}")
     private long timePointTimeout;
+    @Value("${cache.timeout.entity.memo_file_info}")
+    private long memoFileInfoTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -65,7 +66,8 @@ public class ServiceConfiguration {
             TaskCrudOperation taskCrudOperation, TaskDao taskDao,
             PreTaskDao preTaskDao, PreTaskCache preTaskCache,
             TimePointDao timePointDao, TimePointCache timePointCache,
-            MemoCrudOperation memoCrudOperation, MemoDao memoDao
+            MemoCrudOperation memoCrudOperation, MemoDao memoDao,
+            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.projectCrudOperation = projectCrudOperation;
@@ -83,6 +85,8 @@ public class ServiceConfiguration {
         this.timePointCache = timePointCache;
         this.memoCrudOperation = memoCrudOperation;
         this.memoDao = memoDao;
+        this.memoFileInfoDao = memoFileInfoDao;
+        this.memoFileInfoCache = memoFileInfoCache;
     }
 
     @Bean
@@ -291,6 +295,36 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<Memo> memoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 memoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, MemoFileInfo> memoFileInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                memoFileInfoDao,
+                memoFileInfoCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                memoFileInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MemoFileInfo> memoFileInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                memoFileInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MemoFileInfo> memoFileInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                memoFileInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

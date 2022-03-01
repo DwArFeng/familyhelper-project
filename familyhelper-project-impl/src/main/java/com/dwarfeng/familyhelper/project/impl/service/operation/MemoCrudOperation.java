@@ -1,8 +1,12 @@
 package com.dwarfeng.familyhelper.project.impl.service.operation;
 
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo;
 import com.dwarfeng.familyhelper.project.stack.cache.MemoCache;
+import com.dwarfeng.familyhelper.project.stack.cache.MemoFileInfoCache;
 import com.dwarfeng.familyhelper.project.stack.dao.MemoDao;
+import com.dwarfeng.familyhelper.project.stack.dao.MemoFileInfoDao;
+import com.dwarfeng.familyhelper.project.stack.service.MemoFileInfoMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -11,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MemoCrudOperation implements BatchCrudOperation<LongIdKey, Memo> {
@@ -18,12 +23,20 @@ public class MemoCrudOperation implements BatchCrudOperation<LongIdKey, Memo> {
     private final MemoDao memoDao;
     private final MemoCache memoCache;
 
+    private final MemoFileInfoDao memoFileInfoDao;
+    private final MemoFileInfoCache memoFileInfoCache;
+
     @Value("${cache.timeout.entity.memo}")
     private long memoTimeout;
 
-    public MemoCrudOperation(MemoDao memoDao, MemoCache memoCache) {
+    public MemoCrudOperation(
+            MemoDao memoDao, MemoCache memoCache,
+            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache
+    ) {
         this.memoDao = memoDao;
         this.memoCache = memoCache;
+        this.memoFileInfoDao = memoFileInfoDao;
+        this.memoFileInfoCache = memoFileInfoCache;
     }
 
     @Override
@@ -59,6 +72,13 @@ public class MemoCrudOperation implements BatchCrudOperation<LongIdKey, Memo> {
 
     @Override
     public void delete(LongIdKey key) throws Exception {
+        // 查找并删除所有相关的备忘录文件信息。
+        List<LongIdKey> memoFileInfoKeys = memoFileInfoDao.lookup(
+                MemoFileInfoMaintainService.CHILD_FOR_MEMO, new Object[]{key}
+        ).stream().map(MemoFileInfo::getKey).collect(Collectors.toList());
+        memoFileInfoCache.batchDelete(memoFileInfoKeys);
+        memoFileInfoDao.batchDelete(memoFileInfoKeys);
+
         // 删除账本实体自身。
         memoCache.delete(key);
         memoDao.delete(key);
