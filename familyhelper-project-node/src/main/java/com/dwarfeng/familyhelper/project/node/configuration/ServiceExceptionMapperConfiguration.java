@@ -19,10 +19,13 @@ public class ServiceExceptionMapperConfiguration {
         destination = com.dwarfeng.ftp.util.ServiceExceptionHelper.putDefaultDestination(destination);
         destination.put(ProjectNotExistsException.class, ServiceExceptionCodes.PROJECT_NOT_EXISTS);
         destination.put(UserNotExistsException.class, ServiceExceptionCodes.USER_NOT_EXISTS);
-        destination.put(UserNotPermittedException.class, ServiceExceptionCodes.USER_NOT_PERMITTED);
+        destination.put(UserNotPermittedException.class, ServiceExceptionCodes.USER_NOT_PERMITTED_FOR_PROJECT);
         destination.put(InvalidPermissionLevelException.class, ServiceExceptionCodes.INVALID_PERMISSION_LEVEL);
         destination.put(InvalidProjectStatusException.class, ServiceExceptionCodes.INVALID_PROJECT_STATUS);
         destination.put(PostTaskExistsException.class, ServiceExceptionCodes.POST_TASK_EXISTS);
+        destination.put(IllegalMemoStateException.class, ServiceExceptionCodes.INVALID_MEMO_STATUS);
+        destination.put(MemoNotExistsException.class, ServiceExceptionCodes.MEMO_NOT_EXISTS);
+        destination.put(UserNotIdenticalException.class, ServiceExceptionCodes.USER_NOT_IDENTICAL);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }

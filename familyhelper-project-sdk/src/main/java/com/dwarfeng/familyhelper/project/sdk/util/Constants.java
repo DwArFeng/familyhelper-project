@@ -22,6 +22,9 @@ public final class Constants {
     public static final int TIME_POINT_STATUS_IN_PROGRESS = 0;
     public static final int TIME_POINT_STATUS_FINISHED = 1;
 
+    public static final int MEMO_STATUS_IN_PROGRESS = 0;
+    public static final int MEMO_STATUS_FINISHED = 1;
+
     private Constants() {
         throw new IllegalStateException("禁止实例化");
     }

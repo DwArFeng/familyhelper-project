@@ -12,24 +12,24 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  */
 public class UserNotPermittedException extends HandlerException {
 
-    private static final long serialVersionUID = -5433767301117398740L;
+    private static final long serialVersionUID = -621191100176172894L;
 
     private final StringIdKey userKey;
-    private final LongIdKey assetCatalogKey;
+    private final LongIdKey projectKey;
 
-    public UserNotPermittedException(StringIdKey userKey, LongIdKey assetCatalogKey) {
+    public UserNotPermittedException(StringIdKey userKey, LongIdKey projectKey) {
         this.userKey = userKey;
-        this.assetCatalogKey = assetCatalogKey;
+        this.projectKey = projectKey;
     }
 
-    public UserNotPermittedException(Throwable cause, StringIdKey userKey, LongIdKey assetCatalogKey) {
+    public UserNotPermittedException(Throwable cause, StringIdKey userKey, LongIdKey projectKey) {
         super(cause);
         this.userKey = userKey;
-        this.assetCatalogKey = assetCatalogKey;
+        this.projectKey = projectKey;
     }
 
     @Override
     public String getMessage() {
-        return "用户 " + userKey + " 没有操作资产目录 " + assetCatalogKey + " 的权限";
+        return "用户 " + userKey + " 没有操作工程 " + projectKey + " 的权限";
     }
 }
