@@ -1,15 +1,19 @@
 package com.dwarfeng.familyhelper.project.impl.service.operation;
 
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
 import com.dwarfeng.familyhelper.project.stack.cache.UserCache;
+import com.dwarfeng.familyhelper.project.stack.dao.MemoDao;
 import com.dwarfeng.familyhelper.project.stack.dao.PopDao;
 import com.dwarfeng.familyhelper.project.stack.dao.UserDao;
+import com.dwarfeng.familyhelper.project.stack.service.MemoMaintainService;
 import com.dwarfeng.familyhelper.project.stack.service.PopMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,19 +26,28 @@ import java.util.stream.Collectors;
 public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> {
 
     private final UserDao userDao;
-    private final PopDao popDao;
-
     private final UserCache userCache;
+
+    private final PopDao popDao;
     private final PopCache popCache;
+
+    private final MemoDao memoDao;
+    private final MemoCrudOperation memoCrudOperation;
 
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
-    public UserCrudOperation(UserDao userDao, PopDao popDao, UserCache userCache, PopCache popCache) {
+    public UserCrudOperation(
+            UserDao userDao, UserCache userCache,
+            PopDao popDao, PopCache popCache,
+            MemoDao memoDao, MemoCrudOperation memoCrudOperation
+    ) {
         this.userDao = userDao;
-        this.popDao = popDao;
         this.userCache = userCache;
+        this.popDao = popDao;
         this.popCache = popCache;
+        this.memoDao = memoDao;
+        this.memoCrudOperation = memoCrudOperation;
     }
 
     @Override
@@ -70,13 +83,18 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
 
     @Override
     public void delete(StringIdKey key) throws Exception {
-        // 删除与账本相关的账本权限。
+        // 删除与用户相关的工程权限。
         List<PopKey> popKeys = popDao.lookup(PopMaintainService.CHILD_FOR_USER, new Object[]{key})
                 .stream().map(Pop::getKey).collect(Collectors.toList());
         popCache.batchDelete(popKeys);
         popDao.batchDelete(popKeys);
 
-        // 删除账本实体自身。
+        // 删除与用户相关的备忘录。
+        List<LongIdKey> memoKeys = memoDao.lookup(MemoMaintainService.CHILD_FOR_USER, new Object[]{key})
+                .stream().map(Memo::getKey).collect(Collectors.toList());
+        memoCrudOperation.batchDelete(memoKeys);
+
+        // 删除用户实体自身。
         userCache.delete(key);
         userDao.delete(key);
     }

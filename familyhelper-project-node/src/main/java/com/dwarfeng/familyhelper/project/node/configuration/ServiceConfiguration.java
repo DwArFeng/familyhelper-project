@@ -1,5 +1,6 @@
 package com.dwarfeng.familyhelper.project.node.configuration;
 
+import com.dwarfeng.familyhelper.project.impl.service.operation.MemoCrudOperation;
 import com.dwarfeng.familyhelper.project.impl.service.operation.ProjectCrudOperation;
 import com.dwarfeng.familyhelper.project.impl.service.operation.TaskCrudOperation;
 import com.dwarfeng.familyhelper.project.impl.service.operation.UserCrudOperation;
@@ -43,6 +44,8 @@ public class ServiceConfiguration {
     private final PreTaskCache preTaskCache;
     private final TimePointDao timePointDao;
     private final TimePointCache timePointCache;
+    private final MemoCrudOperation memoCrudOperation;
+    private final MemoDao memoDao;
 
     @Value("${cache.timeout.entity.pop}")
     private long popTimeout;
@@ -61,7 +64,8 @@ public class ServiceConfiguration {
             TaskTypeIndicatorDao taskTypeIndicatorDao, TaskTypeIndicatorCache taskTypeIndicatorCache,
             TaskCrudOperation taskCrudOperation, TaskDao taskDao,
             PreTaskDao preTaskDao, PreTaskCache preTaskCache,
-            TimePointDao timePointDao, TimePointCache timePointCache
+            TimePointDao timePointDao, TimePointCache timePointCache,
+            MemoCrudOperation memoCrudOperation, MemoDao memoDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.projectCrudOperation = projectCrudOperation;
@@ -77,6 +81,8 @@ public class ServiceConfiguration {
         this.preTaskCache = preTaskCache;
         this.timePointDao = timePointDao;
         this.timePointCache = timePointCache;
+        this.memoCrudOperation = memoCrudOperation;
+        this.memoDao = memoDao;
     }
 
     @Bean
@@ -257,6 +263,34 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<TimePoint> timePointDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 timePointDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Memo> memoBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                memoCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Memo> memoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                memoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Memo> memoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                memoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
