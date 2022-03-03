@@ -29,7 +29,11 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code MEMO_NOT_EXISTS =
             new ServiceException.Code(offset(70), "memo not exists");
     public static final ServiceException.Code USER_NOT_IDENTICAL =
-            new ServiceException.Code(offset(80), "post task exists");
+            new ServiceException.Code(offset(80), "user not identical");
+    public static final ServiceException.Code INVALID_MEMO_FILE_STATUS =
+            new ServiceException.Code(offset(90), "invalid memo file status");
+    public static final ServiceException.Code MEMO_FILE_NOT_EXISTS =
+            new ServiceException.Code(offset(100), "memo file not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -63,6 +67,8 @@ public final class ServiceExceptionCodes {
         INVALID_MEMO_STATUS.setCode(60);
         MEMO_NOT_EXISTS.setCode(70);
         USER_NOT_IDENTICAL.setCode(80);
+        INVALID_MEMO_FILE_STATUS.setCode(90);
+        MEMO_FILE_NOT_EXISTS.setCode(100);
     }
 
     private ServiceExceptionCodes() {

@@ -24,6 +24,7 @@
   - com.dwarfeng.familyhelper.project.stack.service.TaskOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.TimePointOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.MemoOperateService。
+  - com.dwarfeng.familyhelper.project.stack.service.MemoFileOperateService。
 
 #### Bug修复
 

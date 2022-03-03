@@ -26,6 +26,8 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(IllegalMemoStateException.class, ServiceExceptionCodes.INVALID_MEMO_STATUS);
         destination.put(MemoNotExistsException.class, ServiceExceptionCodes.MEMO_NOT_EXISTS);
         destination.put(UserNotIdenticalException.class, ServiceExceptionCodes.USER_NOT_IDENTICAL);
+        destination.put(IllegalMemoFileStateException.class, ServiceExceptionCodes.INVALID_MEMO_FILE_STATUS);
+        destination.put(MemoFileNotExistsException.class, ServiceExceptionCodes.MEMO_FILE_NOT_EXISTS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }
