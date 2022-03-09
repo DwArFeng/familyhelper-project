@@ -31,7 +31,7 @@ public final class Constraints {
     /**
      * 简报的长度约束。
      */
-    public static final int LENGTH_PROFILE = 20;
+    public static final int LENGTH_PROFILE = 100;
 
     private Constraints() {
         throw new IllegalStateException("禁止实例化");
