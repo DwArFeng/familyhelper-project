@@ -59,4 +59,13 @@ public class MemoOperateServiceImpl implements MemoOperateService {
             throw ServiceExceptionHelper.logAndThrow("完成备忘录时发生异常", LogLevel.WARN, sem, e);
         }
     }
+
+    @Override
+    public void removeFinishedMemos(StringIdKey userKey) throws ServiceException {
+        try {
+            memoOperateHandler.removeFinishedMemos(userKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除已经完成的备忘录时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
 }

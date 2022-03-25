@@ -51,4 +51,12 @@ public interface MemoOperateService extends Service {
      * @throws ServiceException 服务异常。
      */
     void finishMemo(StringIdKey userKey, LongIdKey memoKey) throws ServiceException;
+
+    /**
+     * 删除已经完成的备忘录。
+     *
+     * @param userKey 备忘录的所有者的主键。
+     * @throws ServiceException 服务异常。
+     */
+    void removeFinishedMemos(StringIdKey userKey) throws ServiceException;
 }

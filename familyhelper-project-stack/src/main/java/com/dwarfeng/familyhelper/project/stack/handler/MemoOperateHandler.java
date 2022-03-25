@@ -51,4 +51,12 @@ public interface MemoOperateHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void finishMemo(StringIdKey userKey, LongIdKey memoKey) throws HandlerException;
+
+    /**
+     * 删除已经完成的备忘录。
+     *
+     * @param userKey 备忘录的所有者的主键。
+     * @throws HandlerException 处理器异常。
+     */
+    void removeFinishedMemos(StringIdKey userKey) throws HandlerException;
 }

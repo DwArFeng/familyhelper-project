@@ -24,6 +24,9 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
             case MemoMaintainService.CHILD_FOR_USER_IN_PROGRESS:
                 childForUserInProgress(detachedCriteria, objects);
                 break;
+            case MemoMaintainService.CHILD_FOR_USER_FINISHED:
+                childForUserFinished(detachedCriteria, objects);
+                break;
             case MemoMaintainService.CHILD_FOR_USER_CREATED_DATE_DESC:
                 childForUserCreatedDateDesc(detachedCriteria, objects);
                 break;
@@ -61,6 +64,21 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
             }
             detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_IN_PROGRESS));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserFinished(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_FINISHED));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }

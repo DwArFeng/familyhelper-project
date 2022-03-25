@@ -12,6 +12,8 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MemoOperateHandlerImpl implements MemoOperateHandler {
@@ -127,6 +129,26 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 5. 更新备忘录实体。
             memoMaintainService.update(memo);
+        } catch (HandlerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    @Override
+    public void removeFinishedMemos(StringIdKey userKey) throws HandlerException {
+        try {
+            // 1. 确认用户存在。
+            operateHandlerValidator.makeSureUserExists(userKey);
+
+            // 2. 查询指定的用户的所有已完成的备忘录。
+            List<LongIdKey> memoKeys = memoMaintainService.lookup(
+                    MemoMaintainService.CHILD_FOR_USER_FINISHED, new Object[]{userKey}
+            ).getData().stream().map(Memo::getKey).collect(Collectors.toList());
+
+            // 3. 删除备忘录实体。
+            memoMaintainService.batchDelete(memoKeys);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
