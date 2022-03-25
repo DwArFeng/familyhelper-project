@@ -8,15 +8,12 @@ import com.dwarfeng.familyhelper.project.stack.bean.dto.ProjectUpdateInfo;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Project;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
-import com.dwarfeng.familyhelper.project.stack.exception.*;
 import com.dwarfeng.familyhelper.project.stack.handler.ProjectOperateHandler;
 import com.dwarfeng.familyhelper.project.stack.service.PopMaintainService;
 import com.dwarfeng.familyhelper.project.stack.service.ProjectMaintainService;
-import com.dwarfeng.familyhelper.project.stack.service.UserMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -25,18 +22,19 @@ import java.util.Objects;
 @Component
 public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
 
-    private final UserMaintainService userMaintainService;
     private final ProjectMaintainService projectMaintainService;
     private final PopMaintainService popMaintainService;
 
+    private final OperateHandlerValidator operateHandlerValidator;
+
     public ProjectOperateHandlerImpl(
-            UserMaintainService userMaintainService,
             ProjectMaintainService projectMaintainService,
-            PopMaintainService popMaintainService
+            PopMaintainService popMaintainService,
+            OperateHandlerValidator operateHandlerValidator
     ) {
-        this.userMaintainService = userMaintainService;
         this.projectMaintainService = projectMaintainService;
         this.popMaintainService = popMaintainService;
+        this.operateHandlerValidator = operateHandlerValidator;
     }
 
     @Override
@@ -46,10 +44,10 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             int status = projectCreateInfo.getStatus();
 
             // 1. 确认 status 有效。
-            makeSureProjectStatusValid(status);
+            operateHandlerValidator.makeSureProjectStatusValid(status);
 
             // 2. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 3. 根据 projectCreateInfo 以及创建的规则组合 资产目录 实体。
             Project project = new Project(
@@ -85,16 +83,16 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             int status = projectUpdateInfo.getStatus();
 
             // 1. 确认 status 有效。
-            makeSureProjectStatusValid(status);
+            operateHandlerValidator.makeSureProjectStatusValid(status);
 
             // 2. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 3. 确认工程存在。
-            makeSureProjectExists(projectKey);
+            operateHandlerValidator.makeSureProjectExists(projectKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
-            makeSureUserPermittedForProject(userKey, projectKey);
+            operateHandlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
 
             // 5. 根据 projectUpdateInfo 以及更新的规则设置 资产目录 实体。
             Project project = projectMaintainService.get(projectKey);
@@ -114,13 +112,13 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
     public void removeProject(StringIdKey userKey, LongIdKey projectKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认资产目录存在。
-            makeSureProjectExists(projectKey);
+            operateHandlerValidator.makeSureProjectExists(projectKey);
 
             // 3. 确认用户有权限操作指定的资产目录。
-            makeSureUserPermittedForProject(userKey, projectKey);
+            operateHandlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
 
             // 4. 删除指定主键的资产目录。
             projectMaintainService.delete(projectKey);
@@ -145,17 +143,17 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             }
 
             // 2. 确认 permissionLevel 有效。
-            makeSurePermissionLevelValid(permissionLevel);
+            operateHandlerValidator.makeSurePermissionLevelValid(permissionLevel);
 
             // 3. 确认用户存在。
-            makeSureUserExists(ownerUserKey);
-            makeSureUserExists(targetUserKey);
+            operateHandlerValidator.makeSureUserExists(ownerUserKey);
+            operateHandlerValidator.makeSureUserExists(targetUserKey);
 
             // 4. 确认资产目录存在。
-            makeSureProjectExists(projectKey);
+            operateHandlerValidator.makeSureProjectExists(projectKey);
 
             // 5. 确认用户有权限操作指定的资产目录。
-            makeSureUserPermittedForProject(ownerUserKey, projectKey);
+            operateHandlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
 
             // 6. 通过入口信息组合权限实体，并进行插入或更新操作。
             String permissionLabel;
@@ -195,14 +193,14 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             }
 
             // 2. 确认用户存在。
-            makeSureUserExists(ownerUserKey);
-            makeSureUserExists(targetUserKey);
+            operateHandlerValidator.makeSureUserExists(ownerUserKey);
+            operateHandlerValidator.makeSureUserExists(targetUserKey);
 
             // 3. 确认资产目录存在。
-            makeSureProjectExists(projectKey);
+            operateHandlerValidator.makeSureProjectExists(projectKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
-            makeSureUserPermittedForProject(ownerUserKey, projectKey);
+            operateHandlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
 
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PopKey popKey = new PopKey(projectKey.getLongId(), targetUserKey.getStringId());
@@ -212,67 +210,5 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
         } catch (Exception e) {
             throw new HandlerException(e);
         }
-    }
-
-    private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
-        try {
-            if (Objects.isNull(userKey) || !userMaintainService.exists(userKey)) {
-                throw new UserNotExistsException(userKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureProjectExists(LongIdKey projectKey) throws HandlerException {
-        try {
-            if (Objects.isNull(projectKey) || !projectMaintainService.exists(projectKey)) {
-                throw new ProjectNotExistsException(projectKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    @SuppressWarnings("DuplicatedCode")
-    private void makeSureUserPermittedForProject(StringIdKey userKey, LongIdKey projectKey)
-            throws HandlerException {
-        try {
-            // 1. 构造 Pop 主键。
-            PopKey popKey = new PopKey(projectKey.getLongId(), userKey.getStringId());
-
-            // 2. 查看 Pop 实体是否存在，如果不存在，则没有权限。
-            if (!popMaintainService.exists(popKey)) {
-                throw new UserNotPermittedException(userKey, projectKey);
-            }
-
-            // 3. 查看 Pop.permissionLevel 是否为 Pop.PERMISSION_LEVEL_OWNER，如果不是，则没有权限。
-            Pop pop = popMaintainService.get(popKey);
-            if (!Objects.equals(pop.getPermissionLevel(), Constants.PERMISSION_LEVEL_OWNER)) {
-                throw new UserNotPermittedException(userKey, projectKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureProjectStatusValid(int status) throws HandlerException {
-        if (status == Constants.PROJECT_STATUS_IN_PROGRESS) {
-            return;
-        }
-        if (status == Constants.PROJECT_STATUS_FINISHED) {
-            return;
-        }
-        throw new InvalidProjectStatusException(status);
-    }
-
-    private void makeSurePermissionLevelValid(int permissionLevel) throws HandlerException {
-        if (permissionLevel == Constants.PERMISSION_LEVEL_GUEST) {
-            return;
-        }
-        if (permissionLevel == Constants.PERMISSION_LEVEL_MODIFIER) {
-            return;
-        }
-        throw new InvalidPermissionLevelException(permissionLevel);
     }
 }
