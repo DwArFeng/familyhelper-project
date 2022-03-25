@@ -18,4 +18,6 @@ public interface MemoMaintainService extends BatchCrudService<LongIdKey, Memo>,
     String CHILD_FOR_USER = "child_for_user";
     String CHILD_FOR_USER_IN_PROGRESS = "child_for_user_in_progress";
     String CHILD_FOR_USER_CREATED_DATE_DESC = "child_for_user_created_date_desc";
+    String CHILD_FOR_USER_IN_PROGRESS_CREATED_DATE_DESC = "child_for_user_in_progress_created_date_desc";
+    String CHILD_FOR_USER_FINISHED_CREATED_DATE_DESC = "child_for_user_finished_created_date_desc";
 }
