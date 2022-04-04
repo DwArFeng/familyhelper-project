@@ -37,7 +37,7 @@ public class WebInputTaskUpdateInfo implements Dto {
         }
     }
 
-    @JSONField(name = "taskKey")
+    @JSONField(name = "task_key")
     @Valid
     private WebInputLongIdKey taskKey;
 
@@ -52,11 +52,11 @@ public class WebInputTaskUpdateInfo implements Dto {
     @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
 
-    @JSONField(name = "totalMissionCount")
+    @JSONField(name = "total_mission_count")
     @Positive
     private int totalMissionCount;
 
-    @JSONField(name = "finishedMissionCount")
+    @JSONField(name = "finished_mission_count")
     @PositiveOrZero
     private int finishedMissionCount;
 

@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修正 `WebInputTaskUpdateInfo` 的 JSON 格式。
 
 #### 功能移除
 
