@@ -71,9 +71,6 @@ public class HibernateTask implements Bean {
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePreTask.class, mappedBy = "objectTask")
     private Set<HibernatePreTask> objectPreTasks = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTimePoint.class, mappedBy = "task")
-    private Set<HibernateTimePoint> timePoints = new HashSet<>();
-
     public HibernateTask() {
     }
 

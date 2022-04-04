@@ -12,7 +12,8 @@
 
 #### 功能移除
 
-- (无)
+- 删除实体。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.TimePoint。
 
 ---
 
@@ -49,7 +50,6 @@
   - com.dwarfeng.familyhelper.project.stack.bean.entity.TaskTypeIndicator。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.PreTask。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Task。
-  - com.dwarfeng.familyhelper.project.stack.bean.entity.TimePoint。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.Memo。
   - com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo。
 
@@ -58,7 +58,6 @@
 - 完成实体的操作服务。
   - com.dwarfeng.familyhelper.project.stack.service.ProjectOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.TaskOperateService。
-  - com.dwarfeng.familyhelper.project.stack.service.TimePointOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.MemoOperateService。
   - com.dwarfeng.familyhelper.project.stack.service.MemoFileOperateService。
 

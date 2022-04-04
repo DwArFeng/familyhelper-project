@@ -32,7 +32,6 @@ public class DaoConfiguration {
     private final PopPresetCriteriaMaker popPresetCriteriaMaker;
     private final TaskPresetCriteriaMaker taskPresetCriteriaMaker;
     private final PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker;
-    private final TimePointPresetCriteriaMaker timePointPresetCriteriaMaker;
     private final MemoPresetCriteriaMaker memoPresetCriteriaMaker;
     private final MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker;
 
@@ -45,7 +44,6 @@ public class DaoConfiguration {
             PopPresetCriteriaMaker popPresetCriteriaMaker,
             TaskPresetCriteriaMaker taskPresetCriteriaMaker,
             PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker,
-            TimePointPresetCriteriaMaker timePointPresetCriteriaMaker,
             MemoPresetCriteriaMaker memoPresetCriteriaMaker,
             MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker
     ) {
@@ -55,7 +53,6 @@ public class DaoConfiguration {
         this.popPresetCriteriaMaker = popPresetCriteriaMaker;
         this.taskPresetCriteriaMaker = taskPresetCriteriaMaker;
         this.preTaskPresetCriteriaMaker = preTaskPresetCriteriaMaker;
-        this.timePointPresetCriteriaMaker = timePointPresetCriteriaMaker;
         this.memoPresetCriteriaMaker = memoPresetCriteriaMaker;
         this.memoFileInfoPresetCriteriaMaker = memoFileInfoPresetCriteriaMaker;
     }
@@ -219,38 +216,6 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(PreTask.class, HibernatePreTask.class, mapper),
                 HibernatePreTask.class,
                 preTaskPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, TimePoint, HibernateTimePoint>
-    timePointHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                template,
-                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
-                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
-                HibernateTimePoint.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<TimePoint, HibernateTimePoint> timePointHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
-                HibernateTimePoint.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<TimePoint, HibernateTimePoint> timePointHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(TimePoint.class, HibernateTimePoint.class, mapper),
-                HibernateTimePoint.class,
-                timePointPresetCriteriaMaker
         );
     }
 

@@ -1,7 +1,10 @@
 package com.dwarfeng.familyhelper.project.impl.handler;
 
 import com.dwarfeng.familyhelper.project.sdk.util.Constants;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.Task;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.exception.*;
 import com.dwarfeng.familyhelper.project.stack.service.*;
@@ -27,7 +30,6 @@ public class OperateHandlerValidator {
 
     private final ProjectMaintainService projectMaintainService;
     private final TaskMaintainService taskMaintainService;
-    private final TimePointMaintainService timePointMaintainService;
     private final MemoMaintainService memoMaintainService;
     private final MemoFileInfoMaintainService memoFileInfoMaintainService;
     private final UserMaintainService userMaintainService;
@@ -37,7 +39,6 @@ public class OperateHandlerValidator {
     public OperateHandlerValidator(
             ProjectMaintainService projectMaintainService,
             TaskMaintainService taskMaintainService,
-            TimePointMaintainService timePointMaintainService,
             MemoMaintainService memoMaintainService,
             MemoFileInfoMaintainService memoFileInfoMaintainService,
             UserMaintainService userMaintainService,
@@ -46,7 +47,6 @@ public class OperateHandlerValidator {
     ) {
         this.projectMaintainService = projectMaintainService;
         this.taskMaintainService = taskMaintainService;
-        this.timePointMaintainService = timePointMaintainService;
         this.memoMaintainService = memoMaintainService;
         this.memoFileInfoMaintainService = memoFileInfoMaintainService;
         this.userMaintainService = userMaintainService;
@@ -68,16 +68,6 @@ public class OperateHandlerValidator {
         try {
             if (Objects.isNull(taskKey) || !taskMaintainService.exists(taskKey)) {
                 throw new TaskNotExistsException(taskKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    public void makeSureTimePointExists(LongIdKey timePointKey) throws HandlerException {
-        try {
-            if (Objects.isNull(timePointKey) || !timePointMaintainService.exists(timePointKey)) {
-                throw new TimePointNotExistsException(timePointKey);
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);
@@ -146,22 +136,6 @@ public class OperateHandlerValidator {
 
             // 2. 取出银行卡的账本外键，判断用户是否拥有该账本的权限。
             makeSureUserPermittedForProject(userKey, task.getProjectKey());
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    public void makeSureUserPermittedForTimePoint(StringIdKey userKey, LongIdKey timePointKey)
-            throws HandlerException {
-        try {
-            // 1. 查找指定的银行卡是否绑定账本，如果不绑定账本，则抛出银行卡状态异常。
-            TimePoint timePoint = timePointMaintainService.get(timePointKey);
-            if (Objects.isNull(timePoint.getTaskKey())) {
-                throw new IllegalTimePointStateException(timePointKey);
-            }
-
-            // 2. 取出银行卡的账本外键，判断用户是否拥有该账本的权限。
-            makeSureUserPermittedForTask(userKey, timePoint.getTaskKey());
         } catch (ServiceException e) {
             throw new HandlerException(e);
         }

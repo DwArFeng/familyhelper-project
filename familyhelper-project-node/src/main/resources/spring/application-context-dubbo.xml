@@ -42,10 +42,6 @@
                    ref="preTaskMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TaskTypeIndicatorMaintainService"
                    ref="taskTypeIndicatorMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TimePointMaintainService"
-                   ref="timePointMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.TimePointOperateService"
-                   ref="timePointOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.MemoMaintainService"
                    ref="memoMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.project.stack.service.MemoOperateService"
