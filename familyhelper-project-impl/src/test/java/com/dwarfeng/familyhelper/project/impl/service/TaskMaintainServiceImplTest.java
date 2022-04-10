@@ -124,33 +124,89 @@ public class TaskMaintainServiceImplTest {
             preTaskMaintainService.insert(preTaskDB);
             preTaskMaintainService.insert(preTaskDC);
 
-            // 任务 A 应该没有任何前置任务。
+            // 任务 A 应该没有任何后置任务。
             List<Task> tasks = taskMaintainService.lookup(
-                    TaskMaintainService.PRE_TASK_FOR, new Object[]{taskA.getKey()}
+                    TaskMaintainService.CHILD_FOR_PRE_TASK, new Object[]{taskA.getKey()}
             ).getData();
             assertEquals(0, tasks.size());
 
-            // 任务 B 应该只有前置任务 A。
+            // 任务 B 应该只有后置任务 A。
             tasks = taskMaintainService.lookup(
-                    TaskMaintainService.PRE_TASK_FOR, new Object[]{taskB.getKey()}
+                    TaskMaintainService.CHILD_FOR_PRE_TASK, new Object[]{taskB.getKey()}
             ).getData();
             assertEquals(1, tasks.size());
             assertEquals(taskA.getKey(), tasks.get(0).getKey());
 
-            // 任务 C 应该只有前置任务 A。
+            // 任务 C 应该只有后置任务 A。
             tasks = taskMaintainService.lookup(
-                    TaskMaintainService.PRE_TASK_FOR, new Object[]{taskC.getKey()}
+                    TaskMaintainService.CHILD_FOR_PRE_TASK, new Object[]{taskC.getKey()}
             ).getData();
             assertEquals(1, tasks.size());
             assertEquals(taskA.getKey(), tasks.get(0).getKey());
 
-            // 任务 D 应该同时有前置任务 B 和 C。
+            // 任务 D 应该同时有后置任务 B 和 C。
             tasks = taskMaintainService.lookup(
-                    TaskMaintainService.PRE_TASK_FOR, new Object[]{taskD.getKey()}
+                    TaskMaintainService.CHILD_FOR_PRE_TASK, new Object[]{taskD.getKey()}
             ).getData();
             assertEquals(2, tasks.size());
             assertTrue(tasks.stream().anyMatch(t -> Objects.equals(taskB.getKey(), t.getKey())));
             assertTrue(tasks.stream().anyMatch(t -> Objects.equals(taskC.getKey(), t.getKey())));
+        } finally {
+            taskMaintainService.deleteIfExists(taskA.getKey());
+            taskMaintainService.deleteIfExists(taskB.getKey());
+            taskMaintainService.deleteIfExists(taskC.getKey());
+            taskMaintainService.deleteIfExists(taskD.getKey());
+            preTaskMaintainService.deleteIfExists(preTaskBA.getKey());
+            preTaskMaintainService.deleteIfExists(preTaskCA.getKey());
+            preTaskMaintainService.deleteIfExists(preTaskDB.getKey());
+            preTaskMaintainService.deleteIfExists(preTaskDC.getKey());
+        }
+    }
+
+    @Test
+    public void testForPostTaskLookup() throws Exception {
+        try {
+            taskA.setKey(taskMaintainService.insert(taskA));
+            taskB.setKey(taskMaintainService.insert(taskB));
+            taskC.setKey(taskMaintainService.insert(taskC));
+            taskD.setKey(taskMaintainService.insert(taskD));
+
+            preTaskBA.setKey(new TpKey(taskB.getKey().getLongId(), taskA.getKey().getLongId()));
+            preTaskCA.setKey(new TpKey(taskC.getKey().getLongId(), taskA.getKey().getLongId()));
+            preTaskDB.setKey(new TpKey(taskD.getKey().getLongId(), taskB.getKey().getLongId()));
+            preTaskDC.setKey(new TpKey(taskD.getKey().getLongId(), taskC.getKey().getLongId()));
+            preTaskMaintainService.insert(preTaskBA);
+            preTaskMaintainService.insert(preTaskCA);
+            preTaskMaintainService.insert(preTaskDB);
+            preTaskMaintainService.insert(preTaskDC);
+
+            // 任务 A 应该有 B 和 C 两个后置任务。
+            List<Task> tasks = taskMaintainService.lookup(
+                    TaskMaintainService.CHILD_FOR_POST_TASK, new Object[]{taskA.getKey()}
+            ).getData();
+            assertEquals(2, tasks.size());
+            assertTrue(tasks.stream().anyMatch(t -> Objects.equals(taskB.getKey(), t.getKey())));
+            assertTrue(tasks.stream().anyMatch(t -> Objects.equals(taskC.getKey(), t.getKey())));
+
+            // 任务 B 应该只有后置任务 D。
+            tasks = taskMaintainService.lookup(
+                    TaskMaintainService.CHILD_FOR_POST_TASK, new Object[]{taskB.getKey()}
+            ).getData();
+            assertEquals(1, tasks.size());
+            assertEquals(taskD.getKey(), tasks.get(0).getKey());
+
+            // 任务 C 应该只有后置任务 D。
+            tasks = taskMaintainService.lookup(
+                    TaskMaintainService.CHILD_FOR_POST_TASK, new Object[]{taskC.getKey()}
+            ).getData();
+            assertEquals(1, tasks.size());
+            assertEquals(taskD.getKey(), tasks.get(0).getKey());
+
+            // 任务 D 应该没有后置任务。
+            tasks = taskMaintainService.lookup(
+                    TaskMaintainService.CHILD_FOR_POST_TASK, new Object[]{taskD.getKey()}
+            ).getData();
+            assertEquals(0, tasks.size());
         } finally {
             taskMaintainService.deleteIfExists(taskA.getKey());
             taskMaintainService.deleteIfExists(taskB.getKey());

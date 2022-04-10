@@ -16,6 +16,7 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
         EntireLookupService<Task>, PresetLookupService<Task> {
 
     String CHILD_FOR_PROJECT = "child_for_project";
-    String PRE_TASK_FOR = "pre_task_for";
+    String CHILD_FOR_PRE_TASK = "child_for_pre_task";
+    String CHILD_FOR_POST_TASK = "child_for_post_task";
     String NAME_LIKE = "name_like";
 }

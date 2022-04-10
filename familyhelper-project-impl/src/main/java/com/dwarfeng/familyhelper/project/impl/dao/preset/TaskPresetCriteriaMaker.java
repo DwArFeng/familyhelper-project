@@ -20,8 +20,11 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
             case TaskMaintainService.CHILD_FOR_PROJECT:
                 childForProject(detachedCriteria, objects);
                 break;
-            case TaskMaintainService.PRE_TASK_FOR:
+            case TaskMaintainService.CHILD_FOR_PRE_TASK:
                 preTaskFor(detachedCriteria, objects);
+                break;
+            case TaskMaintainService.CHILD_FOR_POST_TASK:
+                postTaskFor(detachedCriteria, objects);
                 break;
             case TaskMaintainService.NAME_LIKE:
                 nameLike(detachedCriteria, objects);
@@ -52,6 +55,20 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 LongIdKey longIdKey = (LongIdKey) objects[0];
                 detachedCriteria.createAlias("objectPreTasks", "opt");
                 detachedCriteria.add(Restrictions.eqOrIsNull("opt.leftTaskId", longIdKey.getLongId()));
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void postTaskFor(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isEmpty("objectPreTasks"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.createAlias("subjectPreTasks", "spt");
+                detachedCriteria.add(Restrictions.eqOrIsNull("spt.rightTaskId", longIdKey.getLongId()));
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
