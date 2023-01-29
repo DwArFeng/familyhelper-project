@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class FastJsonMemo implements Bean {
 
-    private static final long serialVersionUID = -3349538046474724589L;
+    private static final long serialVersionUID = -6416009986821564089L;
 
     public static FastJsonMemo of(Memo memo) {
         if (Objects.isNull(memo)) {
@@ -27,7 +27,7 @@ public class FastJsonMemo implements Bean {
                     FastJsonLongIdKey.of(memo.getKey()),
                     FastJsonStringIdKey.of(memo.getUserKey()),
                     memo.getProfile(), memo.getRemark(), memo.getStatus(), memo.getCreatedDate(),
-                    memo.getModifiedDate(), memo.getFinishedDate()
+                    memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority()
             );
         }
     }
@@ -56,12 +56,18 @@ public class FastJsonMemo implements Bean {
     @JSONField(name = "finished_date", ordinal = 8)
     private Date finishedDate;
 
+    @JSONField(name = "star_flag", ordinal = 9)
+    private boolean starFlag;
+
+    @JSONField(name = "priority", ordinal = 10)
+    private int priority;
+
     public FastJsonMemo() {
     }
 
     public FastJsonMemo(
             FastJsonLongIdKey key, FastJsonStringIdKey userKey, String profile, String remark, int status,
-            Date createdDate, Date modifiedDate, Date finishedDate
+            Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -71,6 +77,8 @@ public class FastJsonMemo implements Bean {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.finishedDate = finishedDate;
+        this.starFlag = starFlag;
+        this.priority = priority;
     }
 
     public FastJsonLongIdKey getKey() {
@@ -137,6 +145,22 @@ public class FastJsonMemo implements Bean {
         this.finishedDate = finishedDate;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "FastJsonMemo{" +
@@ -148,6 +172,8 @@ public class FastJsonMemo implements Bean {
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", finishedDate=" + finishedDate +
+                ", starFlag=" + starFlag +
+                ", priority=" + priority +
                 '}';
     }
 }

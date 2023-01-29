@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "tbl_memo")
 public class HibernateMemo implements Bean {
 
-    private static final long serialVersionUID = 8097845626470348046L;
+    private static final long serialVersionUID = 878601915541004838L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -48,6 +48,12 @@ public class HibernateMemo implements Bean {
     @Column(name = "finished_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishedDate;
+
+    @Column(name = "star_flag")
+    private boolean starFlag;
+
+    @Column(name = "priority")
+    private int priority;
 
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateUser.class)
@@ -161,6 +167,22 @@ public class HibernateMemo implements Bean {
         this.memoFileInfos = memoFileInfos;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -172,6 +194,8 @@ public class HibernateMemo implements Bean {
                 "createdDate = " + createdDate + ", " +
                 "modifiedDate = " + modifiedDate + ", " +
                 "finishedDate = " + finishedDate + ", " +
+                "starFlag = " + starFlag + ", " +
+                "priority = " + priority + ", " +
                 "user = " + user + ")";
     }
 }

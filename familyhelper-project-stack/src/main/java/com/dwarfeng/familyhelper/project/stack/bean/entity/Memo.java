@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class Memo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 7866874926887296442L;
-    
+    private static final long serialVersionUID = -6984855012215126788L;
+
     private LongIdKey key;
     private StringIdKey userKey;
     private String profile;
@@ -25,12 +25,22 @@ public class Memo implements Entity<LongIdKey> {
     private Date modifiedDate;
     private Date finishedDate;
 
+    /**
+     * @since 1.1.1
+     */
+    private boolean starFlag;
+
+    /**
+     * @since 1.1.1
+     */
+    private int priority;
+
     public Memo() {
     }
 
     public Memo(
             LongIdKey key, StringIdKey userKey, String profile, String remark, int status, Date createdDate,
-            Date modifiedDate, Date finishedDate
+            Date modifiedDate, Date finishedDate, boolean starFlag, int priority
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -40,6 +50,8 @@ public class Memo implements Entity<LongIdKey> {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.finishedDate = finishedDate;
+        this.starFlag = starFlag;
+        this.priority = priority;
     }
 
     @Override
@@ -108,6 +120,22 @@ public class Memo implements Entity<LongIdKey> {
         this.finishedDate = finishedDate;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "Memo{" +
@@ -119,6 +147,8 @@ public class Memo implements Entity<LongIdKey> {
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", finishedDate=" + finishedDate +
+                ", starFlag=" + starFlag +
+                ", priority=" + priority +
                 '}';
     }
 }

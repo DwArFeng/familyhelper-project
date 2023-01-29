@@ -27,7 +27,7 @@ public class JSFixedFastJsonMemo implements Bean {
                     JSFixedFastJsonLongIdKey.of(memo.getKey()),
                     FastJsonStringIdKey.of(memo.getUserKey()),
                     memo.getProfile(), memo.getRemark(), memo.getStatus(), memo.getCreatedDate(),
-                    memo.getModifiedDate(), memo.getFinishedDate()
+                    memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority()
             );
         }
     }
@@ -56,12 +56,19 @@ public class JSFixedFastJsonMemo implements Bean {
     @JSONField(name = "finished_date", ordinal = 8)
     private Date finishedDate;
 
+    @JSONField(name = "star_flag", ordinal = 9)
+    private boolean starFlag;
+
+    @JSONField(name = "priority", ordinal = 10)
+    private int priority;
+
+
     public JSFixedFastJsonMemo() {
     }
 
     public JSFixedFastJsonMemo(
             JSFixedFastJsonLongIdKey key, FastJsonStringIdKey userKey, String profile, String remark, int status,
-            Date createdDate, Date modifiedDate, Date finishedDate
+            Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -71,6 +78,8 @@ public class JSFixedFastJsonMemo implements Bean {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.finishedDate = finishedDate;
+        this.starFlag = starFlag;
+        this.priority = priority;
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
@@ -137,6 +146,22 @@ public class JSFixedFastJsonMemo implements Bean {
         this.finishedDate = finishedDate;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "JSFixedFastJsonMemo{" +
@@ -148,6 +173,8 @@ public class JSFixedFastJsonMemo implements Bean {
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", finishedDate=" + finishedDate +
+                ", starFlag=" + starFlag +
+                ", priority=" + priority +
                 '}';
     }
 }

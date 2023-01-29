@@ -46,7 +46,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
             Date currentDate = new Date();
             Memo memo = new Memo(
                     null, targetUserKey, memoCreateInfo.getProfile(), memoCreateInfo.getRemark(),
-                    Constants.MEMO_STATUS_IN_PROGRESS, currentDate, currentDate, null
+                    Constants.MEMO_STATUS_IN_PROGRESS, currentDate, currentDate, null,
+                    memoCreateInfo.isStarFlag(), memoCreateInfo.getPriority()
             );
 
             // 4. 插入备忘录实体，并返回生成的主键。
@@ -76,6 +77,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
             Memo memo = memoMaintainService.get(memoKey);
             memo.setProfile(memoUpdateInfo.getProfile());
             memo.setRemark(memoUpdateInfo.getRemark());
+            memo.setStarFlag(memoUpdateInfo.isStarFlag());
+            memo.setPriority(memoUpdateInfo.getPriority());
             memo.setModifiedDate(new Date());
 
             // 5. 更新备忘录实体。

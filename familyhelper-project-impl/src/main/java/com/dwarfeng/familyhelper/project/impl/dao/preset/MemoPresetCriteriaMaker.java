@@ -36,11 +36,21 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
             case MemoMaintainService.CHILD_FOR_USER_FINISHED_CREATED_DATE_DESC:
                 childForUserFinishedCreatedDateDesc(detachedCriteria, objects);
                 break;
+            case MemoMaintainService.CHILD_FOR_USER_DEFAULT_ORDER:
+                childForUserDefaultOrder(detachedCriteria, objects);
+                break;
+            case MemoMaintainService.CHILD_FOR_USER_IN_PROGRESS_DEFAULT_ORDER:
+                childForUserInProgressDefaultOrder(detachedCriteria, objects);
+                break;
+            case MemoMaintainService.CHILD_FOR_USER_FINISHED_DEFAULT_ORDER:
+                childForUserFinishedDefaultOrder(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForUser(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -84,6 +94,7 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForUserCreatedDateDesc(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -114,6 +125,7 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForUserFinishedCreatedDateDesc(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -123,6 +135,59 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
             }
             detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_FINISHED));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserInProgressDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_IN_PROGRESS));
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserFinishedDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_FINISHED));
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
             detachedCriteria.addOrder(Order.desc("createdDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));

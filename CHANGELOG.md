@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 增加实体字段。
+  - Memo.starFlag。
+  - Memo.priority。
+
 - 使用 `MapStruct` 重构 `BeanTransformer`。
 
 - 增加依赖。

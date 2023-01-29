@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Objects;
  */
 public class WebInputMemoCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 2909614165131893142L;
+    private static final long serialVersionUID = -6640193187905994719L;
 
     public static MemoCreateInfo toStackBean(WebInputMemoCreateInfo webInputMemoCreateInfo) {
         if (Objects.isNull(webInputMemoCreateInfo)) {
@@ -28,7 +29,8 @@ public class WebInputMemoCreateInfo implements Dto {
         } else {
             return new MemoCreateInfo(
                     WebInputStringIdKey.toStackBean(webInputMemoCreateInfo.getUserKey()),
-                    webInputMemoCreateInfo.getProfile(), webInputMemoCreateInfo.getRemark()
+                    webInputMemoCreateInfo.getProfile(), webInputMemoCreateInfo.getRemark(),
+                    webInputMemoCreateInfo.isStarFlag(), webInputMemoCreateInfo.getPriority()
             );
         }
     }
@@ -46,6 +48,13 @@ public class WebInputMemoCreateInfo implements Dto {
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
+
+    @JSONField(name = "star_flag")
+    private boolean starFlag;
+
+    @JSONField(name = "priority")
+    @PositiveOrZero
+    private int priority;
 
     public WebInputMemoCreateInfo() {
     }
@@ -74,12 +83,30 @@ public class WebInputMemoCreateInfo implements Dto {
         this.remark = remark;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemoCreateInfo{" +
                 "userKey=" + userKey +
                 ", profile='" + profile + '\'' +
                 ", remark='" + remark + '\'' +
+                ", starFlag=" + starFlag +
+                ", priority=" + priority +
                 '}';
     }
 }

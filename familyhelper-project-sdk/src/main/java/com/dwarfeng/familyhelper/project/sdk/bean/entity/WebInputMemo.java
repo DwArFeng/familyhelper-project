@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 import java.util.Objects;
 
@@ -32,7 +33,8 @@ public class WebInputMemo implements Bean {
                     WebInputLongIdKey.toStackBean(webInputMemo.getKey()),
                     WebInputStringIdKey.toStackBean(webInputMemo.getUserKey()),
                     webInputMemo.getProfile(), webInputMemo.getRemark(), webInputMemo.getStatus(),
-                    webInputMemo.getCreatedDate(), webInputMemo.getModifiedDate(), webInputMemo.getFinishedDate()
+                    webInputMemo.getCreatedDate(), webInputMemo.getModifiedDate(), webInputMemo.getFinishedDate(),
+                    webInputMemo.isStarFlag(), webInputMemo.getPriority()
             );
         }
     }
@@ -66,6 +68,13 @@ public class WebInputMemo implements Bean {
 
     @JSONField(name = "finished_date")
     private Date finishedDate;
+
+    @JSONField(name = "star_flag")
+    private boolean starFlag;
+
+    @JSONField(name = "priority")
+    @PositiveOrZero
+    private int priority;
 
     public WebInputMemo() {
     }
@@ -134,6 +143,22 @@ public class WebInputMemo implements Bean {
         this.finishedDate = finishedDate;
     }
 
+    public boolean isStarFlag() {
+        return starFlag;
+    }
+
+    public void setStarFlag(boolean starFlag) {
+        this.starFlag = starFlag;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemo{" +
@@ -145,6 +170,8 @@ public class WebInputMemo implements Bean {
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", finishedDate=" + finishedDate +
+                ", starFlag=" + starFlag +
+                ", priority=" + priority +
                 '}';
     }
 }
