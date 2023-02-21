@@ -42,7 +42,9 @@ public class MemoFileInfoMaintainServiceImplTest {
             );
             memoFileInfos.add(memoFileInfo);
         }
-        memo = new Memo(null, null, "profile", "remark", 12450, new Date(), new Date(), new Date(), true, 12450);
+        memo = new Memo(
+                null, null, "profile", "remark", 12450, new Date(), new Date(), new Date(), true, 12450, new Date()
+        );
     }
 
     @After

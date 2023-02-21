@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Objects;
  */
 public class WebInputMemoUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 3518027714311495336L;
+    private static final long serialVersionUID = -6305723953849456377L;
 
     public static MemoUpdateInfo toStackBean(WebInputMemoUpdateInfo webInputMemoUpdateInfo) {
         if (Objects.isNull(webInputMemoUpdateInfo)) {
@@ -30,7 +31,8 @@ public class WebInputMemoUpdateInfo implements Dto {
             return new MemoUpdateInfo(
                     WebInputLongIdKey.toStackBean(webInputMemoUpdateInfo.getMemoKey()),
                     webInputMemoUpdateInfo.getProfile(), webInputMemoUpdateInfo.getRemark(),
-                    webInputMemoUpdateInfo.isStarFlag(), webInputMemoUpdateInfo.getPriority()
+                    webInputMemoUpdateInfo.isStarFlag(), webInputMemoUpdateInfo.getPriority(),
+                    webInputMemoUpdateInfo.getExpectedFinishDate()
             );
         }
     }
@@ -55,6 +57,9 @@ public class WebInputMemoUpdateInfo implements Dto {
     @JSONField(name = "priority")
     @PositiveOrZero
     private int priority;
+
+    @JSONField(name = "expected_finish_date")
+    private Date expectedFinishDate;
 
     public WebInputMemoUpdateInfo() {
     }
@@ -99,6 +104,14 @@ public class WebInputMemoUpdateInfo implements Dto {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemoUpdateInfo{" +
@@ -107,6 +120,7 @@ public class WebInputMemoUpdateInfo implements Dto {
                 ", remark='" + remark + '\'' +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }

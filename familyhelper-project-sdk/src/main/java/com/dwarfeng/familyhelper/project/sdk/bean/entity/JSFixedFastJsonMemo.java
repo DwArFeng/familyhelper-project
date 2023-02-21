@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonMemo implements Bean {
 
-    private static final long serialVersionUID = -2696044643523820394L;
+    private static final long serialVersionUID = -5605431745233098237L;
 
     public static JSFixedFastJsonMemo of(Memo memo) {
         if (Objects.isNull(memo)) {
@@ -27,7 +27,8 @@ public class JSFixedFastJsonMemo implements Bean {
                     JSFixedFastJsonLongIdKey.of(memo.getKey()),
                     FastJsonStringIdKey.of(memo.getUserKey()),
                     memo.getProfile(), memo.getRemark(), memo.getStatus(), memo.getCreatedDate(),
-                    memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority()
+                    memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority(),
+                    memo.getExpectedFinishDate()
             );
         }
     }
@@ -62,13 +63,16 @@ public class JSFixedFastJsonMemo implements Bean {
     @JSONField(name = "priority", ordinal = 10)
     private int priority;
 
+    @JSONField(name = "expected_finish_date", ordinal = 11)
+    private Date expectedFinishDate;
 
     public JSFixedFastJsonMemo() {
     }
 
     public JSFixedFastJsonMemo(
             JSFixedFastJsonLongIdKey key, FastJsonStringIdKey userKey, String profile, String remark, int status,
-            Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority
+            Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority,
+            Date expectedFinishDate
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -80,6 +84,7 @@ public class JSFixedFastJsonMemo implements Bean {
         this.finishedDate = finishedDate;
         this.starFlag = starFlag;
         this.priority = priority;
+        this.expectedFinishDate = expectedFinishDate;
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
@@ -162,6 +167,14 @@ public class JSFixedFastJsonMemo implements Bean {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "JSFixedFastJsonMemo{" +
@@ -175,6 +188,7 @@ public class JSFixedFastJsonMemo implements Bean {
                 ", finishedDate=" + finishedDate +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }

@@ -3,6 +3,8 @@ package com.dwarfeng.familyhelper.project.stack.bean.dto;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
+import java.util.Date;
+
 /**
  * 备忘录更新信息。
  *
@@ -11,7 +13,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class MemoUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 6854102238103663368L;
+    private static final long serialVersionUID = 8410196248961660248L;
     
     private LongIdKey memoKey;
     private String profile;
@@ -27,15 +29,24 @@ public class MemoUpdateInfo implements Dto {
      */
     private int priority;
 
+    /**
+     * @since 1.2.0
+     */
+    private Date expectedFinishDate;
+
     public MemoUpdateInfo() {
     }
 
-    public MemoUpdateInfo(LongIdKey memoKey, String profile, String remark, boolean starFlag, int priority) {
+    public MemoUpdateInfo(
+            LongIdKey memoKey, String profile, String remark, boolean starFlag, int priority,
+            Date expectedFinishDate
+    ) {
         this.memoKey = memoKey;
         this.profile = profile;
         this.remark = remark;
         this.starFlag = starFlag;
         this.priority = priority;
+        this.expectedFinishDate = expectedFinishDate;
     }
 
     public LongIdKey getMemoKey() {
@@ -78,6 +89,14 @@ public class MemoUpdateInfo implements Dto {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "MemoUpdateInfo{" +
@@ -86,6 +105,7 @@ public class MemoUpdateInfo implements Dto {
                 ", remark='" + remark + '\'' +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }

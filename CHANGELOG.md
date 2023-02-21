@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 增加实体字段。
+  - Memo.expectedFinishDate。
 
 #### Bug修复
 

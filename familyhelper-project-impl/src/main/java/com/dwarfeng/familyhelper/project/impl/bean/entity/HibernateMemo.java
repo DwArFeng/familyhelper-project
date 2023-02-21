@@ -16,8 +16,8 @@ import java.util.Set;
 @Table(name = "tbl_memo")
 public class HibernateMemo implements Bean {
 
-    private static final long serialVersionUID = 878601915541004838L;
-
+    private static final long serialVersionUID = 4943469525250500L;
+    
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -54,6 +54,10 @@ public class HibernateMemo implements Bean {
 
     @Column(name = "priority")
     private int priority;
+
+    @Column(name = "expected_finish_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expectedFinishDate;
 
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateUser.class)
@@ -183,6 +187,14 @@ public class HibernateMemo implements Bean {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -196,6 +208,7 @@ public class HibernateMemo implements Bean {
                 "finishedDate = " + finishedDate + ", " +
                 "starFlag = " + starFlag + ", " +
                 "priority = " + priority + ", " +
+                "expectedFinishDate = " + expectedFinishDate + ", " +
                 "user = " + user + ")";
     }
 }

@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class Memo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -6984855012215126788L;
-
+    private static final long serialVersionUID = -6618073380939762621L;
+    
     private LongIdKey key;
     private StringIdKey userKey;
     private String profile;
@@ -35,12 +35,17 @@ public class Memo implements Entity<LongIdKey> {
      */
     private int priority;
 
+    /**
+     * @since 1.2.0
+     */
+    private Date expectedFinishDate;
+
     public Memo() {
     }
 
     public Memo(
             LongIdKey key, StringIdKey userKey, String profile, String remark, int status, Date createdDate,
-            Date modifiedDate, Date finishedDate, boolean starFlag, int priority
+            Date modifiedDate, Date finishedDate, boolean starFlag, int priority, Date expectedFinishDate
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -52,6 +57,7 @@ public class Memo implements Entity<LongIdKey> {
         this.finishedDate = finishedDate;
         this.starFlag = starFlag;
         this.priority = priority;
+        this.expectedFinishDate = expectedFinishDate;
     }
 
     @Override
@@ -136,6 +142,14 @@ public class Memo implements Entity<LongIdKey> {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "Memo{" +
@@ -149,6 +163,7 @@ public class Memo implements Entity<LongIdKey> {
                 ", finishedDate=" + finishedDate +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }

@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public class WebInputMemo implements Bean {
 
-    private static final long serialVersionUID = -8048667671753652283L;
+    private static final long serialVersionUID = 6543557052616668705L;
 
     public static Memo toStackBean(WebInputMemo webInputMemo) {
         if (Objects.isNull(webInputMemo)) {
@@ -34,7 +34,7 @@ public class WebInputMemo implements Bean {
                     WebInputStringIdKey.toStackBean(webInputMemo.getUserKey()),
                     webInputMemo.getProfile(), webInputMemo.getRemark(), webInputMemo.getStatus(),
                     webInputMemo.getCreatedDate(), webInputMemo.getModifiedDate(), webInputMemo.getFinishedDate(),
-                    webInputMemo.isStarFlag(), webInputMemo.getPriority()
+                    webInputMemo.isStarFlag(), webInputMemo.getPriority(), webInputMemo.getExpectedFinishDate()
             );
         }
     }
@@ -75,6 +75,9 @@ public class WebInputMemo implements Bean {
     @JSONField(name = "priority")
     @PositiveOrZero
     private int priority;
+
+    @JSONField(name = "expected_finish_date")
+    private Date expectedFinishDate;
 
     public WebInputMemo() {
     }
@@ -159,6 +162,14 @@ public class WebInputMemo implements Bean {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemo{" +
@@ -172,6 +183,7 @@ public class WebInputMemo implements Bean {
                 ", finishedDate=" + finishedDate +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }

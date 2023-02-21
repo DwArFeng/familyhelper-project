@@ -39,7 +39,7 @@ public class MemoMaintainServiceImplTest {
         memos = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Memo memo = new Memo(
-                    null, null, "profile", "remark", 12450, new Date(), new Date(), new Date(), true, 12450
+                    null, null, "profile", "remark", 12450, new Date(), new Date(), new Date(), true, 12450, new Date()
             );
             memos.add(memo);
         }

@@ -3,6 +3,8 @@ package com.dwarfeng.familyhelper.project.stack.bean.dto;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
+import java.util.Date;
+
 /**
  * 备忘录创建信息。
  *
@@ -11,8 +13,8 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  */
 public class MemoCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 7738092515057426595L;
-
+    private static final long serialVersionUID = -1445801934321079002L;
+    
     private StringIdKey userKey;
     private String profile;
     private String remark;
@@ -27,15 +29,24 @@ public class MemoCreateInfo implements Dto {
      */
     private int priority;
 
+    /**
+     * @since 1.2.0
+     */
+    private Date expectedFinishDate;
+
     public MemoCreateInfo() {
     }
 
-    public MemoCreateInfo(StringIdKey userKey, String profile, String remark, boolean starFlag, int priority) {
+    public MemoCreateInfo(
+            StringIdKey userKey, String profile, String remark, boolean starFlag, int priority,
+            Date expectedFinishDate
+    ) {
         this.userKey = userKey;
         this.profile = profile;
         this.remark = remark;
         this.starFlag = starFlag;
         this.priority = priority;
+        this.expectedFinishDate = expectedFinishDate;
     }
 
     public StringIdKey getUserKey() {
@@ -78,6 +89,14 @@ public class MemoCreateInfo implements Dto {
         this.priority = priority;
     }
 
+    public Date getExpectedFinishDate() {
+        return expectedFinishDate;
+    }
+
+    public void setExpectedFinishDate(Date expectedFinishDate) {
+        this.expectedFinishDate = expectedFinishDate;
+    }
+
     @Override
     public String toString() {
         return "MemoCreateInfo{" +
@@ -86,6 +105,7 @@ public class MemoCreateInfo implements Dto {
                 ", remark='" + remark + '\'' +
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
+                ", expectedFinishDate=" + expectedFinishDate +
                 '}';
     }
 }
