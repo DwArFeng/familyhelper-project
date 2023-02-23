@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class Memo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -6618073380939762621L;
-    
+    private static final long serialVersionUID = -870973508866469460L;
+
     private LongIdKey key;
     private StringIdKey userKey;
     private String profile;
@@ -40,12 +40,17 @@ public class Memo implements Entity<LongIdKey> {
      */
     private Date expectedFinishDate;
 
+    /**
+     * @since 1.2.0
+     */
+    private String brief;
+
     public Memo() {
     }
 
     public Memo(
             LongIdKey key, StringIdKey userKey, String profile, String remark, int status, Date createdDate,
-            Date modifiedDate, Date finishedDate, boolean starFlag, int priority, Date expectedFinishDate
+            Date modifiedDate, Date finishedDate, boolean starFlag, int priority, Date expectedFinishDate, String brief
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -58,6 +63,7 @@ public class Memo implements Entity<LongIdKey> {
         this.starFlag = starFlag;
         this.priority = priority;
         this.expectedFinishDate = expectedFinishDate;
+        this.brief = brief;
     }
 
     @Override
@@ -150,6 +156,14 @@ public class Memo implements Entity<LongIdKey> {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "Memo{" +
@@ -164,6 +178,7 @@ public class Memo implements Entity<LongIdKey> {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

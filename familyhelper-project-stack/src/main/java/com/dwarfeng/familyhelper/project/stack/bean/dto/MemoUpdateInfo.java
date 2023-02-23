@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class MemoUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 8410196248961660248L;
-    
+    private static final long serialVersionUID = 3899143420970263166L;
+
     private LongIdKey memoKey;
     private String profile;
     private String remark;
@@ -34,12 +34,17 @@ public class MemoUpdateInfo implements Dto {
      */
     private Date expectedFinishDate;
 
+    /**
+     * @since 1.2.0
+     */
+    private String brief;
+
     public MemoUpdateInfo() {
     }
 
     public MemoUpdateInfo(
             LongIdKey memoKey, String profile, String remark, boolean starFlag, int priority,
-            Date expectedFinishDate
+            Date expectedFinishDate, String brief
     ) {
         this.memoKey = memoKey;
         this.profile = profile;
@@ -47,6 +52,7 @@ public class MemoUpdateInfo implements Dto {
         this.starFlag = starFlag;
         this.priority = priority;
         this.expectedFinishDate = expectedFinishDate;
+        this.brief = brief;
     }
 
     public LongIdKey getMemoKey() {
@@ -97,6 +103,14 @@ public class MemoUpdateInfo implements Dto {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "MemoUpdateInfo{" +
@@ -106,6 +120,7 @@ public class MemoUpdateInfo implements Dto {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

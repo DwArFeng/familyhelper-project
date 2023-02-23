@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonMemo implements Bean {
 
-    private static final long serialVersionUID = -5605431745233098237L;
+    private static final long serialVersionUID = 915985837045059008L;
 
     public static JSFixedFastJsonMemo of(Memo memo) {
         if (Objects.isNull(memo)) {
@@ -28,7 +28,7 @@ public class JSFixedFastJsonMemo implements Bean {
                     FastJsonStringIdKey.of(memo.getUserKey()),
                     memo.getProfile(), memo.getRemark(), memo.getStatus(), memo.getCreatedDate(),
                     memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority(),
-                    memo.getExpectedFinishDate()
+                    memo.getExpectedFinishDate(), memo.getBrief()
             );
         }
     }
@@ -66,13 +66,16 @@ public class JSFixedFastJsonMemo implements Bean {
     @JSONField(name = "expected_finish_date", ordinal = 11)
     private Date expectedFinishDate;
 
+    @JSONField(name = "brief", ordinal = 12)
+    private String brief;
+
     public JSFixedFastJsonMemo() {
     }
 
     public JSFixedFastJsonMemo(
             JSFixedFastJsonLongIdKey key, FastJsonStringIdKey userKey, String profile, String remark, int status,
             Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority,
-            Date expectedFinishDate
+            Date expectedFinishDate, String brief
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -85,6 +88,7 @@ public class JSFixedFastJsonMemo implements Bean {
         this.starFlag = starFlag;
         this.priority = priority;
         this.expectedFinishDate = expectedFinishDate;
+        this.brief = brief;
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
@@ -175,6 +179,14 @@ public class JSFixedFastJsonMemo implements Bean {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "JSFixedFastJsonMemo{" +
@@ -189,6 +201,7 @@ public class JSFixedFastJsonMemo implements Bean {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

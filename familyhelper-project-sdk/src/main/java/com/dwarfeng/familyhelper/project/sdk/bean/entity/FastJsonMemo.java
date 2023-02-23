@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class FastJsonMemo implements Bean {
 
-    private static final long serialVersionUID = 91519612017622112L;
+    private static final long serialVersionUID = -2783213939810333047L;
 
     public static FastJsonMemo of(Memo memo) {
         if (Objects.isNull(memo)) {
@@ -28,7 +28,7 @@ public class FastJsonMemo implements Bean {
                     FastJsonStringIdKey.of(memo.getUserKey()),
                     memo.getProfile(), memo.getRemark(), memo.getStatus(), memo.getCreatedDate(),
                     memo.getModifiedDate(), memo.getFinishedDate(), memo.isStarFlag(), memo.getPriority(),
-                    memo.getExpectedFinishDate()
+                    memo.getExpectedFinishDate(), memo.getBrief()
             );
         }
     }
@@ -66,13 +66,16 @@ public class FastJsonMemo implements Bean {
     @JSONField(name = "expected_finish_date", ordinal = 11)
     private Date expectedFinishDate;
 
+    @JSONField(name = "brief", ordinal = 12)
+    private String brief;
+
     public FastJsonMemo() {
     }
 
     public FastJsonMemo(
             FastJsonLongIdKey key, FastJsonStringIdKey userKey, String profile, String remark, int status,
             Date createdDate, Date modifiedDate, Date finishedDate, boolean starFlag, int priority,
-            Date expectedFinishDate
+            Date expectedFinishDate, String brief
     ) {
         this.key = key;
         this.userKey = userKey;
@@ -85,6 +88,7 @@ public class FastJsonMemo implements Bean {
         this.starFlag = starFlag;
         this.priority = priority;
         this.expectedFinishDate = expectedFinishDate;
+        this.brief = brief;
     }
 
     public FastJsonLongIdKey getKey() {
@@ -175,6 +179,14 @@ public class FastJsonMemo implements Bean {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "FastJsonMemo{" +
@@ -189,6 +201,7 @@ public class FastJsonMemo implements Bean {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

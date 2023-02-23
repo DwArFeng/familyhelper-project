@@ -16,8 +16,8 @@ import java.util.Set;
 @Table(name = "tbl_memo")
 public class HibernateMemo implements Bean {
 
-    private static final long serialVersionUID = 4943469525250500L;
-    
+    private static final long serialVersionUID = -6550451225439861474L;
+
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -58,6 +58,9 @@ public class HibernateMemo implements Bean {
     @Column(name = "expected_finish_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expectedFinishDate;
+
+    @Column(name = "brief", length = Constraints.LENGTH_BRIEF)
+    private String brief;
 
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateUser.class)
@@ -155,22 +158,6 @@ public class HibernateMemo implements Bean {
         this.finishedDate = finishedDate;
     }
 
-    public HibernateUser getUser() {
-        return user;
-    }
-
-    public void setUser(HibernateUser user) {
-        this.user = user;
-    }
-
-    public Set<HibernateMemoFileInfo> getMemoFileInfos() {
-        return memoFileInfos;
-    }
-
-    public void setMemoFileInfos(Set<HibernateMemoFileInfo> memoFileInfos) {
-        this.memoFileInfos = memoFileInfos;
-    }
-
     public boolean isStarFlag() {
         return starFlag;
     }
@@ -195,6 +182,30 @@ public class HibernateMemo implements Bean {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public HibernateUser getUser() {
+        return user;
+    }
+
+    public void setUser(HibernateUser user) {
+        this.user = user;
+    }
+
+    public Set<HibernateMemoFileInfo> getMemoFileInfos() {
+        return memoFileInfos;
+    }
+
+    public void setMemoFileInfos(Set<HibernateMemoFileInfo> memoFileInfos) {
+        this.memoFileInfos = memoFileInfos;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -209,6 +220,7 @@ public class HibernateMemo implements Bean {
                 "starFlag = " + starFlag + ", " +
                 "priority = " + priority + ", " +
                 "expectedFinishDate = " + expectedFinishDate + ", " +
+                "brief = " + brief + ", " +
                 "user = " + user + ")";
     }
 }

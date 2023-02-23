@@ -29,9 +29,14 @@ public final class Constraints {
     public static final int LENGTH_USER = 50;
 
     /**
-     * 简报的长度约束。
+     * 概要的长度约束。
      */
     public static final int LENGTH_PROFILE = 100;
+
+    /**
+     * 简报的长度约束。
+     */
+    public static final int LENGTH_BRIEF = 250;
 
     private Constraints() {
         throw new IllegalStateException("禁止实例化");

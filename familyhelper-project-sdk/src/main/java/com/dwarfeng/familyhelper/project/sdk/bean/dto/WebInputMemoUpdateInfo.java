@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class WebInputMemoUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = -6305723953849456377L;
+    private static final long serialVersionUID = 7544699999633927175L;
 
     public static MemoUpdateInfo toStackBean(WebInputMemoUpdateInfo webInputMemoUpdateInfo) {
         if (Objects.isNull(webInputMemoUpdateInfo)) {
@@ -32,7 +32,7 @@ public class WebInputMemoUpdateInfo implements Dto {
                     WebInputLongIdKey.toStackBean(webInputMemoUpdateInfo.getMemoKey()),
                     webInputMemoUpdateInfo.getProfile(), webInputMemoUpdateInfo.getRemark(),
                     webInputMemoUpdateInfo.isStarFlag(), webInputMemoUpdateInfo.getPriority(),
-                    webInputMemoUpdateInfo.getExpectedFinishDate()
+                    webInputMemoUpdateInfo.getExpectedFinishDate(), webInputMemoUpdateInfo.getBrief()
             );
         }
     }
@@ -60,6 +60,10 @@ public class WebInputMemoUpdateInfo implements Dto {
 
     @JSONField(name = "expected_finish_date")
     private Date expectedFinishDate;
+
+    @JSONField(name = "brief")
+    @Length(max = Constraints.LENGTH_BRIEF)
+    private String brief;
 
     public WebInputMemoUpdateInfo() {
     }
@@ -112,6 +116,14 @@ public class WebInputMemoUpdateInfo implements Dto {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemoUpdateInfo{" +
@@ -121,6 +133,7 @@ public class WebInputMemoUpdateInfo implements Dto {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

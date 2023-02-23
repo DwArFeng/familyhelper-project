@@ -6,6 +6,7 @@
 
 - 增加实体字段。
   - Memo.expectedFinishDate。
+  - Memo.brief。
 
 #### Bug修复
 

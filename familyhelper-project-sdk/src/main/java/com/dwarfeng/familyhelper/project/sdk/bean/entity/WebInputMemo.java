@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public class WebInputMemo implements Bean {
 
-    private static final long serialVersionUID = 6543557052616668705L;
+    private static final long serialVersionUID = -1788001083182304090L;
 
     public static Memo toStackBean(WebInputMemo webInputMemo) {
         if (Objects.isNull(webInputMemo)) {
@@ -34,7 +34,8 @@ public class WebInputMemo implements Bean {
                     WebInputStringIdKey.toStackBean(webInputMemo.getUserKey()),
                     webInputMemo.getProfile(), webInputMemo.getRemark(), webInputMemo.getStatus(),
                     webInputMemo.getCreatedDate(), webInputMemo.getModifiedDate(), webInputMemo.getFinishedDate(),
-                    webInputMemo.isStarFlag(), webInputMemo.getPriority(), webInputMemo.getExpectedFinishDate()
+                    webInputMemo.isStarFlag(), webInputMemo.getPriority(), webInputMemo.getExpectedFinishDate(),
+                    webInputMemo.getBrief()
             );
         }
     }
@@ -78,6 +79,10 @@ public class WebInputMemo implements Bean {
 
     @JSONField(name = "expected_finish_date")
     private Date expectedFinishDate;
+
+    @JSONField(name = "brief")
+    @Length(max = Constraints.LENGTH_BRIEF)
+    private String brief;
 
     public WebInputMemo() {
     }
@@ -170,6 +175,14 @@ public class WebInputMemo implements Bean {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemo{" +
@@ -184,6 +197,7 @@ public class WebInputMemo implements Bean {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }

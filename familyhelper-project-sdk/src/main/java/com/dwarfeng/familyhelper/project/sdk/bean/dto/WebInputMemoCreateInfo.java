@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class WebInputMemoCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 234489482855578536L;
+    private static final long serialVersionUID = -1653246252387053473L;
 
     public static MemoCreateInfo toStackBean(WebInputMemoCreateInfo webInputMemoCreateInfo) {
         if (Objects.isNull(webInputMemoCreateInfo)) {
@@ -32,7 +32,7 @@ public class WebInputMemoCreateInfo implements Dto {
                     WebInputStringIdKey.toStackBean(webInputMemoCreateInfo.getUserKey()),
                     webInputMemoCreateInfo.getProfile(), webInputMemoCreateInfo.getRemark(),
                     webInputMemoCreateInfo.isStarFlag(), webInputMemoCreateInfo.getPriority(),
-                    webInputMemoCreateInfo.getExpectedFinishDate()
+                    webInputMemoCreateInfo.getExpectedFinishDate(), webInputMemoCreateInfo.getBrief()
             );
         }
     }
@@ -60,6 +60,10 @@ public class WebInputMemoCreateInfo implements Dto {
 
     @JSONField(name = "expected_finish_date")
     private Date expectedFinishDate;
+
+    @JSONField(name = "brief")
+    @Length(max = Constraints.LENGTH_BRIEF)
+    private String brief;
 
     public WebInputMemoCreateInfo() {
     }
@@ -112,6 +116,14 @@ public class WebInputMemoCreateInfo implements Dto {
         this.expectedFinishDate = expectedFinishDate;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     @Override
     public String toString() {
         return "WebInputMemoCreateInfo{" +
@@ -121,6 +133,7 @@ public class WebInputMemoCreateInfo implements Dto {
                 ", starFlag=" + starFlag +
                 ", priority=" + priority +
                 ", expectedFinishDate=" + expectedFinishDate +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 }
