@@ -17,16 +17,16 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
- * 操作处理器验证器。
+ * 处理器验证器。
  *
  * <p>
  * 为操作处理器提供公共的验证方法。
  *
  * @author DwArFeng
- * @since 1.0.1
+ * @since 1.2.0
  */
 @Component
-public class OperateHandlerValidator {
+public class HandlerValidator {
 
     private final ProjectMaintainService projectMaintainService;
     private final TaskMaintainService taskMaintainService;
@@ -36,7 +36,7 @@ public class OperateHandlerValidator {
     private final PopMaintainService popMaintainService;
     private final PreTaskMaintainService preTaskMaintainService;
 
-    public OperateHandlerValidator(
+    public HandlerValidator(
             ProjectMaintainService projectMaintainService,
             TaskMaintainService taskMaintainService,
             MemoMaintainService memoMaintainService,

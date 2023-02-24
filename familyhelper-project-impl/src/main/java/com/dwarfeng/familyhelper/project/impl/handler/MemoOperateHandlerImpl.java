@@ -20,14 +20,14 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
     private final MemoMaintainService memoMaintainService;
 
-    private final OperateHandlerValidator operateHandlerValidator;
+    private final HandlerValidator handlerValidator;
 
     public MemoOperateHandlerImpl(
             MemoMaintainService memoMaintainService,
-            OperateHandlerValidator operateHandlerValidator
+            HandlerValidator handlerValidator
     ) {
         this.memoMaintainService = memoMaintainService;
-        this.operateHandlerValidator = operateHandlerValidator;
+        this.handlerValidator = handlerValidator;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
             StringIdKey targetUserKey = memoCreateInfo.getUserKey();
 
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
-            operateHandlerValidator.makeSureUserExists(targetUserKey);
+            handlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(targetUserKey);
 
             // 2. 确认用户一致。
-            operateHandlerValidator.makeSureUserIdentical(userKey, targetUserKey);
+            handlerValidator.makeSureUserIdentical(userKey, targetUserKey);
 
             // 3. 根据 memoCreateInfo 以及创建的规则组合备忘录实体。
             Date currentDate = new Date();
@@ -66,13 +66,13 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
             LongIdKey memoKey = memoUpdateInfo.getMemoKey();
 
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认备忘录存在。
-            operateHandlerValidator.makeSureMemoExists(memoKey);
+            handlerValidator.makeSureMemoExists(memoKey);
 
             // 3. 确认备忘录所属的用户与操作的用户一致。
-            operateHandlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
+            handlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
 
             // 4. 根据 memoUpdateInfo 以及更新的规则设置备忘录实体。
             Memo memo = memoMaintainService.get(memoKey);
@@ -97,13 +97,13 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
     public void removeMemo(StringIdKey userKey, LongIdKey memoKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认备忘录存在。
-            operateHandlerValidator.makeSureMemoExists(memoKey);
+            handlerValidator.makeSureMemoExists(memoKey);
 
             // 3. 确认备忘录所属的用户与操作的用户一致。
-            operateHandlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
+            handlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
 
             // 4. 删除指定的备忘录。
             memoMaintainService.delete(memoKey);
@@ -118,13 +118,13 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
     public void finishMemo(StringIdKey userKey, LongIdKey memoKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认备忘录存在。
-            operateHandlerValidator.makeSureMemoExists(memoKey);
+            handlerValidator.makeSureMemoExists(memoKey);
 
             // 3. 确认备忘录所属的用户与操作的用户一致。
-            operateHandlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
+            handlerValidator.makeSureUserIdenticalForMemo(userKey, memoKey);
 
             // 4. 设置备忘录属性，使其变为完成状态。
             Date currentDate = new Date();
@@ -146,7 +146,7 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
     public void removeFinishedMemos(StringIdKey userKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 查询指定的用户的所有已完成的备忘录。
             List<LongIdKey> memoKeys = memoMaintainService.lookup(

@@ -24,32 +24,32 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
     private final KeyFetcher<LongIdKey> keyFetcher;
 
-    private final OperateHandlerValidator operateHandlerValidator;
+    private final HandlerValidator handlerValidator;
 
     public MemoFileOperateHandlerImpl(
             MemoFileInfoMaintainService memoFileInfoMaintainService,
             FtpHandler ftpHandler,
             KeyFetcher<LongIdKey> keyFetcher,
-            OperateHandlerValidator operateHandlerValidator
+            HandlerValidator handlerValidator
     ) {
         this.memoFileInfoMaintainService = memoFileInfoMaintainService;
         this.ftpHandler = ftpHandler;
         this.keyFetcher = keyFetcher;
-        this.operateHandlerValidator = operateHandlerValidator;
+        this.handlerValidator = handlerValidator;
     }
 
     @Override
     public MemoFile downloadMemoFile(StringIdKey userKey, LongIdKey memoFileKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目文件存在。
-            operateHandlerValidator.makeSureMemoFileExists(memoFileKey);
+            handlerValidator.makeSureMemoFileExists(memoFileKey);
 
             // 3. 获取项目文件对应的项目，并确认用户有权限操作项目。
             MemoFileInfo memoFileInfo = memoFileInfoMaintainService.get(memoFileKey);
-            operateHandlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
+            handlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
 
             // 4. 下载项目文件。
             byte[] content = ftpHandler.getFileContent(
@@ -73,14 +73,14 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
     public void uploadMemoFile(StringIdKey userKey, MemoFileUploadInfo memoFileUploadInfo) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目文件所属的项目存在。
             LongIdKey memoKey = memoFileUploadInfo.getMemoKey();
-            operateHandlerValidator.makeSureMemoExists(memoKey);
+            handlerValidator.makeSureMemoExists(memoKey);
 
             // 3. 确认用户有权限操作项目。
-            operateHandlerValidator.makeSureUserPermittedForMemo(userKey, memoKey);
+            handlerValidator.makeSureUserPermittedForMemo(userKey, memoKey);
 
             // 4. 分配主键。
             LongIdKey memoFileKey = keyFetcher.fetchKey();
@@ -115,13 +115,13 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             LongIdKey memoFileKey = memoFileUpdateInfo.getMemoFileKey();
 
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目文件信息存在。
-            operateHandlerValidator.makeSureMemoFileExists(memoFileKey);
+            handlerValidator.makeSureMemoFileExists(memoFileKey);
 
             // 3. 确认用户有权限操作项目文件信息。
-            operateHandlerValidator.makeSureUserPermittedForMemoFileInfo(userKey, memoFileKey);
+            handlerValidator.makeSureUserPermittedForMemoFileInfo(userKey, memoFileKey);
 
             // 4. 项目文件内容并存储（覆盖）。
             byte[] content = memoFileUpdateInfo.getContent();
@@ -144,14 +144,14 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
     public void removeMemoFile(StringIdKey userKey, LongIdKey memoFileKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目文件存在。
-            operateHandlerValidator.makeSureMemoFileExists(memoFileKey);
+            handlerValidator.makeSureMemoFileExists(memoFileKey);
 
             // 3. 获取项目文件对应的项目，并确认用户有权限操作项目。
             MemoFileInfo memoFileInfo = memoFileInfoMaintainService.get(memoFileKey);
-            operateHandlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
+            handlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
 
             // 4. 如果存在 MemoFile 文件，则删除。
             if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey))) {

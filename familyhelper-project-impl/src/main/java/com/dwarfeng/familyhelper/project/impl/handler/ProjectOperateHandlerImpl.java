@@ -25,16 +25,16 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
     private final ProjectMaintainService projectMaintainService;
     private final PopMaintainService popMaintainService;
 
-    private final OperateHandlerValidator operateHandlerValidator;
+    private final HandlerValidator handlerValidator;
 
     public ProjectOperateHandlerImpl(
             ProjectMaintainService projectMaintainService,
             PopMaintainService popMaintainService,
-            OperateHandlerValidator operateHandlerValidator
+            HandlerValidator handlerValidator
     ) {
         this.projectMaintainService = projectMaintainService;
         this.popMaintainService = popMaintainService;
-        this.operateHandlerValidator = operateHandlerValidator;
+        this.handlerValidator = handlerValidator;
     }
 
     @Override
@@ -44,10 +44,10 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             int status = projectCreateInfo.getStatus();
 
             // 1. 确认 status 有效。
-            operateHandlerValidator.makeSureProjectStatusValid(status);
+            handlerValidator.makeSureProjectStatusValid(status);
 
             // 2. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 3. 根据 projectCreateInfo 以及创建的规则组合 资产目录 实体。
             Project project = new Project(
@@ -83,16 +83,16 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             int status = projectUpdateInfo.getStatus();
 
             // 1. 确认 status 有效。
-            operateHandlerValidator.makeSureProjectStatusValid(status);
+            handlerValidator.makeSureProjectStatusValid(status);
 
             // 2. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 3. 确认工程存在。
-            operateHandlerValidator.makeSureProjectExists(projectKey);
+            handlerValidator.makeSureProjectExists(projectKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
+            handlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
 
             // 5. 根据 projectUpdateInfo 以及更新的规则设置 资产目录 实体。
             Project project = projectMaintainService.get(projectKey);
@@ -112,13 +112,13 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
     public void removeProject(StringIdKey userKey, LongIdKey projectKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认资产目录存在。
-            operateHandlerValidator.makeSureProjectExists(projectKey);
+            handlerValidator.makeSureProjectExists(projectKey);
 
             // 3. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
+            handlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
 
             // 4. 删除指定主键的资产目录。
             projectMaintainService.delete(projectKey);
@@ -143,17 +143,17 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             }
 
             // 2. 确认 permissionLevel 有效。
-            operateHandlerValidator.makeSurePermissionLevelValid(permissionLevel);
+            handlerValidator.makeSurePermissionLevelValid(permissionLevel);
 
             // 3. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(ownerUserKey);
-            operateHandlerValidator.makeSureUserExists(targetUserKey);
+            handlerValidator.makeSureUserExists(ownerUserKey);
+            handlerValidator.makeSureUserExists(targetUserKey);
 
             // 4. 确认资产目录存在。
-            operateHandlerValidator.makeSureProjectExists(projectKey);
+            handlerValidator.makeSureProjectExists(projectKey);
 
             // 5. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
+            handlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
 
             // 6. 通过入口信息组合权限实体，并进行插入或更新操作。
             String permissionLabel;
@@ -193,14 +193,14 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             }
 
             // 2. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(ownerUserKey);
-            operateHandlerValidator.makeSureUserExists(targetUserKey);
+            handlerValidator.makeSureUserExists(ownerUserKey);
+            handlerValidator.makeSureUserExists(targetUserKey);
 
             // 3. 确认资产目录存在。
-            operateHandlerValidator.makeSureProjectExists(projectKey);
+            handlerValidator.makeSureProjectExists(projectKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
+            handlerValidator.makeSureUserPermittedForProject(ownerUserKey, projectKey);
 
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PopKey popKey = new PopKey(projectKey.getLongId(), targetUserKey.getStringId());

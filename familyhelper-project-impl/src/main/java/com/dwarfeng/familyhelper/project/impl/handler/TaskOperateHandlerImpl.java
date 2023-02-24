@@ -19,14 +19,14 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
     private final TaskMaintainService taskMaintainService;
 
-    private final OperateHandlerValidator operateHandlerValidator;
+    private final HandlerValidator handlerValidator;
 
     public TaskOperateHandlerImpl(
             TaskMaintainService taskMaintainService,
-            OperateHandlerValidator operateHandlerValidator
+            HandlerValidator handlerValidator
     ) {
         this.taskMaintainService = taskMaintainService;
-        this.operateHandlerValidator = operateHandlerValidator;
+        this.handlerValidator = handlerValidator;
     }
 
     @Override
@@ -35,13 +35,13 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
             LongIdKey projectKey = taskCreateInfo.getProjectKey();
 
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认工程存在。
-            operateHandlerValidator.makeSureProjectExists(projectKey);
+            handlerValidator.makeSureProjectExists(projectKey);
 
             // 3. 确认用户有权限操作指定的工程。
-            operateHandlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
+            handlerValidator.makeSureUserPermittedForProject(userKey, projectKey);
 
             // 4. 根据 taskCreateInfo 以及创建的规则组合任务实体。
             Date currentDate = new Date();
@@ -66,13 +66,13 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
             LongIdKey taskKey = taskUpdateInfo.getTaskKey();
 
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认任务存在。
-            operateHandlerValidator.makeSureTaskExists(taskKey);
+            handlerValidator.makeSureTaskExists(taskKey);
 
             // 3. 确认用户有权限操作指定的银行卡。
-            operateHandlerValidator.makeSureUserPermittedForTask(userKey, taskKey);
+            handlerValidator.makeSureUserPermittedForTask(userKey, taskKey);
 
             // 4. 根据 taskUpdateInfo 以及更新的规则设置任务实体。
             Task task = taskMaintainService.get(taskKey);
@@ -96,16 +96,16 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
     public void removeTask(StringIdKey userKey, LongIdKey taskKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            operateHandlerValidator.makeSureUserExists(userKey);
+            handlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认任务存在。
-            operateHandlerValidator.makeSureTaskExists(taskKey);
+            handlerValidator.makeSureTaskExists(taskKey);
 
             // 3. 确认用户有权限操作指定的银行卡。
-            operateHandlerValidator.makeSureUserPermittedForTask(userKey, taskKey);
+            handlerValidator.makeSureUserPermittedForTask(userKey, taskKey);
 
             // 4. 确认此任务没有任何后置任务，以保证任务删除后其它的任务状态不受影响。
-            operateHandlerValidator.markSurePostTaskNotExists(taskKey);
+            handlerValidator.markSurePostTaskNotExists(taskKey);
 
             // 5. 删除指定的任务。
             taskMaintainService.delete(taskKey);
