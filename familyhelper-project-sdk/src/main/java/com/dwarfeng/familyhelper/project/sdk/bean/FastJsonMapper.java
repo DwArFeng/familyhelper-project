@@ -17,7 +17,7 @@ import org.mapstruct.Mapper;
  * FastJson Bean 映射器。
  *
  * @author DwArFeng
- * @since 1.4.0
+ * @since 1.2.0
  */
 @Mapper
 public interface FastJsonMapper {
@@ -81,4 +81,16 @@ public interface FastJsonMapper {
 
     @InheritInverseConfiguration
     User userFromFastJson(FastJsonUser fastJsonUser);
+
+    FastJsonMemoRemindDriverInfo memoRemindDriverInfoToFastJson(MemoRemindDriverInfo memoRemindDriverInfo);
+
+    @InheritInverseConfiguration
+    MemoRemindDriverInfo memoRemindDriverInfoFromFastJson(FastJsonMemoRemindDriverInfo fastJsonMemoRemindDriverInfo);
+
+    FastJsonMemoRemindDriverSupport memoRemindDriverSupportToFastJson(MemoRemindDriverSupport memoRemindDriverSupport);
+
+    @InheritInverseConfiguration
+    MemoRemindDriverSupport memoRemindDriverSupportFromFastJson(
+            FastJsonMemoRemindDriverSupport fastJsonMemoRemindDriverSupport
+    );
 }

@@ -7,10 +7,7 @@ import com.dwarfeng.familyhelper.project.impl.service.operation.UserCrudOperatio
 import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
-import com.dwarfeng.familyhelper.project.stack.cache.MemoFileInfoCache;
-import com.dwarfeng.familyhelper.project.stack.cache.PopCache;
-import com.dwarfeng.familyhelper.project.stack.cache.PreTaskCache;
-import com.dwarfeng.familyhelper.project.stack.cache.TaskTypeIndicatorCache;
+import com.dwarfeng.familyhelper.project.stack.cache.*;
 import com.dwarfeng.familyhelper.project.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
@@ -46,6 +43,10 @@ public class ServiceConfiguration {
     private final MemoDao memoDao;
     private final MemoFileInfoDao memoFileInfoDao;
     private final MemoFileInfoCache memoFileInfoCache;
+    private final MemoRemindDriverInfoDao memoRemindDriverInfoDao;
+    private final MemoRemindDriverInfoCache memoRemindDriverInfoCache;
+    private final MemoRemindDriverSupportDao memoRemindDriverSupportDao;
+    private final MemoRemindDriverSupportCache memoRemindDriverSupportCache;
 
     @Value("${cache.timeout.entity.pop}")
     private long popTimeout;
@@ -55,6 +56,10 @@ public class ServiceConfiguration {
     private long preTaskTimeout;
     @Value("${cache.timeout.entity.memo_file_info}")
     private long memoFileInfoTimeout;
+    @Value("${cache.timeout.entity.memo_remind_driver_info}")
+    private long memoRemindDriverInfoTimeout;
+    @Value("${cache.timeout.entity.memo_remind_driver_support}")
+    private long memoRemindDriverSupportTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -65,7 +70,9 @@ public class ServiceConfiguration {
             TaskCrudOperation taskCrudOperation, TaskDao taskDao,
             PreTaskDao preTaskDao, PreTaskCache preTaskCache,
             MemoCrudOperation memoCrudOperation, MemoDao memoDao,
-            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache
+            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache,
+            MemoRemindDriverInfoDao memoRemindDriverInfoDao, MemoRemindDriverInfoCache memoRemindDriverInfoCache,
+            MemoRemindDriverSupportDao memoRemindDriverSupportDao, MemoRemindDriverSupportCache memoRemindDriverSupportCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.projectCrudOperation = projectCrudOperation;
@@ -83,6 +90,10 @@ public class ServiceConfiguration {
         this.memoDao = memoDao;
         this.memoFileInfoDao = memoFileInfoDao;
         this.memoFileInfoCache = memoFileInfoCache;
+        this.memoRemindDriverInfoDao = memoRemindDriverInfoDao;
+        this.memoRemindDriverInfoCache = memoRemindDriverInfoCache;
+        this.memoRemindDriverSupportDao = memoRemindDriverSupportDao;
+        this.memoRemindDriverSupportCache = memoRemindDriverSupportCache;
     }
 
     @Bean
@@ -291,6 +302,66 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<MemoFileInfo> memoFileInfoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 memoFileInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, MemoRemindDriverInfo> memoRemindDriverInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                memoRemindDriverInfoDao,
+                memoRemindDriverInfoCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                memoRemindDriverInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MemoRemindDriverInfo> memoRemindDriverInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                memoRemindDriverInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MemoRemindDriverInfo> memoRemindDriverInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                memoRemindDriverInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, MemoRemindDriverSupport> memoRemindDriverSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                memoRemindDriverSupportDao,
+                memoRemindDriverSupportCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                memoRemindDriverSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MemoRemindDriverSupport> memoRemindDriverSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                memoRemindDriverSupportDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MemoRemindDriverSupport> memoRemindDriverSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                memoRemindDriverSupportDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

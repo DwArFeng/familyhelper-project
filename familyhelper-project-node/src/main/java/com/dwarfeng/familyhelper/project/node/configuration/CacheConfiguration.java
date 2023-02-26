@@ -39,6 +39,10 @@ public class CacheConfiguration {
     private String memoPrefix;
     @Value("${cache.prefix.entity.memo_file_info}")
     private String memoFileInfoPrefix;
+    @Value("${cache.prefix.entity.memo_remind_driver_info}")
+    private String memoRemindDriverInfoPrefix;
+    @Value("${cache.prefix.entity.memo_remind_driver_support}")
+    private String memoRemindDriverSupportPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -124,6 +128,32 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonMemoFileInfo>) template,
                 new LongIdStringKeyFormatter(memoFileInfoPrefix),
                 new MapStructBeanTransformer<>(MemoFileInfo.class, FastJsonMemoFileInfo.class, FastJsonMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, MemoRemindDriverInfo, FastJsonMemoRemindDriverInfo>
+    memoRemindDriverInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMemoRemindDriverInfo>) template,
+                new LongIdStringKeyFormatter(memoRemindDriverInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverInfo.class, FastJsonMemoRemindDriverInfo.class, FastJsonMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, MemoRemindDriverSupport, FastJsonMemoRemindDriverSupport>
+    memoRemindDriverSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMemoRemindDriverSupport>) template,
+                new StringIdStringKeyFormatter(memoRemindDriverSupportPrefix),
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverSupport.class, FastJsonMemoRemindDriverSupport.class, FastJsonMapper.class
+                )
         );
     }
 }

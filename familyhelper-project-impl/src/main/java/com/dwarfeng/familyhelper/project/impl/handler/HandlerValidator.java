@@ -1,10 +1,7 @@
 package com.dwarfeng.familyhelper.project.impl.handler;
 
 import com.dwarfeng.familyhelper.project.sdk.util.Constants;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.Pop;
-import com.dwarfeng.familyhelper.project.stack.bean.entity.Task;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.exception.*;
 import com.dwarfeng.familyhelper.project.stack.service.*;
@@ -35,6 +32,7 @@ public class HandlerValidator {
     private final UserMaintainService userMaintainService;
     private final PopMaintainService popMaintainService;
     private final PreTaskMaintainService preTaskMaintainService;
+    private final MemoRemindDriverInfoMaintainService memoRemindDriverInfoMaintainService;
 
     public HandlerValidator(
             ProjectMaintainService projectMaintainService,
@@ -43,7 +41,8 @@ public class HandlerValidator {
             MemoFileInfoMaintainService memoFileInfoMaintainService,
             UserMaintainService userMaintainService,
             PopMaintainService popMaintainService,
-            PreTaskMaintainService preTaskMaintainService
+            PreTaskMaintainService preTaskMaintainService,
+            MemoRemindDriverInfoMaintainService memoRemindDriverInfoMaintainService
     ) {
         this.projectMaintainService = projectMaintainService;
         this.taskMaintainService = taskMaintainService;
@@ -52,6 +51,7 @@ public class HandlerValidator {
         this.userMaintainService = userMaintainService;
         this.popMaintainService = popMaintainService;
         this.preTaskMaintainService = preTaskMaintainService;
+        this.memoRemindDriverInfoMaintainService = memoRemindDriverInfoMaintainService;
     }
 
     public void makeSureProjectExists(LongIdKey projectKey) throws HandlerException {
@@ -221,6 +221,50 @@ public class HandlerValidator {
 
             // 2. 取出备忘录的账本外键，备忘录的用户是否与操作用户一致。
             makeSureUserIdentical(userKey, memo.getUserKey());
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMemoRemindDriverInfoExists(LongIdKey memoRemindDriverInfoKey) throws HandlerException {
+        try {
+            if (!memoRemindDriverInfoMaintainService.exists(memoRemindDriverInfoKey)) {
+                throw new MemoRemindDriverInfoNotExistsException(memoRemindDriverInfoKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMemoRemindDriverInfoValid(LongIdKey memoRemindDriverInfoKey) throws HandlerException {
+        try {
+            if (!memoRemindDriverInfoMaintainService.exists(memoRemindDriverInfoKey)) {
+                throw new MemoRemindDriverInfoNotExistsException(memoRemindDriverInfoKey);
+            }
+            MemoRemindDriverInfo memoRemindDriverInfo = memoRemindDriverInfoMaintainService.get(
+                    memoRemindDriverInfoKey
+            );
+            if (!memoRemindDriverInfo.isEnabled()) {
+                throw new MemoRemindDriverInfoDisabledException(memoRemindDriverInfoKey);
+            }
+            LongIdKey memoKey = memoRemindDriverInfo.getMemoKey();
+            if (Objects.isNull(memoKey) || !memoMaintainService.exists(memoKey)) {
+                throw new MemoNotExistsException(memoKey);
+            }
+            Memo memo = memoMaintainService.get(memoKey);
+            if (memo.getStatus() != Constants.MEMO_STATUS_IN_PROGRESS) {
+                throw new InvalidMemoRemindDriverInfoParentException(
+                        memoRemindDriverInfoKey,
+                        InvalidMemoRemindDriverInfoParentException.InvalidCause.PARENT_STATUS_INVALID
+                );
+            }
+            StringIdKey parentUserKey = memo.getUserKey();
+            if (Objects.isNull(parentUserKey) || !userMaintainService.exists(parentUserKey)) {
+                throw new InvalidMemoRemindDriverInfoParentException(
+                        memoRemindDriverInfoKey,
+                        InvalidMemoRemindDriverInfoParentException.InvalidCause.PARENT_USER_INVALID
+                );
+            }
         } catch (ServiceException e) {
             throw new HandlerException(e);
         }

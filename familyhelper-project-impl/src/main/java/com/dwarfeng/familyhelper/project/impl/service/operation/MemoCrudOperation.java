@@ -2,11 +2,15 @@ package com.dwarfeng.familyhelper.project.impl.service.operation;
 
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo;
+import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoRemindDriverInfo;
 import com.dwarfeng.familyhelper.project.stack.cache.MemoCache;
 import com.dwarfeng.familyhelper.project.stack.cache.MemoFileInfoCache;
+import com.dwarfeng.familyhelper.project.stack.cache.MemoRemindDriverInfoCache;
 import com.dwarfeng.familyhelper.project.stack.dao.MemoDao;
 import com.dwarfeng.familyhelper.project.stack.dao.MemoFileInfoDao;
+import com.dwarfeng.familyhelper.project.stack.dao.MemoRemindDriverInfoDao;
 import com.dwarfeng.familyhelper.project.stack.service.MemoFileInfoMaintainService;
+import com.dwarfeng.familyhelper.project.stack.service.MemoRemindDriverInfoMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -26,17 +30,23 @@ public class MemoCrudOperation implements BatchCrudOperation<LongIdKey, Memo> {
     private final MemoFileInfoDao memoFileInfoDao;
     private final MemoFileInfoCache memoFileInfoCache;
 
+    private final MemoRemindDriverInfoDao memoRemindDriverInfoDao;
+    private final MemoRemindDriverInfoCache memoRemindDriverInfoCache;
+
     @Value("${cache.timeout.entity.memo}")
     private long memoTimeout;
 
     public MemoCrudOperation(
             MemoDao memoDao, MemoCache memoCache,
-            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache
+            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache,
+            MemoRemindDriverInfoDao memoRemindDriverInfoDao, MemoRemindDriverInfoCache memoRemindDriverInfoCache
     ) {
         this.memoDao = memoDao;
         this.memoCache = memoCache;
         this.memoFileInfoDao = memoFileInfoDao;
         this.memoFileInfoCache = memoFileInfoCache;
+        this.memoRemindDriverInfoDao = memoRemindDriverInfoDao;
+        this.memoRemindDriverInfoCache = memoRemindDriverInfoCache;
     }
 
     @Override
@@ -78,6 +88,13 @@ public class MemoCrudOperation implements BatchCrudOperation<LongIdKey, Memo> {
         ).stream().map(MemoFileInfo::getKey).collect(Collectors.toList());
         memoFileInfoCache.batchDelete(memoFileInfoKeys);
         memoFileInfoDao.batchDelete(memoFileInfoKeys);
+
+        // 查找并删除所有相关的备忘录提醒驱动信息。
+        List<LongIdKey> memoRemindDriverInfoKeys = memoRemindDriverInfoDao.lookup(
+                MemoRemindDriverInfoMaintainService.CHILD_FOR_MEMO, new Object[]{key}
+        ).stream().map(MemoRemindDriverInfo::getKey).collect(Collectors.toList());
+        memoRemindDriverInfoCache.batchDelete(memoRemindDriverInfoKeys);
+        memoRemindDriverInfoDao.batchDelete(memoRemindDriverInfoKeys);
 
         // 删除账本实体自身。
         memoCache.delete(key);

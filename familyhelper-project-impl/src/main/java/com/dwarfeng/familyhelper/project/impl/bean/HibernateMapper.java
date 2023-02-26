@@ -18,7 +18,7 @@ import org.mapstruct.Mapping;
  * Hibernate Bean 映射器。
  *
  * @author DwArFeng
- * @since 1.4.0
+ * @since 1.2.0
  */
 @Mapper
 public interface HibernateMapper {
@@ -45,6 +45,7 @@ public interface HibernateMapper {
 
     @Mapping(target = "userStringId", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "memoRemindDriverInfos", ignore = true)
     @Mapping(target = "memoFileInfos", ignore = true)
     @Mapping(target = "longId", ignore = true)
     HibernateMemo memoToHibernate(Memo memo);
@@ -109,4 +110,22 @@ public interface HibernateMapper {
 
     @InheritInverseConfiguration
     User userFromHibernate(HibernateUser hibernateUser);
+
+    @Mapping(target = "memoLongId", ignore = true)
+    @Mapping(target = "memo", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateMemoRemindDriverInfo memoRemindDriverInfoToHibernate(MemoRemindDriverInfo memoRemindDriverInfo);
+
+    @InheritInverseConfiguration
+    MemoRemindDriverInfo memoRemindDriverInfoFromHibernate(HibernateMemoRemindDriverInfo hibernateMemoRemindDriverInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateMemoRemindDriverSupport memoRemindDriverSupportToHibernate(
+            MemoRemindDriverSupport memoRemindDriverSupport
+    );
+
+    @InheritInverseConfiguration
+    MemoRemindDriverSupport memoRemindDriverSupportFromHibernate(
+            HibernateMemoRemindDriverSupport hibernateMemoRemindDriverSupport
+    );
 }

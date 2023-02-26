@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "tbl_memo")
 public class HibernateMemo implements Bean {
 
-    private static final long serialVersionUID = -6550451225439861474L;
+    private static final long serialVersionUID = 2637104015860404746L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -72,6 +72,9 @@ public class HibernateMemo implements Bean {
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMemoFileInfo.class, mappedBy = "memo")
     private Set<HibernateMemoFileInfo> memoFileInfos = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMemoRemindDriverInfo.class, mappedBy = "memo")
+    private Set<HibernateMemoRemindDriverInfo> memoRemindDriverInfos = new HashSet<>();
 
     public HibernateMemo() {
     }
@@ -204,6 +207,14 @@ public class HibernateMemo implements Bean {
 
     public void setMemoFileInfos(Set<HibernateMemoFileInfo> memoFileInfos) {
         this.memoFileInfos = memoFileInfos;
+    }
+
+    public Set<HibernateMemoRemindDriverInfo> getMemoRemindDriverInfos() {
+        return memoRemindDriverInfos;
+    }
+
+    public void setMemoRemindDriverInfos(Set<HibernateMemoRemindDriverInfo> memoRemindDriverInfos) {
+        this.memoRemindDriverInfos = memoRemindDriverInfos;
     }
 
     @Override

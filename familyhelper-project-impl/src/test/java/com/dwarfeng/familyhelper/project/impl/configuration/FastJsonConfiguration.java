@@ -22,6 +22,8 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonPreTask.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonMemo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonMemoFileInfo.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonMemoRemindDriverInfo.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonMemoRemindDriverSupport.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

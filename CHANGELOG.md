@@ -4,6 +4,21 @@
 
 #### 功能构建
 
+- 增加备忘录的提醒机制。
+
+- 增加事件推送机制。
+
+- 增加重置机制。
+
+- 增加运维指令。
+  - com.dwarfeng.familyhelper.project.impl.service.telqos.MemoRemindDriveCommand。
+  - com.dwarfeng.familyhelper.project.impl.service.telqos.MemoRemindDriveLocalCacheCommand。
+  - com.dwarfeng.familyhelper.project.impl.service.telqos.ResetCommand。
+
+- 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.MemoRemindDriverInfo。
+  - com.dwarfeng.familyhelper.project.stack.bean.entity.MemoRemindDriverSupport。
+
 - 增加实体字段。
   - Memo.expectedFinishDate。
   - Memo.brief。

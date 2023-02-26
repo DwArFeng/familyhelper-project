@@ -33,6 +33,8 @@ public class DaoConfiguration {
     private final PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker;
     private final MemoPresetCriteriaMaker memoPresetCriteriaMaker;
     private final MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker;
+    private final MemoRemindDriverInfoPresetCriteriaMaker memoRemindDriverInfoPresetCriteriaMaker;
+    private final MemoRemindDriverSupportPresetCriteriaMaker memoRemindDriverSupportPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -44,7 +46,9 @@ public class DaoConfiguration {
             TaskPresetCriteriaMaker taskPresetCriteriaMaker,
             PreTaskPresetCriteriaMaker preTaskPresetCriteriaMaker,
             MemoPresetCriteriaMaker memoPresetCriteriaMaker,
-            MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker
+            MemoFileInfoPresetCriteriaMaker memoFileInfoPresetCriteriaMaker,
+            MemoRemindDriverInfoPresetCriteriaMaker memoRemindDriverInfoPresetCriteriaMaker,
+            MemoRemindDriverSupportPresetCriteriaMaker memoRemindDriverSupportPresetCriteriaMaker
     ) {
         this.template = template;
         this.projectPresetCriteriaMaker = projectPresetCriteriaMaker;
@@ -53,6 +57,8 @@ public class DaoConfiguration {
         this.preTaskPresetCriteriaMaker = preTaskPresetCriteriaMaker;
         this.memoPresetCriteriaMaker = memoPresetCriteriaMaker;
         this.memoFileInfoPresetCriteriaMaker = memoFileInfoPresetCriteriaMaker;
+        this.memoRemindDriverInfoPresetCriteriaMaker = memoRemindDriverInfoPresetCriteriaMaker;
+        this.memoRemindDriverSupportPresetCriteriaMaker = memoRemindDriverSupportPresetCriteriaMaker;
     }
 
     @Bean
@@ -282,6 +288,86 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(MemoFileInfo.class, HibernateMemoFileInfo.class, HibernateMapper.class),
                 HibernateMemoFileInfo.class,
                 memoFileInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, MemoRemindDriverInfo, HibernateMemoRemindDriverInfo>
+    memoRemindDriverInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverInfo.class, HibernateMemoRemindDriverInfo.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MemoRemindDriverInfo, HibernateMemoRemindDriverInfo>
+    memoRemindDriverInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverInfo.class, HibernateMemoRemindDriverInfo.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MemoRemindDriverInfo, HibernateMemoRemindDriverInfo>
+    memoRemindDriverInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverInfo.class, HibernateMemoRemindDriverInfo.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverInfo.class,
+                memoRemindDriverInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, MemoRemindDriverSupport, HibernateMemoRemindDriverSupport>
+    memoRemindDriverSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverSupport.class, HibernateMemoRemindDriverSupport.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MemoRemindDriverSupport, HibernateMemoRemindDriverSupport>
+    memoRemindDriverSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverSupport.class, HibernateMemoRemindDriverSupport.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MemoRemindDriverSupport, HibernateMemoRemindDriverSupport>
+    memoRemindDriverSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MemoRemindDriverSupport.class, HibernateMemoRemindDriverSupport.class, HibernateMapper.class
+                ),
+                HibernateMemoRemindDriverSupport.class,
+                memoRemindDriverSupportPresetCriteriaMaker
         );
     }
 }

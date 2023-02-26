@@ -34,6 +34,16 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(90), "invalid memo file status");
     public static final ServiceException.Code MEMO_FILE_NOT_EXISTS =
             new ServiceException.Code(offset(100), "memo file not exists");
+    public static final ServiceException.Code MEMO_REMIND_DRIVER_FAILED =
+            new ServiceException.Code(offset(110), "memo remind driver failed");
+    public static final ServiceException.Code MEMO_REMIND_DRIVER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(111), "memo remind driver type unsupported");
+    public static final ServiceException.Code MEMO_REMIND_DRIVER_INFO_NOT_EXISTS =
+            new ServiceException.Code(offset(120), "memo remind driver info not exists");
+    public static final ServiceException.Code MEMO_REMIND_DRIVER_INFO_DISABLED =
+            new ServiceException.Code(offset(130), "memo remind driver info disabled");
+    public static final ServiceException.Code INVALID_MEMO_REMIND_DRIVER_INFO_PARENT =
+            new ServiceException.Code(offset(140), "invalid memo remind driver info parent");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -69,6 +79,11 @@ public final class ServiceExceptionCodes {
         USER_NOT_IDENTICAL.setCode(80);
         INVALID_MEMO_FILE_STATUS.setCode(90);
         MEMO_FILE_NOT_EXISTS.setCode(100);
+        MEMO_REMIND_DRIVER_FAILED.setCode(110);
+        MEMO_REMIND_DRIVER_TYPE_UNSUPPORTED.setCode(111);
+        MEMO_REMIND_DRIVER_INFO_NOT_EXISTS.setCode(120);
+        MEMO_REMIND_DRIVER_INFO_DISABLED.setCode(130);
+        INVALID_MEMO_REMIND_DRIVER_INFO_PARENT.setCode(140);
     }
 
     private ServiceExceptionCodes() {

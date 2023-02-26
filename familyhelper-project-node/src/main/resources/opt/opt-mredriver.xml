@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!-- 扫描 handler 的实现包。 -->
+    <context:component-scan
+            base-package="com.dwarfeng.familyhelper.project.impl.handler.mredriver"
+            use-default-filters="false"
+    >
+        <!-- 加载 CronMemoRemindDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.CronMemoRemindDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.CronMemoRemindDriverSupporter"
+        />
+        -->
+
+        <!-- 加载 FixedDelayMemoRemindDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.FixedDelayMemoRemindDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.FixedDelayMemoRemindDriverSupporter"
+        />
+        -->
+
+        <!-- 加载 FixedRateMemoRemindDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.FixedRateMemoRemindDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.familyhelper.project.impl.handler.mredriver.FixedRateMemoRemindDriverSupporter"
+        />
+        -->
+    </context:component-scan>
+</beans>

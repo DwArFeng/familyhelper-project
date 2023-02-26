@@ -28,6 +28,11 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(UserNotIdenticalException.class, ServiceExceptionCodes.USER_NOT_IDENTICAL);
         destination.put(IllegalMemoFileStateException.class, ServiceExceptionCodes.INVALID_MEMO_FILE_STATUS);
         destination.put(MemoFileNotExistsException.class, ServiceExceptionCodes.MEMO_FILE_NOT_EXISTS);
+        destination.put(MemoRemindDriverException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_FAILED);
+        destination.put(UnsupportedMemoRemindDriverTypeException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_TYPE_UNSUPPORTED);
+        destination.put(MemoRemindDriverInfoNotExistsException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_INFO_NOT_EXISTS);
+        destination.put(MemoRemindDriverInfoDisabledException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_INFO_DISABLED);
+        destination.put(InvalidMemoRemindDriverInfoParentException.class, ServiceExceptionCodes.INVALID_MEMO_REMIND_DRIVER_INFO_PARENT);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }
