@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.project.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.project.sdk.util.Constraints;
+import com.dwarfeng.familyhelper.project.sdk.util.ValidMemoStatus;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
@@ -59,6 +60,7 @@ public class WebInputMemo implements Bean {
     private String remark;
 
     @JSONField(name = "status")
+    @ValidMemoStatus
     private int status;
 
     @JSONField(name = "created_date")

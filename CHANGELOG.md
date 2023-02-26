@@ -4,6 +4,11 @@
 
 #### 功能构建
 
+- 优化常量类结构。
+
+- 增加有效性验证注解。
+  - com.dwarfeng.familyhelper.project.sdk.util.ValidMemoStatus。
+
 - 增加备忘录的提醒机制。
 
 - 增加事件推送机制。
