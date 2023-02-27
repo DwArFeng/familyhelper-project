@@ -20,7 +20,7 @@ public class CronMemoRemindDriverConfig implements Bean {
     @JSONField(name = "time_range_type", ordinal = 1)
     private int timeRangeType;
 
-    @JSONField(name = "#time_range_type", ordinal = 2)
+    @JSONField(name = "#time_range_type", ordinal = 2, deserialize = false)
     private String timeRangeTypeRem = String.format(
             "%d: 任何时间提醒; %d: 早于预期结束时间时提醒; %d: 晚于预期结束时间时提醒",
             TIME_RANGE_TYPE_ALL,
