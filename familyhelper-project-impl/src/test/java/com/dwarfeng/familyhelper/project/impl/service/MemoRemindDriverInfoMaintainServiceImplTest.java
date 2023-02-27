@@ -36,7 +36,7 @@ public class MemoRemindDriverInfoMaintainServiceImplTest {
         memoRemindDriverInfos = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             MemoRemindDriverInfo memoRemindDriverInfo = new MemoRemindDriverInfo(
-                    null, null, true, "message", "type", "param", "remark"
+                    null, null, true, "type", "param", "message", "remark"
             );
             memoRemindDriverInfos.add(memoRemindDriverInfo);
         }

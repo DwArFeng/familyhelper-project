@@ -24,8 +24,8 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
             return new JSFixedFastJsonMemoRemindDriverInfo(
                     JSFixedFastJsonLongIdKey.of(memoRemindDriverInfo.getKey()),
                     JSFixedFastJsonLongIdKey.of(memoRemindDriverInfo.getMemoKey()),
-                    memoRemindDriverInfo.isEnabled(), memoRemindDriverInfo.getMessage(), memoRemindDriverInfo.getType(),
-                    memoRemindDriverInfo.getParam(), memoRemindDriverInfo.getRemark()
+                    memoRemindDriverInfo.isEnabled(), memoRemindDriverInfo.getType(), memoRemindDriverInfo.getParam(),
+                    memoRemindDriverInfo.getMessage(), memoRemindDriverInfo.getRemark()
             );
         }
     }
@@ -39,14 +39,14 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
     @JSONField(name = "enabled", ordinal = 3)
     private boolean enabled;
 
-    @JSONField(name = "message", ordinal = 4)
-    private String message;
-
-    @JSONField(name = "type", ordinal = 5)
+    @JSONField(name = "type", ordinal = 4)
     private String type;
 
-    @JSONField(name = "param", ordinal = 6)
+    @JSONField(name = "param", ordinal = 5)
     private String param;
+
+    @JSONField(name = "message", ordinal = 6)
+    private String message;
 
     @JSONField(name = "remark", ordinal = 7)
     private String remark;
@@ -55,15 +55,15 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
     }
 
     public JSFixedFastJsonMemoRemindDriverInfo(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey memoKey, boolean enabled, String message,
-            String type, String param, String remark
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey memoKey, boolean enabled, String type,
+            String param, String message, String remark
     ) {
         this.key = key;
         this.memoKey = memoKey;
         this.enabled = enabled;
-        this.message = message;
         this.type = type;
         this.param = param;
+        this.message = message;
         this.remark = remark;
     }
 
@@ -91,14 +91,6 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
         this.enabled = enabled;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getType() {
         return type;
     }
@@ -115,6 +107,14 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
         this.param = param;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -129,9 +129,9 @@ public class JSFixedFastJsonMemoRemindDriverInfo implements Bean {
                 "key=" + key +
                 ", memoKey=" + memoKey +
                 ", enabled=" + enabled +
-                ", message='" + message + '\'' +
                 ", type='" + type + '\'' +
                 ", param='" + param + '\'' +
+                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

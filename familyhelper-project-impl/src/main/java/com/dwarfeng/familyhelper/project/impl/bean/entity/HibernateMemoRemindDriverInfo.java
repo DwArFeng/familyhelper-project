@@ -27,14 +27,14 @@ public class HibernateMemoRemindDriverInfo implements Bean {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Column(name = "message", length = Constraints.LENGTH_MESSAGE)
-    private String message;
-
     @Column(name = "type", length = Constraints.LENGTH_TYPE)
     private String type;
 
     @Column(name = "param", columnDefinition = "TEXT")
     private String param;
+
+    @Column(name = "message", length = Constraints.LENGTH_MESSAGE)
+    private String message;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -91,14 +91,6 @@ public class HibernateMemoRemindDriverInfo implements Bean {
         this.enabled = enabled;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getType() {
         return type;
     }
@@ -113,6 +105,14 @@ public class HibernateMemoRemindDriverInfo implements Bean {
 
     public void setParam(String param) {
         this.param = param;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getRemark() {
@@ -137,9 +137,9 @@ public class HibernateMemoRemindDriverInfo implements Bean {
                 "longId = " + longId + ", " +
                 "memoLongId = " + memoLongId + ", " +
                 "enabled = " + enabled + ", " +
-                "message = " + message + ", " +
                 "type = " + type + ", " +
                 "param = " + param + ", " +
+                "message = " + message + ", " +
                 "remark = " + remark + ", " +
                 "memo = " + memo + ")";
     }

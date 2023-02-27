@@ -29,8 +29,8 @@ public class WebInputMemoRemindDriverInfo implements Bean {
             return new MemoRemindDriverInfo(
                     WebInputLongIdKey.toStackBean(webInputMemoRemindDriverInfo.getKey()),
                     WebInputLongIdKey.toStackBean(webInputMemoRemindDriverInfo.getMemoKey()),
-                    webInputMemoRemindDriverInfo.isEnabled(), webInputMemoRemindDriverInfo.getMessage(),
-                    webInputMemoRemindDriverInfo.getType(), webInputMemoRemindDriverInfo.getParam(),
+                    webInputMemoRemindDriverInfo.isEnabled(), webInputMemoRemindDriverInfo.getType(),
+                    webInputMemoRemindDriverInfo.getParam(), webInputMemoRemindDriverInfo.getMessage(),
                     webInputMemoRemindDriverInfo.getRemark()
             );
         }
@@ -47,10 +47,6 @@ public class WebInputMemoRemindDriverInfo implements Bean {
     @JSONField(name = "enabled")
     private boolean enabled;
 
-    @JSONField(name = "message")
-    @Length(max = Constraints.LENGTH_MESSAGE)
-    private String message;
-
     @JSONField(name = "type")
     @NotNull
     @NotEmpty
@@ -59,6 +55,10 @@ public class WebInputMemoRemindDriverInfo implements Bean {
 
     @JSONField(name = "param")
     private String param;
+
+    @JSONField(name = "message")
+    @Length(max = Constraints.LENGTH_MESSAGE)
+    private String message;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -91,14 +91,6 @@ public class WebInputMemoRemindDriverInfo implements Bean {
         this.enabled = enabled;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getType() {
         return type;
     }
@@ -115,6 +107,14 @@ public class WebInputMemoRemindDriverInfo implements Bean {
         this.param = param;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -129,9 +129,9 @@ public class WebInputMemoRemindDriverInfo implements Bean {
                 "key=" + key +
                 ", memoKey=" + memoKey +
                 ", enabled=" + enabled +
-                ", message='" + message + '\'' +
                 ", type='" + type + '\'' +
                 ", param='" + param + '\'' +
+                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

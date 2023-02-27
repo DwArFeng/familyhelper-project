@@ -16,24 +16,24 @@ public class MemoRemindDriverInfo implements Entity<LongIdKey> {
     private LongIdKey key;
     private LongIdKey memoKey;
     private boolean enabled;
-    private String message;
     private String type;
     private String param;
+    private String message;
     private String remark;
 
     public MemoRemindDriverInfo() {
     }
 
     public MemoRemindDriverInfo(
-            LongIdKey key, LongIdKey memoKey, boolean enabled, String message, String type, String param,
+            LongIdKey key, LongIdKey memoKey, boolean enabled, String type, String param, String message,
             String remark
     ) {
         this.key = key;
         this.memoKey = memoKey;
         this.enabled = enabled;
-        this.message = message;
         this.type = type;
         this.param = param;
+        this.message = message;
         this.remark = remark;
     }
 
@@ -63,14 +63,6 @@ public class MemoRemindDriverInfo implements Entity<LongIdKey> {
         this.enabled = enabled;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getType() {
         return type;
     }
@@ -87,6 +79,14 @@ public class MemoRemindDriverInfo implements Entity<LongIdKey> {
         this.param = param;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -101,9 +101,9 @@ public class MemoRemindDriverInfo implements Entity<LongIdKey> {
                 "key=" + key +
                 ", memoKey=" + memoKey +
                 ", enabled=" + enabled +
-                ", message='" + message + '\'' +
                 ", type='" + type + '\'' +
                 ", param='" + param + '\'' +
+                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }
