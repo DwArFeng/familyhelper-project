@@ -195,8 +195,15 @@ public class FixedRateMemoRemindDriverProvider implements MemoRemindDriverProvid
             try {
                 int status = context.getStatus();
                 Date expectedFinishDate = context.getExpectedFinishDate();
+
+                // 状态判断: 如果备忘录已经完成了，则不进行任何提示。
                 if (Objects.equals(status, Constants.MEMO_STATUS_FINISHED)) {
                     return null;
+                }
+
+                // 预期完成日期空值判断: 如果未指定预期完成日期，则按照全时间范围进行判断。
+                if (Objects.isNull(expectedFinishDate)) {
+                    return nextAll(triggerContext);
                 }
 
                 switch (timeRangeType) {
