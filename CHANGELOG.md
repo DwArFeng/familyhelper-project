@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 增加 FastJson 实体。
+  - com.dwarfeng.familyhelper.project.sdk.bean.dto.FastJsonMemoRemindInfo。
 
 #### Bug修复
 
