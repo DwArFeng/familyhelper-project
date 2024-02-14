@@ -5,6 +5,7 @@ import com.dwarfeng.familyhelper.project.stack.service.MemoMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,15 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
                 break;
             case MemoMaintainService.CHILD_FOR_USER_FINISHED_DEFAULT_ORDER:
                 childForUserFinishedDefaultOrder(detachedCriteria, objects);
+                break;
+            case MemoMaintainService.CHILD_FOR_USER_PROFILE_LIKE_DEFAULT_ORDER:
+                childForUserProfileLikeDefaultOrder(detachedCriteria, objects);
+                break;
+            case MemoMaintainService.CHILD_FOR_USER_IN_PROGRESS_PROFILE_LIKE_DEFAULT_ORDER:
+                childForUserInProgressProfileLikeDefaultOrder(detachedCriteria, objects);
+                break;
+            case MemoMaintainService.CHILD_FOR_USER_FINISHED_PROFILE_LIKE_DEFAULT_ORDER:
+                childForUserFinishedProfileLikeDefaultOrder(detachedCriteria, objects);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
@@ -186,6 +196,71 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
             }
             detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_FINISHED));
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserProfileLikeDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            // 条件。
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            String profilePattern = (String) objects[1];
+            detachedCriteria.add(Restrictions.like("profile", profilePattern, MatchMode.ANYWHERE));
+            // 顺序。
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserInProgressProfileLikeDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            // 条件。
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            String profilePattern = (String) objects[1];
+            detachedCriteria.add(Restrictions.like("profile", profilePattern, MatchMode.ANYWHERE));
+            detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_IN_PROGRESS));
+            // 顺序。
+            detachedCriteria.addOrder(Order.desc("starFlag"));
+            detachedCriteria.addOrder(Order.desc("priority"));
+            detachedCriteria.addOrder(Order.desc("createdDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserFinishedProfileLikeDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            // 条件。
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userStringId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("userStringId", stringIdKey.getStringId()));
+            }
+            String profilePattern = (String) objects[1];
+            detachedCriteria.add(Restrictions.like("profile", profilePattern, MatchMode.ANYWHERE));
+            detachedCriteria.add(Restrictions.eq("status", Constants.MEMO_STATUS_FINISHED));
+            // 顺序。
             detachedCriteria.addOrder(Order.desc("starFlag"));
             detachedCriteria.addOrder(Order.desc("priority"));
             detachedCriteria.addOrder(Order.desc("createdDate"));

@@ -4,7 +4,10 @@
 
 #### 功能构建
 
-- (无)
+- 为 Memo 实体增加预设查询。
+  - MemoMaintainService.CHILD_FOR_USER_PROFILE_LIKE_DEFAULT_ORDER。
+  - MemoMaintainService.CHILD_FOR_USER_IN_PROGRESS_PROFILE_LIKE_DEFAULT_ORDER。
+  - MemoMaintainService.CHILD_FOR_USER_FINISHED_PROFILE_LIKE_DEFAULT_ORDER。
 
 #### Bug修复
 

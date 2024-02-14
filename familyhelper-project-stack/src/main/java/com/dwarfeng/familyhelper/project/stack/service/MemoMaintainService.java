@@ -36,4 +36,21 @@ public interface MemoMaintainService extends BatchCrudService<LongIdKey, Memo>,
      * @since 1.1.1
      */
     String CHILD_FOR_USER_FINISHED_DEFAULT_ORDER = "child_for_user_finished_default_order";
+
+    /**
+     * @since 1.2.2
+     */
+    String CHILD_FOR_USER_PROFILE_LIKE_DEFAULT_ORDER = "child_for_user_profile_like_default_order";
+
+    /**
+     * @since 1.2.2
+     */
+    String CHILD_FOR_USER_IN_PROGRESS_PROFILE_LIKE_DEFAULT_ORDER
+            = "child_for_user_in_progress_profile_like_default_order";
+
+    /**
+     * @since 1.2.2
+     */
+    String CHILD_FOR_USER_FINISHED_PROFILE_LIKE_DEFAULT_ORDER
+            = "child_for_user_finished_profile_like_default_order";
 }
