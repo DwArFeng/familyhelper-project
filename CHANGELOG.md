@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 启停脚本优化。
+  - 优化 Windows 系统的启动脚本。
+  - 优化 Linux 系统的启停脚本。
+
 - 为 Memo 实体增加预设查询。
   - MemoMaintainService.CHILD_FOR_USER_PROFILE_LIKE_DEFAULT_ORDER。
   - MemoMaintainService.CHILD_FOR_USER_IN_PROGRESS_PROFILE_LIKE_DEFAULT_ORDER。
