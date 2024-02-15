@@ -1,18 +1,18 @@
 package com.dwarfeng.familyhelper.project.impl.service.telqos;
 
 import com.dwarfeng.familyhelper.project.stack.service.MemoRemindDriveQosService;
+import com.dwarfeng.springtelqos.node.config.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.stack.command.Context;
 import com.dwarfeng.springtelqos.stack.exception.TelqosException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@TelqosCommand
 public class MemoRemindDriveCommand extends CliCommand {
 
     private static final String COMMAND_OPTION_ONLINE = "online";
