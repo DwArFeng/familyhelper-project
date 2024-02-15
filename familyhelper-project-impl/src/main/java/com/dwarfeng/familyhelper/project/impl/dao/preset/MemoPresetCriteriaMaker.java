@@ -60,7 +60,6 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void childForUser(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -104,7 +103,6 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void childForUserCreatedDateDesc(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -151,7 +149,6 @@ public class MemoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void childForUserDefaultOrder(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {

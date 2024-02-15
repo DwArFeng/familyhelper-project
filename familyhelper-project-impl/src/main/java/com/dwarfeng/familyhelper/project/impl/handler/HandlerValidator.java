@@ -104,7 +104,6 @@ public class HandlerValidator {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     public void makeSureUserPermittedForProject(StringIdKey userKey, LongIdKey projectKey)
             throws HandlerException {
         try {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @since 1.2.0
  */
 @Component
-class ResetProcessor {
+public class ResetProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResetProcessor.class);
 

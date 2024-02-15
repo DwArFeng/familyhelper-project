@@ -262,7 +262,6 @@ public class CronMemoRemindDriverProvider implements MemoRemindDriverProvider {
             return (next != null ? Date.from(next.toInstant()) : null);
         }
 
-        @SuppressWarnings("DuplicatedCode")
         private Date getLastCompletionTime(TriggerContext triggerContext) {
             Date date = triggerContext.lastCompletionTime();
             if (date != null) {

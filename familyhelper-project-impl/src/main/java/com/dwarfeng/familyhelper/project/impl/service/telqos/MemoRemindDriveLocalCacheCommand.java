@@ -61,7 +61,6 @@ public class MemoRemindDriveLocalCacheCommand extends CliCommand {
         return list;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
         try {
@@ -85,7 +84,6 @@ public class MemoRemindDriveLocalCacheCommand extends CliCommand {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void handleLookup(Context context, CommandLine cmd) throws Exception {
         long memoRemindDriverInfoId;
         try {

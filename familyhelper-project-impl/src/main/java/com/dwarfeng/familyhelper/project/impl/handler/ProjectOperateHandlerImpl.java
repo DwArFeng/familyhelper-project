@@ -124,6 +124,7 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
         }
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     @Override
     public void upsertPermission(StringIdKey ownerUserKey, PermissionUpsertInfo permissionUpsertInfo)
             throws HandlerException {

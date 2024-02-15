@@ -68,6 +68,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
         }
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     @Override
     public void uploadMemoFile(StringIdKey userKey, MemoFileUploadInfo memoFileUploadInfo) throws HandlerException {
         try {
