@@ -9,6 +9,7 @@ import com.dwarfeng.familyhelper.project.stack.handler.PushHandler;
 import com.dwarfeng.familyhelper.project.stack.service.MemoMaintainService;
 import com.dwarfeng.familyhelper.project.stack.service.MemoRemindDriverInfoMaintainService;
 import com.dwarfeng.familyhelper.project.stack.service.UserMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -64,10 +65,8 @@ public class MemoRemindHandlerImpl implements MemoRemindHandler {
             } catch (Exception e) {
                 LOGGER.warn("推送备忘录提醒动作发生消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
             }
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

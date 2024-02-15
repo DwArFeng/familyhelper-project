@@ -42,7 +42,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             return memoRemindDriveHandler.isOnline();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断备忘录提醒驱动处理器是否上线时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断备忘录提醒驱动处理器是否上线时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -51,7 +51,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             memoRemindDriveHandler.online();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上线备忘录提醒驱动处理器时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上线备忘录提醒驱动处理器时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -60,7 +60,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             memoRemindDriveHandler.offline();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下线备忘录提醒驱动处理器时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下线备忘录提醒驱动处理器时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -69,7 +69,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             return memoRemindDriveHandler.isLockHolding();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断备忘录提醒驱动处理器是否正在持有锁时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断备忘录提醒驱动处理器是否正在持有锁时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -78,7 +78,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             return memoRemindDriveHandler.isStarted();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断备忘录提醒驱动处理器是否启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断备忘录提醒驱动处理器是否启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -87,7 +87,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             memoRemindDriveHandler.start();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("备忘录提醒驱动处理器启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("备忘录提醒驱动处理器启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -96,7 +96,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             memoRemindDriveHandler.stop();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("备忘录提醒驱动处理器停止时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("备忘录提醒驱动处理器停止时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -105,7 +105,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             return memoRemindDriveHandler.isWorking();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断备忘录提醒驱动处理器是否正在工作时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断备忘录提醒驱动处理器是否正在工作时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -114,8 +114,8 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             return memoRemindDriveLocalCacheHandler.get(memoRemindDriverInfoKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "获取指定的备忘录提醒驱动器信息对应的备忘录提醒驱动器时发生异常", LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logParse(
+                    "获取指定的备忘录提醒驱动器信息对应的备忘录提醒驱动器时发生异常", LogLevel.WARN, e, sem
             );
         }
     }
@@ -125,7 +125,7 @@ public class MemoRemindDriveQosServiceImpl implements MemoRemindDriveQosService 
         try {
             memoRemindDriveLocalCacheHandler.clear();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("清除本地缓存时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

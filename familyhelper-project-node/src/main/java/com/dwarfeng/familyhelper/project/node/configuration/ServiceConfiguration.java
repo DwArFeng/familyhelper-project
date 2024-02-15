@@ -9,13 +9,11 @@ import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.bean.key.TpKey;
 import com.dwarfeng.familyhelper.project.stack.cache.*;
 import com.dwarfeng.familyhelper.project.stack.dao.*;
-import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -27,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+    private final GenerateConfiguration generateConfiguration;
 
     private final ProjectCrudOperation projectCrudOperation;
     private final ProjectDao projectDao;
@@ -63,18 +62,29 @@ public class ServiceConfiguration {
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
-            ProjectCrudOperation projectCrudOperation, ProjectDao projectDao,
+            GenerateConfiguration generateConfiguration,
+            ProjectCrudOperation projectCrudOperation,
+            ProjectDao projectDao,
             UserCrudOperation userCrudOperation,
-            PopDao popDao, PopCache popCache,
-            TaskTypeIndicatorDao taskTypeIndicatorDao, TaskTypeIndicatorCache taskTypeIndicatorCache,
-            TaskCrudOperation taskCrudOperation, TaskDao taskDao,
-            PreTaskDao preTaskDao, PreTaskCache preTaskCache,
-            MemoCrudOperation memoCrudOperation, MemoDao memoDao,
-            MemoFileInfoDao memoFileInfoDao, MemoFileInfoCache memoFileInfoCache,
-            MemoRemindDriverInfoDao memoRemindDriverInfoDao, MemoRemindDriverInfoCache memoRemindDriverInfoCache,
-            MemoRemindDriverSupportDao memoRemindDriverSupportDao, MemoRemindDriverSupportCache memoRemindDriverSupportCache
+            PopDao popDao,
+            PopCache popCache,
+            TaskTypeIndicatorDao taskTypeIndicatorDao,
+            TaskTypeIndicatorCache taskTypeIndicatorCache,
+            TaskCrudOperation taskCrudOperation,
+            TaskDao taskDao,
+            PreTaskDao preTaskDao,
+            PreTaskCache preTaskCache,
+            MemoCrudOperation memoCrudOperation,
+            MemoDao memoDao,
+            MemoFileInfoDao memoFileInfoDao,
+            MemoFileInfoCache memoFileInfoCache,
+            MemoRemindDriverInfoDao memoRemindDriverInfoDao,
+            MemoRemindDriverInfoCache memoRemindDriverInfoCache,
+            MemoRemindDriverSupportDao memoRemindDriverSupportDao,
+            MemoRemindDriverSupportCache memoRemindDriverSupportCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.generateConfiguration = generateConfiguration;
         this.projectCrudOperation = projectCrudOperation;
         this.projectDao = projectDao;
         this.userCrudOperation = userCrudOperation;
@@ -97,15 +107,10 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Bean
     public CustomBatchCrudService<LongIdKey, Project> projectBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 projectCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -133,7 +138,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<StringIdKey, User> userBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 userCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -144,7 +149,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 popDao,
                 popCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 popTimeout
@@ -175,7 +180,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 taskTypeIndicatorDao,
                 taskTypeIndicatorCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 taskTypeIndicatorTimeout
@@ -195,7 +200,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, Task> taskBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 taskCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -224,7 +229,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 preTaskDao,
                 preTaskCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 preTaskTimeout
@@ -253,7 +258,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, Memo> memoBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 memoCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -282,7 +287,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 memoFileInfoDao,
                 memoFileInfoCache,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 memoFileInfoTimeout
@@ -312,7 +317,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 memoRemindDriverInfoDao,
                 memoRemindDriverInfoCache,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 memoRemindDriverInfoTimeout
@@ -342,7 +347,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 memoRemindDriverSupportDao,
                 memoRemindDriverSupportCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 memoRemindDriverSupportTimeout

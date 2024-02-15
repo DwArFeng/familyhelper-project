@@ -30,7 +30,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             return taskOperateHandler.createTask(userKey, taskCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建任务时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建任务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -39,7 +39,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             taskOperateHandler.updateTask(userKey, taskUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新任务时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新任务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -48,7 +48,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             taskOperateHandler.removeTask(userKey, taskKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除任务时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除任务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -57,7 +57,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             taskOperateHandler.resetPreTask(userKey, preTaskResetInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("重置任务的前置任务时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("重置任务的前置任务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -66,7 +66,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             return taskOperateHandler.refreshTaskStatus(userKey, taskKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("刷新指定任务的状态时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("刷新指定任务的状态时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -75,7 +75,7 @@ public class TaskOperateServiceImpl implements TaskOperateService {
         try {
             taskOperateHandler.finishTask(userKey, taskKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("完成任务时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("完成任务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

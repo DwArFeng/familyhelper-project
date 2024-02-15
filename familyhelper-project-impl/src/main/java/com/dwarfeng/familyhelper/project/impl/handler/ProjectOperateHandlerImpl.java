@@ -11,6 +11,7 @@ import com.dwarfeng.familyhelper.project.stack.bean.key.PopKey;
 import com.dwarfeng.familyhelper.project.stack.handler.ProjectOperateHandler;
 import com.dwarfeng.familyhelper.project.stack.service.PopMaintainService;
 import com.dwarfeng.familyhelper.project.stack.service.ProjectMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -68,10 +69,8 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
 
             // 6. 返回生成的主键。
             return projectKey;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -101,10 +100,8 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
 
             // 6. 更新资产目录实体。
             projectMaintainService.update(project);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -122,10 +119,8 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
 
             // 4. 删除指定主键的资产目录。
             projectMaintainService.delete(projectKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -173,10 +168,8 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
                     "赋予用户 " + targetUserKey.getStringId() + " " + permissionLabel + "权限"
             );
             popMaintainService.insertOrUpdate(pop);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -205,10 +198,8 @@ public class ProjectOperateHandlerImpl implements ProjectOperateHandler {
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PopKey popKey = new PopKey(projectKey.getLongId(), targetUserKey.getStringId());
             popMaintainService.deleteIfExists(popKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

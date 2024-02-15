@@ -8,10 +8,11 @@ import com.dwarfeng.familyhelper.project.stack.bean.entity.MemoFileInfo;
 import com.dwarfeng.familyhelper.project.stack.handler.MemoFileOperateHandler;
 import com.dwarfeng.familyhelper.project.stack.service.MemoFileInfoMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,19 +23,19 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
     private final MemoFileInfoMaintainService memoFileInfoMaintainService;
     private final FtpHandler ftpHandler;
 
-    private final KeyFetcher<LongIdKey> keyFetcher;
+    private final KeyGenerator<LongIdKey> keyGenerator;
 
     private final HandlerValidator handlerValidator;
 
     public MemoFileOperateHandlerImpl(
             MemoFileInfoMaintainService memoFileInfoMaintainService,
             FtpHandler ftpHandler,
-            KeyFetcher<LongIdKey> keyFetcher,
+            KeyGenerator<LongIdKey> keyGenerator,
             HandlerValidator handlerValidator
     ) {
         this.memoFileInfoMaintainService = memoFileInfoMaintainService;
         this.ftpHandler = ftpHandler;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = keyGenerator;
         this.handlerValidator = handlerValidator;
     }
 
@@ -52,7 +53,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             handlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
 
             // 4. 下载项目文件。
-            byte[] content = ftpHandler.getFileContent(
+            byte[] content = ftpHandler.retrieveFile(
                     new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey)
             );
 
@@ -62,10 +63,8 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
             // 6. 拼接 MemoFile 并返回。
             return new MemoFile(memoFileInfo.getOriginName(), content);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -83,7 +82,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             handlerValidator.makeSureUserPermittedForMemo(userKey, memoKey);
 
             // 4. 分配主键。
-            LongIdKey memoFileKey = keyFetcher.fetchKey();
+            LongIdKey memoFileKey = keyGenerator.generate();
 
             // 5. 项目文件内容并存储（覆盖）。
             byte[] content = memoFileUploadInfo.getContent();
@@ -102,10 +101,8 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             memoFileInfo.setInspectedDate(currentDate);
             memoFileInfo.setRemark("通过 familyhelper-assets 服务上传/更新项目文件");
             memoFileInfoMaintainService.insertOrUpdate(memoFileInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -133,10 +130,8 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             memoFileInfo.setLength(content.length);
             memoFileInfo.setModifiedDate(new Date());
             memoFileInfoMaintainService.update(memoFileInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -160,10 +155,8 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
             // 5. 如果存在 MemoFileInfo 实体，则删除。
             memoFileInfoMaintainService.deleteIfExists(memoFileKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 

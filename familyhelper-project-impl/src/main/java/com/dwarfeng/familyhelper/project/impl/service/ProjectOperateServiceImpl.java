@@ -31,7 +31,7 @@ public class ProjectOperateServiceImpl implements ProjectOperateService {
         try {
             return projectOperateHandler.createProject(userKey, projectCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建工程时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建工程时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -40,7 +40,7 @@ public class ProjectOperateServiceImpl implements ProjectOperateService {
         try {
             projectOperateHandler.updateProject(userKey, projectUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新工程时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新工程时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -49,7 +49,7 @@ public class ProjectOperateServiceImpl implements ProjectOperateService {
         try {
             projectOperateHandler.removeProject(userKey, projectKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除工程时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除工程时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -59,7 +59,7 @@ public class ProjectOperateServiceImpl implements ProjectOperateService {
         try {
             projectOperateHandler.upsertPermission(ownerUserKey, permissionUpsertInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加或更新工程的权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("添加或更新工程的权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -69,7 +69,7 @@ public class ProjectOperateServiceImpl implements ProjectOperateService {
         try {
             projectOperateHandler.removePermission(ownerUserKey, permissionRemoveInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("移除工程的权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("移除工程的权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

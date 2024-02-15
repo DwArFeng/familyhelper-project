@@ -6,6 +6,7 @@ import com.dwarfeng.familyhelper.project.stack.bean.dto.MemoUpdateInfo;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Memo;
 import com.dwarfeng.familyhelper.project.stack.handler.MemoOperateHandler;
 import com.dwarfeng.familyhelper.project.stack.service.MemoMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -53,10 +54,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 4. 插入备忘录实体，并返回生成的主键。
             return memoMaintainService.insert(memo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -86,10 +85,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 5. 更新备忘录实体。
             memoMaintainService.update(memo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -107,10 +104,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 4. 删除指定的备忘录。
             memoMaintainService.delete(memoKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -135,10 +130,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 5. 更新备忘录实体。
             memoMaintainService.update(memo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -155,10 +148,8 @@ public class MemoOperateHandlerImpl implements MemoOperateHandler {
 
             // 3. 删除备忘录实体。
             memoMaintainService.batchDelete(memoKeys);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

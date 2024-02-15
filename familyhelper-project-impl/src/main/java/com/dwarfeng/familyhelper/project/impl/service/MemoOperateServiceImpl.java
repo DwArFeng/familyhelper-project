@@ -29,7 +29,7 @@ public class MemoOperateServiceImpl implements MemoOperateService {
         try {
             return memoOperateHandler.createMemo(userKey, memoCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建备忘录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建备忘录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -38,7 +38,7 @@ public class MemoOperateServiceImpl implements MemoOperateService {
         try {
             memoOperateHandler.updateMemo(userKey, memoUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新备忘录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新备忘录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -47,7 +47,7 @@ public class MemoOperateServiceImpl implements MemoOperateService {
         try {
             memoOperateHandler.removeMemo(userKey, memoKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除备忘录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除备忘录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -56,7 +56,7 @@ public class MemoOperateServiceImpl implements MemoOperateService {
         try {
             memoOperateHandler.finishMemo(userKey, memoKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("完成备忘录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("完成备忘录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -65,7 +65,7 @@ public class MemoOperateServiceImpl implements MemoOperateService {
         try {
             memoOperateHandler.removeFinishedMemos(userKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除已经完成的备忘录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除已经完成的备忘录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

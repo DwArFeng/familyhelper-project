@@ -26,7 +26,7 @@ public class MemoRemindServiceImpl implements MemoRemindService {
         try {
             memoRemindHandler.remind(memoRemindDriverInfoKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("执行备忘录提醒动作时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("执行备忘录提醒动作时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

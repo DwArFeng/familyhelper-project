@@ -33,6 +33,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(MemoRemindDriverInfoNotExistsException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_INFO_NOT_EXISTS);
         destination.put(MemoRemindDriverInfoDisabledException.class, ServiceExceptionCodes.MEMO_REMIND_DRIVER_INFO_DISABLED);
         destination.put(InvalidMemoRemindDriverInfoParentException.class, ServiceExceptionCodes.INVALID_MEMO_REMIND_DRIVER_INFO_PARENT);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
+        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

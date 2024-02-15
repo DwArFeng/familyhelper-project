@@ -7,6 +7,7 @@ import com.dwarfeng.familyhelper.project.stack.bean.dto.TaskUpdateInfo;
 import com.dwarfeng.familyhelper.project.stack.bean.entity.Task;
 import com.dwarfeng.familyhelper.project.stack.handler.TaskOperateHandler;
 import com.dwarfeng.familyhelper.project.stack.service.TaskMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -53,10 +54,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
             // 5. 插入任务实体，并返回生成的主键。
             return taskMaintainService.insert(task);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -85,10 +84,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
             // 5. 更新任务实体。
             taskMaintainService.update(task);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -109,10 +106,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
             // 5. 删除指定的任务。
             taskMaintainService.delete(taskKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -121,10 +116,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         try {
             // TODO 业务逻辑待实现。
             throw new HandlerException();
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -133,10 +126,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         try {
             // TODO 业务逻辑待实现。
             throw new HandlerException();
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -145,10 +136,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         try {
             // TODO 业务逻辑待实现。
             throw new HandlerException();
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }
