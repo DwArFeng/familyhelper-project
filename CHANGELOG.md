@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- dwarfeng-ftp 优化。
+  - 优化 FtpHandler 的扫描方式，使其符合最新版本标准。
+  - 优化 FtpConstants 中的常量类型，使其更加符合 dwarfeng-ftp 的接口标准。
+
 - 优化 `spring-telqos` 结构。
   - 优化指令注解。
   - 使用 `package-scan` 扫描 `telqos` 包内所有指令。

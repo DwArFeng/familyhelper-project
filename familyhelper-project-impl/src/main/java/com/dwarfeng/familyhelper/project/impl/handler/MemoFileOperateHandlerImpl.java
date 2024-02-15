@@ -54,7 +54,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
             // 4. 下载项目文件。
             byte[] content = ftpHandler.retrieveFile(
-                    new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey)
+                    FtpConstants.PATH_MEMO_FILE, getFileName(memoFileKey)
             );
 
             // 5. 更新文件的查看时间。
@@ -86,7 +86,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
             // 5. 项目文件内容并存储（覆盖）。
             byte[] content = memoFileUploadInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_MEMO_FILE, getFileName(memoFileKey), content);
 
             // 6. 根据 memoFileUploadInfo 构造 MemoFileInfo，插入或更新。
             Date currentDate = new Date();
@@ -122,7 +122,7 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
 
             // 4. 项目文件内容并存储（覆盖）。
             byte[] content = memoFileUpdateInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_MEMO_FILE, getFileName(memoFileKey), content);
 
             // 5. 根据 memoFileUpdateInfo 更新字段。
             MemoFileInfo memoFileInfo = memoFileInfoMaintainService.get(memoFileKey);
@@ -149,8 +149,8 @@ public class MemoFileOperateHandlerImpl implements MemoFileOperateHandler {
             handlerValidator.makeSureUserPermittedForMemo(userKey, memoFileInfo.getMemoKey());
 
             // 4. 如果存在 MemoFile 文件，则删除。
-            if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey))) {
-                ftpHandler.deleteFile(new String[]{FtpConstants.PATH_MEMO_FILE}, getFileName(memoFileKey));
+            if (ftpHandler.existsFile(FtpConstants.PATH_MEMO_FILE, getFileName(memoFileKey))) {
+                ftpHandler.deleteFile(FtpConstants.PATH_MEMO_FILE, getFileName(memoFileKey));
             }
 
             // 5. 如果存在 MemoFileInfo 实体，则删除。

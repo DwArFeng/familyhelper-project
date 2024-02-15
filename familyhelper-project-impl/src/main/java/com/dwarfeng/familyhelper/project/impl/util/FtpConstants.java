@@ -8,7 +8,7 @@ package com.dwarfeng.familyhelper.project.impl.util;
  */
 public final class FtpConstants {
 
-    public static final String PATH_MEMO_FILE = "familyhelper-project/memo-file";
+    public static final String[] PATH_MEMO_FILE = new String[]{"familyhelper-project", "memo-file"};
 
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");
